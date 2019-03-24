@@ -1,11 +1,11 @@
 <template lang="html">
-    <div class="roles-index">
-        <myTable ref="listTable" :listConf="listConf" @select="selectRow" @searchReset="searchReset" :no-search="true">
-            <template slot="formBtn" >
-                <Button type="primary" @click="jumpPage({ path: '/adminManage/roles/add' })">添加角色</Button>
-            </template>
-        </myTable>
-    </div>
+  <div class="roles-index">
+    <myTable ref="listTable" :listConf="listConf" @select="selectRow" @searchReset="searchReset" :no-search="true">
+      <template slot="formBtn" >
+        <Button type="primary" @click="jumpPage({ path: '/adminManage/roles/add' })">添加角色</Button>
+      </template>
+    </myTable>
+  </div>
 </template>
 
 <script>

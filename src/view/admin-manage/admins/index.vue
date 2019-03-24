@@ -1,12 +1,12 @@
 <template lang="html">
-    <div class="admins-index">
-        <myTable ref="listTable" :listConf="listConf" @select="selectRow" @searchReset="searchReset" :no-search="true">
-            <template slot="formBtn" >
-                <Button type="primary" @click="jumpPage({ path: '/adminManage/admins/add' })"><Icon type="plus-round"></Icon>管理员添加</Button>
-                <Button type="primary" @click="setRole"><Icon type="plus-round"></Icon>设置角色</Button>
-            </template>
-        </myTable>
-    </div>
+  <div class="admins-index">
+    <myTable ref="listTable" :listConf="listConf" @select="selectRow" @searchReset="searchReset" :no-search="true">
+      <template slot="formBtn" >
+        <Button type="primary" @click="jumpPage({ path: '/adminManage/admins/add' })"><Icon type="plus-round"></Icon>管理员添加</Button>
+        <Button type="primary" @click="setRole"><Icon type="plus-round"></Icon>设置角色</Button>
+      </template>
+    </myTable>
+  </div>
 </template>
 
 <script>

@@ -1,8 +1,8 @@
 <template lang="html">
-    <div class="categorys-index">
-        <Button class="add-btn" type="primary" @click="jumpPage({ path: '/productManage/categorys/add' })">添加分类</Button>
-        <Tree :data="categorys" :render="renderContent" empty-text=""></Tree>
-    </div>
+  <div class="categorys-index">
+    <Button class="add-btn" type="primary" @click="jumpPage({ path: '/productManage/categorys/add' })">添加分类</Button>
+    <Tree :data="categorys" :render="renderContent" empty-text=""></Tree>
+  </div>
 </template>
 
 <script>
@@ -139,6 +139,6 @@ export default {
 
 <style lang="css" >
 button.add-btn {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 </style>
