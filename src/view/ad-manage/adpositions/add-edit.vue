@@ -6,8 +6,8 @@
     <FormItem label="上级分类" prop="parent_id" >
       <Cascader :data="categorys" v-model="formValidate.parent_id" placeholder="不选择默认为顶级" change-on-select></Cascader>
     </FormItem>
-    <FormItem label="分类图标" prop="icon" required>
-      <my-upload ref="icon" :data="uploadData" :defaultImgs="formValidate.icon"></my-upload>
+    <FormItem label="分类描述" prop="desc">
+      <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 4,maxRows: 5}" placeholder=""></Input>
     </FormItem>
     <FormItem label="排序" prop="sort_order">
       <Input v-model="formValidate.sort_order" placeholder="数字越大，优先级越高"></Input>
@@ -18,6 +18,7 @@
   </Form>
 </template>
 <script>
+
 import Util from '@/libs/util'
 import myUpload from '@/view/includes/myUpload'
 
@@ -31,21 +32,15 @@ export default {
         id: 0,
         name: '',
         parent_id: [],
-        icon: '',
+        desc: '',
         sort_order: 50
       },
       ruleValidate: {
         name: [
           { required: true, message: '请填写名称', trigger: 'blur' }
         ],
-        icon: [
-          { required: false }
-        ]
       },
       categorys: [],
-      uploadData: {
-        file_type: 'products'
-      }
     }
   },
   methods: {
@@ -56,20 +51,12 @@ export default {
         if (valid) {
           // 添加
           var method = 'post'
-          var url = '/adminapi/shopProductCategorys'
+          var url = '/adminapi/articleCats'
           if (_this.formValidate.id) { // 编辑
             method = 'patch'
-            var url = '/adminapi/shopProductCategorys/' + _this.formValidate.id
+            var url = '/adminapi/articleCats/' + _this.formValidate.id
           }
-          _this.formValidate.icon = _this.$refs.icon.imgList()
 
-          if (_this.formValidate.icon == '') {
-            _this.$Notice.error({
-              title: '提示',
-              desc: '请上传分类图标'
-            })
-            return false
-          }
           Util.ajax({
             url: url,
             method: method,
@@ -80,7 +67,7 @@ export default {
                   title: '提示',
                   desc: '保存成功'
                 })
-                _this.$router.push('/productManage/categorys/index')
+                _this.$router.push('/articleManage/articleCats/index')
               } else {
                 _this.$Notice.error({
                   title: '提示',
@@ -101,7 +88,7 @@ export default {
   created() {
     var _this = this
     Util.ajax({
-      url: '/adminapi/shopProductCategorys',
+      url: '/adminapi/articleCats',
       method: 'get',
       success: function(result) {
         if (result.error == 0) {
@@ -117,7 +104,7 @@ export default {
 
     if (_this.$route.params.id != undefined) {
       Util.ajax({
-        url: '/adminapi/shopProductCategorys/' + _this.$route.params.id,
+        url: '/adminapi/articleCats/' + _this.$route.params.id,
         method: 'get',
         success: function(result) {
           if (result.error == 0) {
