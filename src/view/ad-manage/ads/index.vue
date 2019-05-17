@@ -1,17 +1,13 @@
 <template lang="html">
-  <div class="admins-index">
+  <div class="ads-index">
     <myTable ref="listTable" :listConf="listConf" @select="selectRow" @searchReset="searchReset" >
       <template slot="formItem" >
-        <Form-item prop="title">
-          <Input type="text" v-model="listConf.searchParams.title" placeholder="搜索文章名称" ></Input>
-        </Form-item>
-
-        <Form-item prop="cat_id">
-          <Cascader :data="categorys" v-model="listConf.searchParams.cat_id" change-on-select></Cascader>
+        <Form-item prop="name">
+          <Input type="text" v-model="listConf.searchParams.name" placeholder="搜索广告位名称" ></Input>
         </Form-item>
       </template>
       <template slot="formBtn" >
-        <Button type="primary" @click="jumpPage({ path: '/articleManage/articles/add' })"><Icon type="plus-round"></Icon>文章添加</Button>
+        <Button type="primary" @click="jumpPage({ path: '/adManage/ads/add' })"><Icon type="plus-round"></Icon>广告添加</Button>
       </template>
     </myTable>
   </div>
@@ -30,23 +26,45 @@ export default {
       currentRow: {},
       categorys: [],
       listConf: {
-        url: '/adminapi/articles',
+        url: '/adminapi/ads',
         searchParams: {
         },
         item: [],
         columns: [
           {type: 'index', align: 'center', width: 100, fixed: 'left'},
-          {title: '标题', align: 'center', key: 'title'},
-          {title: '分类', key: 'cat_name',
-            width: 120,
+          {title: '广告名称', align: 'center', width: 150, key: 'name'},
+          {title: '广告位名称', align: 'center', width: 150, key: 'adposition_name',
             render: (h, params) => {
-              if (params.row.article_cat != null) {
-                return h('span', params.row.article_cat.name)
+              if (params.row.ad_position != null) {
+                return h('span', params.row.ad_position.name)
               }
             }},
-          {title: '标识类型', align: 'center', key: 'code_name'},
-          {title: '浏览量', align: 'center', key: 'view_num'},
-          { title: '状态',
+          {title: '广告图片',
+            align: 'center',
+            width: 100,
+            key: 'image',
+            render: (h, params) => {
+              if (params.row.image != null && params.row.image != '') {
+                return h('div', [
+                  h('img', {
+                    attrs: {
+                      src: params.row.image
+                    },
+                    style: {
+                      width: '90px',
+                      height: '40px',
+                      marginTop: '5px'
+                    }
+                  })
+                ])
+              }
+            }},
+          {title: '小程序链接', align: 'center', width: 150, key: 'link_mini'},
+          {title: '网页链接', align: 'center', width: 150, key: 'link'},
+          {title: 'app 链接', align: 'center', width: 150, key: 'link_app'},
+          {title: '广告开始时间', align: 'center', width: 180, key: 'start_at'},
+          {title: '广告结束时间', align: 'center', width: 180, key: 'end_at'},
+          {title: '状态',
             key: 'status',
             width: 100,
             render: (h, params) => {
@@ -68,11 +86,11 @@ export default {
                 })
               ])
             }},
-          {title: '添加时间', align: 'center', key: 'created_at'},
+          {title: '添加时间', align: 'center', width: 180, key: 'created_at'},
           {title: '操作',
             key: 'action',
             align: 'center',
-            width: 150,
+            width: 120,
             fixed: 'right',
             render: (h, params) => {
               return h('div', [
@@ -89,7 +107,7 @@ export default {
                   on: {
                     click: () => {
                       var id = params.row.id
-                      this.jumpPage('/articleManage/articles/edit/' + id)
+                      this.jumpPage('/adManage/ads/edit/' + id)
                     }
                   }
                 }),
@@ -134,17 +152,17 @@ export default {
         title: '提示',
         content: '确定删除吗？删除之后不可恢复!',
         onOk: function () {
-          _this.articleDel(id)
+          _this.adDel(id)
         },
         onCancel: function () {
           _this.$Notice.error({ title: '提示', desc: '操作取消' })
         }
       })
     },
-    articleDel (id) {
+    adDel (id) {
       var _this = this
       Util.ajax({
-        url: '/adminapi/articles/' + id,
+        url: '/adminapi/ads/' + id,
         method: 'DELETE',
         success: function (result) {
           if (result.error == 0) {
@@ -160,7 +178,7 @@ export default {
       var _this = this
 
       Util.ajax({
-        url: '/adminapi/articles/' + id + '/setStatus',
+        url: '/adminapi/ads/' + id + '/setStatus',
         method: 'patch',
         data: {status: status},
         success: function (result) {
@@ -176,18 +194,6 @@ export default {
   },
   created: function () {
     var _this = this
-
-    Util.ajax({
-      url: '/adminapi/articleCats',
-      method: 'get',
-      success: function (result) {
-        if (result.error == 0) {
-          _this.categorys = result.result
-        } else {
-          _this.$Notice.error({title: '提示', desc: result.info})
-        }
-      }
-    })
   },
   mounted: function () {
   }

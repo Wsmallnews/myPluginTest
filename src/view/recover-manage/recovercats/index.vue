@@ -1,8 +1,8 @@
 <template lang="html">
-  <div class="adpositions-index">
+  <div class="recovercats-index">
     <myTable ref="listTable" :listConf="listConf" @select="selectRow" @searchReset="searchReset" :no-search="true">
       <template slot="formBtn" >
-        <Button type="primary" @click="jumpPage({ path: '/adManage/adPositions/add' })"><Icon type="plus-round"></Icon>广告位添加</Button>
+        <Button type="primary" @click="jumpPage({ path: '/recoverManage/recoverCats/add' })"><Icon type="plus-round"></Icon>类目添加</Button>
       </template>
     </myTable>
   </div>
@@ -20,15 +20,15 @@ export default {
     return {
       currentRow:{},
       listConf: {
-        url: "/adminapi/adPositions",
+        url: "/adminapi/recoverCats",
         searchParams: {
         },
         item: [],
         columns: [
           {type: 'index', align: 'center', width:100, fixed: 'left'},
-          {title: '广告位名称', align: 'center', width: 150, key: 'name'},
-          {title: '广告位标识', align: 'center', width: 150, key: 'code_name'},
+          {title: '类目名称', align: 'center', width: 150, key: 'name'},
           {title: '描述', align: 'left', minWidth: 150, key: 'desc'},
+          {title: '排序', align: 'center', width: 80, key: 'sort_order'},
           {title: '添加时间', align: 'center', width: 200, key: 'created_at'},
           {title: '操作',
             key: 'action',
@@ -50,7 +50,7 @@ export default {
                   on: {
                     click: () => {
                       var id = params.row.id
-                      this.jumpPage('/adManage/adPositions/edit/' + id)
+                      this.jumpPage('/recoverManage/recoverCats/edit/' + id)
                     }
                   }
                 }),
@@ -94,17 +94,17 @@ export default {
         title: '提示',
         content: '确定删除吗？删除之后不可恢复!',
         onOk: function () {
-          _this.adPositionDel(id)
+          _this.recoverCatDel(id)
         },
         onCancel: function () {
           _this.$Notice.error({ title: '提示', desc: '操作取消' })
         }
       })
     },
-    adPositionDel (id) {
+    recoverCatDel (id) {
       var _this = this
       Util.ajax({
-        url: '/adminapi/adPositions/' + id,
+        url: '/adminapi/recoverCats/' + id,
         method: 'DELETE',
         success: function (result) {
           if (result.error == 0) {

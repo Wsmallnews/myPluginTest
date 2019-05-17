@@ -43,6 +43,94 @@ export default [{
     }]
   },
   {
+    path: '/recoverManage',
+    name: 'recovermanage',
+    meta: {
+      icon: 'md-article',
+      title: '回收管理'
+    },
+    component: Main,
+    children: [{
+        path: 'recovers',
+        name: 'recovermanage-recovers',
+        meta: {
+          icon: 'md-home',
+          title: '类目内容管理'
+        },
+        component: parentView,
+        children: [{
+            path: 'index',
+            name: 'recovermanage-recovers-index',
+            meta: {
+              icon: 'md-home',
+              title: '类目内容管理',
+            },
+            component: () => import('@/view/recover-manage/recovers/index.vue')
+          },
+          {
+            path: 'add',
+            name: 'recovermanage-recovers-add',
+            meta: {
+              hideInMenu: true,
+              icon: 'md-add',
+              title: '类目内容添加',
+            },
+            component: () => import('@/view/recover-manage/recovers/add-edit.vue')
+          },
+          {
+            path: 'edit/:id',
+            name: 'recovermanage-recovers-edit',
+            meta: {
+              hideInMenu: true,
+              icon: 'md-brush',
+              title: '类目内容编辑',
+            },
+            component: () => import('@/view/recover-manage/recovers/add-edit.vue')
+          },
+        ]
+      },
+      {
+        path: 'recoverCats',
+        name: 'recovermanage-recovercats',
+        meta: {
+          icon: 'md-home',
+          title: '类目管理'
+        },
+        component: parentView,
+        children: [{
+            path: 'index',
+            name: 'recovermanage-recovercats-index',
+            meta: {
+              icon: 'md-home',
+              title: '类目管理',
+            },
+            component: () => import('@/view/recover-manage/recovercats/index.vue')
+          },
+          {
+            path: 'add',
+            name: 'recovermanage-recovercats-add',
+            meta: {
+              hideInMenu: true,
+              icon: 'md-add',
+              title: '类目添加',
+            },
+            component: () => import('@/view/recover-manage/recovercats/add-edit.vue')
+          },
+          {
+            path: 'edit/:id',
+            name: 'recovermanage-recovercats-edit',
+            meta: {
+              hideInMenu: true,
+              icon: 'md-brush',
+              title: '类目编辑',
+            },
+            component: () => import('@/view/recover-manage/recovercats/add-edit.vue')
+          },
+        ]
+      }
+    ]
+  },
+  {
     path: '/articleManage',
     name: 'articlemanage',
     meta: {
@@ -218,111 +306,25 @@ export default [{
       }
     ]
   },
-
-  // {
-  //   path: '/productManage',
-  //   name: 'productmanage',
-  //   meta: {
-  //     icon: 'md-apps',
-  //     title: '产品管理'
-  //   },
-  //   component: Main,
-  //   children: [
-      // {
-      //     path: 'products',
-      //     name: 'productmanage-products',
-      //     meta: {
-      //         icon: 'md-apps',
-      //         title: '产品管理'
-      //     },
-      //     component: parentView,
-      //     children: [
-      //         {
-      //             path: 'index',
-      //             name: 'productmanage-products-index',
-      //             meta: {
-      //                 icon: 'md-apps',
-      //                 title: '产品管理',
-      //                 access: ['shopProducts_view']
-      //             },
-      //             component: () => import('@/view/product-manage/products/index.vue')
-      //         },
-      //         {
-      //             path: 'add',
-      //             name: 'productmanage-products-add',
-      //             meta: {
-      //                 hideInMenu: true,
-      //                 icon: 'md-add',
-      //                 title: '产品添加',
-      //                 access: ['shopProducts_edit']
-      //             },
-      //             component: () => import('@/view/product-manage/products/add-edit.vue')
-      //         },
-      //         {
-      //             path: 'edit/:id',
-      //             name: 'productmanage-products-edit',
-      //             meta: {
-      //                 hideInMenu: true,
-      //                 icon: 'md-brush',
-      //                 title: '产品编辑',
-      //                 access: ['shopProducts_edit']
-      //             },
-      //             component: () => import('@/view/product-manage/products/add-edit.vue')
-      //         },
-      //     ]
-      // },
-      // {
-      //     path: 'trash',
-      //     name: 'productmanage-trash',
-      //     meta: {
-      //         icon: 'md-trash',
-      //         title: '回收站',
-      //         access: ['shopProducts_view']
-      //     },
-      //     component: () => import('@/view/product-manage/products/index.vue')
-      // },
-  //     {
-  //       path: 'categorys',
-  //       name: 'productmanage-categorys',
-  //       meta: {
-  //         icon: 'md-briefcase',
-  //         title: '分类管理',
-  //         access: ['shopProductCategorys_oper']
-  //       },
-  //       component: parentView,
-  //       children: [{
-  //           path: 'index',
-  //           name: 'productmanage-categorys-index',
-  //           meta: {
-  //             icon: 'md-briefcase',
-  //             title: '分类列表'
-  //           },
-  //           component: () => import('@/view/product-manage/categorys/index.vue')
-  //         },
-  //         {
-  //           path: 'add',
-  //           name: 'productmanage-categorys-add',
-  //           meta: {
-  //             hideInMenu: true,
-  //             icon: 'md-add',
-  //             title: '分类添加'
-  //           },
-  //           component: () => import('@/view/product-manage/categorys/add-edit.vue')
-  //         },
-  //         {
-  //           path: 'edit/:id',
-  //           name: 'productmanage-categorys-edit',
-  //           meta: {
-  //             hideInMenu: true,
-  //             icon: 'md-brush',
-  //             title: '分类编辑'
-  //           },
-  //           component: () => import('@/view/product-manage/categorys/add-edit.vue')
-  //         },
-  //       ]
-  //     }
-  //   ]
-  // },
+  {
+    path: '/settingManage',
+    name: 'settingmanage',
+    meta: {
+      icon: 'md-cog',
+      title: '设置管理'
+    },
+    component: Main,
+    children: [{
+        path: 'settings',
+        name: 'settingmanage-settings',
+        meta: {
+          icon: 'md-person',
+          title: '设置管理'
+        },
+        component: () => import('@/view/setting-manage/settings/index.vue')
+      }
+    ]
+  },
   {
     path: '/adminManage',
     name: 'adminmanage',
@@ -345,7 +347,7 @@ export default [{
             meta: {
               icon: 'md-person',
               title: '管理员管理',
-              access: ['admins_view']
+              // access: ['admins_view']
             },
             component: () => import('@/view/admin-manage/admins/index.vue')
           },
@@ -356,7 +358,7 @@ export default [{
               hideInMenu: true,
               icon: 'md-person-add',
               title: '管理员添加',
-              access: ['admins_edit']
+              // access: ['admins_edit']
             },
             component: () => import('@/view/admin-manage/admins/add-edit.vue')
           },
@@ -367,7 +369,7 @@ export default [{
               hideInMenu: true,
               icon: 'md-person-add',
               title: '管理员编辑',
-              access: ['admins_edit']
+              // access: ['admins_edit']
             },
             component: () => import('@/view/admin-manage/admins/add-edit.vue')
           },
@@ -378,7 +380,7 @@ export default [{
               hideInMenu: true,
               icon: 'ios-build',
               title: '管理员重置密码',
-              access: ['admins_edit']
+              // access: ['admins_edit']
             },
             component: () => import('@/view/admin-manage/admins/reset-password.vue')
           },
@@ -389,7 +391,7 @@ export default [{
               hideInMenu: true,
               icon: 'ios-build',
               title: '设置角色',
-              access: ['admins_roles']
+              // access: ['admins_roles']
             },
             component: () => import('@/view/admin-manage/admins/set-role.vue')
           },
@@ -409,7 +411,7 @@ export default [{
             meta: {
               icon: 'md-person',
               title: '角色管理',
-              access: ['roles_view']
+              // access: ['roles_view']
             },
             component: () => import('@/view/admin-manage/roles/index.vue')
           },
@@ -420,7 +422,7 @@ export default [{
               hideInMenu: true,
               icon: 'md-person-add',
               title: '角色添加',
-              access: ['roles_edit']
+              // access: ['roles_edit']
             },
             component: () => import('@/view/admin-manage/roles/add-edit.vue')
           },
@@ -431,7 +433,7 @@ export default [{
               hideInMenu: true,
               icon: 'md-person-add',
               title: '角色编辑',
-              access: ['roles_edit']
+              // access: ['roles_edit']
             },
             component: () => import('@/view/admin-manage/roles/add-edit.vue')
           },
@@ -442,7 +444,7 @@ export default [{
               hideInMenu: true,
               icon: 'md-settings',
               title: '分配权限',
-              access: ['roles_permission']
+              // access: ['roles_permission']
             },
             component: () => import('@/view/admin-manage/roles/give-perm.vue')
           },
@@ -462,7 +464,7 @@ export default [{
             meta: {
               icon: 'md-list-box',
               title: '权限管理',
-              access: ['permissions_oper']
+              // access: ['permissions_oper']
             },
             component: () => import('@/view/admin-manage/permissions/index.vue')
           },
@@ -473,7 +475,7 @@ export default [{
               hideInMenu: true,
               icon: 'md-person-add',
               title: '权限添加',
-              access: ['permissions_oper']
+              // access: ['permissions_oper']
             },
             component: () => import('@/view/admin-manage/permissions/add-edit.vue')
           },
@@ -484,7 +486,7 @@ export default [{
               hideInMenu: true,
               icon: 'md-person-add',
               title: '权限编辑',
-              access: ['permissions_oper']
+              // access: ['permissions_oper']
             },
             component: () => import('@/view/admin-manage/permissions/add-edit.vue')
           },
@@ -504,7 +506,7 @@ export default [{
           meta: {
             icon: 'md-list-box',
             title: '操作日志',
-            access: ['adminLogs_view']
+            // access: ['adminLogs_view']
           },
           component: () => import('@/view/admin-manage/admin-logs/index.vue')
         }, ]
@@ -523,7 +525,7 @@ export default [{
           meta: {
             icon: 'md-list-box',
             title: '计划任务',
-            access: ['cronLogs_view']
+            // access: ['cronLogs_view']
           },
           component: () => import('@/view/admin-manage/cron-logs/index.vue')
         }, ]

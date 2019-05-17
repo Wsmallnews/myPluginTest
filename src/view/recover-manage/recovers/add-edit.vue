@@ -1,37 +1,31 @@
 <template lang="html">
-	<div class="articles-add-edit">
+	<div class="recovers-add-edit">
 		<Form class="form-edit" ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120">
-			<Form-item label="标题" prop="title">
-        <Input v-model="formValidate.title" placeholder="标题"></Input>
+			<Form-item label="类目内容名称" prop="name">
+        <Input v-model="formValidate.name" placeholder="类目内容名称"></Input>
       </Form-item>
 
-      <Form-item label="分类" prop="cat_id">
-        <Cascader :data="catList" v-model="formValidate.cat_id" change-on-select></Cascader>
-      </Form-item>
-
-      <Form-item label="图片" prop="images">
-        <MyUpload ref="images" :data="uploadData" :multiple="true" :defaultImgs="formValidate.images"></MyUpload>
+      <Form-item label="所属类目" prop="cat_id">
+        <Select v-model="formValidate.cat_id">
+          <Option v-for="item in catList" :value="item.id" :key="item.id">{{ item.name }}</Option>
+        </Select>
       </Form-item>
 
       <Form-item label="内容" prop="content">
         <editor ref="editor" :value="formValidate.content" @on-change="handleChange"/>
       </Form-item>
 
-      <Form-item label="摘要" prop="desc">
-        <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 3,maxRows: 5}" placeholder="摘要"></Input>
-      </Form-item>
-
-      <Form-item label="关键字" prop="keywords">
-        <Input v-model="formValidate.keywords" placeholder="关键字"></Input>
+      <Form-item label="描述" prop="desc">
+        <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 3,maxRows: 5}" placeholder="描述"></Input>
       </Form-item>
 
       <Form-Item label="状态" prop="status">
         <i-switch v-model="formValidate.status" :true-value="1" :false-value="0"></i-switch>
       </Form-Item>
 
-      <Form-item label="浏览量" prop="view_num">
-        <InputNumber :min="1" v-model="formValidate.view_num" placeholder="浏览量"></InputNumber>
-      </Form-item>
+      <FormItem label="排序" prop="sort_order">
+        <Input v-model="formValidate.sort_order" placeholder="数字越大，优先级越高"></Input>
+      </FormItem>
 
       <Form-item>
         <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
@@ -55,29 +49,27 @@ export default {
     return {
       catList: [],
       uploadData: {
-        file_type: 'articles'
+        file_type: 'recovers'
       },
       formValidate: {
         id: 0,
-        title: "",
-        cat_id: [],
-        images: [],
+        name: "",
+        cat_id: 0,
         content: "",
         text: "",
         desc: "",
-        keywords: "",
         status: 0,
-        view_num: 0
+        sort_order: 50
       },
       ruleValidate: {
-        title: [
-          { required: true, message: '请输入标题', trigger: 'blur' }
+        name: [
+          { required: true, message: '类目内容名称', trigger: 'blur' }
         ],
         cat_id: [
-          { required: true, type: 'array', min: 1, message: '请选择分类', trigger: 'change' }
+          { required: true, type: 'number', message: '请选择所属类目', min: 1, trigger: 'change' }
         ],
         content: [
-          { required: true, message: '请输入文章内容', trigger: 'blur' }
+          { required: true, message: '请输入类目内容', trigger: 'blur' }
         ],
       }
     }
@@ -92,14 +84,13 @@ export default {
       _this.$refs[name].validate((valid) => {
         if (valid) {
           var method = 'post'
-          var url = '/adminapi/articles'
+          var url = '/adminapi/recovers'
           if (_this.formValidate.id) { // 编辑
             method = 'patch'
-            var url = '/adminapi/articles/' + _this.formValidate.id
+            var url = '/adminapi/recovers/' + _this.formValidate.id
           }
 
-          // 获取文章图片
-          _this.formValidate.images = _this.$refs.images.imgList()
+          // 获取类容
           _this.formValidate.text = _this.$refs.editor.getText();
 
           Util.ajax({
@@ -112,7 +103,7 @@ export default {
                   title: '提示',
                   desc: '保存成功'
                 })
-                _this.$router.push('/articleManage/articles/index')
+                _this.$router.push('/recoverManage/recovers/index')
               } else {
                 _this.$Notice.error({
                   title: '提示',
@@ -139,19 +130,13 @@ export default {
     var _this = this
     if (_this.$route.params.id != undefined) {
       Util.ajax({
-        url: '/adminapi/articles/' + _this.$route.params.id,
+        url: '/adminapi/recovers/' + _this.$route.params.id,
         method: 'get',
         success: function(result) {
           if (result.error == 0) {
             var info = result.result
             for (var i in _this.formValidate) {
-              if (i == 'images') {
-                  _this.formValidate[i] = info['images_arr']
-              } else if (i == 'cat_id') {
-                  _this.formValidate[i] = info['cat_id_arr']
-              } else {
-                  _this.formValidate[i] = info[i]
-              }
+              _this.formValidate[i] = info[i]
             }
 
             _this.$refs.editor.setHtml(_this.formValidate.content);
@@ -166,7 +151,7 @@ export default {
     }
 
     Util.ajax({
-      url: '/adminapi/articleCats',
+      url: '/adminapi/recoverCats/all',
       method: 'get',
       success: function(result){
         if (result.error == 0) {

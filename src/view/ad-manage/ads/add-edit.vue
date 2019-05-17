@@ -1,38 +1,39 @@
 <template lang="html">
-	<div class="admin-add-edit">
+	<div class="ads-add-edit">
 		<Form class="form-edit" ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120">
-			<Form-item label="标题" prop="title">
-        <Input v-model="formValidate.title" placeholder="标题"></Input>
+      <Form-item label="广告位置" prop="position_id">
+        <Select v-model="formValidate.position_id">
+          <Option v-for="item in adPositions" :value="item.id" :key="item.id">{{ item.name }}</Option>
+        </Select>
       </Form-item>
-
-      <Form-item label="分类" prop="cat_id">
-        <Cascader :data="catList" v-model="formValidate.cat_id" change-on-select></Cascader>
+      <Form-item label="广告标题" prop="name">
+        <Input v-model="formValidate.name" placeholder="广告标题"></Input>
       </Form-item>
-
-      <Form-item label="图片" prop="images">
-        <MyUpload ref="images" :data="uploadData" :multiple="true" :defaultImgs="formValidate.images"></MyUpload>
+      <Form-item label="图片" prop="image" required>
+				<myUpload ref="adImg" :data="uploadData" :defaultImgs="formValidate.image"></myUpload>
       </Form-item>
-
-      <Form-item label="内容" prop="content">
-        <editor ref="editor" :value="formValidate.content" @on-change="handleChange"/>
+      <Form-item label="广告有效时间" prop="dateRange">
+        <Date-Picker :value="formValidate.dateRange" @on-change="dateHandle" type="datetimerange" format="yyyy-MM-dd HH:mm:ss" placement="right-start" placeholder="广告有效时间" ></Date-Picker>
+        <span class="form-hints">广告的显示时间范围</span>
       </Form-item>
-
-      <Form-item label="摘要" prop="desc">
-        <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 3,maxRows: 5}" placeholder="摘要"></Input>
+      <Form-item label="广告链接" prop="link">
+        <Input v-model="formValidate.link" placeholder="广告链接"></Input>
+        <span class="form-hints">网页跳转链接</span>
       </Form-item>
-
-      <Form-item label="关键字" prop="keywords">
-        <Input v-model="formValidate.keywords" placeholder="关键字"></Input>
+      <Form-item label="app 链接" prop="link_app">
+        <Input v-model="formValidate.link_app" placeholder="app 链接"></Input>
+        <span class="form-hints">app 跳转链接标识</span>
       </Form-item>
-
-      <FormItem label="状态" prop="status">
+      <Form-item label="小程序链接" prop="link_mini">
+        <Input v-model="formValidate.link_mini" placeholder="小程序链接"></Input>
+        <span class="form-hints">小程序跳转链接</span>
+      </Form-item>
+      <Form-Item label="状态" prop="status">
         <i-switch v-model="formValidate.status" :true-value="1" :false-value="0"></i-switch>
-      </FormItem>
-
-      <Form-item label="浏览量" prop="view_num">
-        <InputNumber :min="1" v-model="formValidate.view_num" placeholder="浏览量"></InputNumber>
-      </Form-item>
-
+      </Form-Item>
+      <Form-Item label="排序" prop="sort_order">
+        <Input v-model="formValidate.sort_order" placeholder="数字越大，优先级越高"></Input>
+      </Form-Item>
       <Form-item>
         <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
         <Button @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
@@ -44,48 +45,49 @@
 <script>
 import Util from '@/libs/util'
 import MyUpload from '@/view/includes/myUpload'
-import Editor from '@/components/editor'
 
 export default {
   components: {
-    MyUpload,
-    Editor
+    MyUpload
   },
   data() {
     return {
-      type: 'add',
-      catList: [],
+      adPositions: [],
       uploadData: {
-        file_type: 'articles'
+        file_type: 'ads'
       },
       formValidate: {
         id: 0,
-        title: "",
-        cat_id: [],
-        images: [],
-        content: "",
-        text: "",
-        desc: "",
-        keywords: "",
+        position_id: 0,
+        name: "",
+        image: "",
+        link: "",
+        link_app: "",
+        link_mini: "",
+        dateRange: [],
         status: 0,
-        view_num: 0
+        sort_order: 50,
       },
       ruleValidate: {
-        title: [
-          { required: true, message: '请输入标题', trigger: 'blur' }
+        position_id: [
+          { required: true, type: 'number', message: '请选择广告位置', min: 1, trigger: 'change' }
         ],
-        cat_id: [
-          { required: true, type: 'array', min: 1, message: '请选择分类', trigger: 'change' }
+        name: [
+          { required: true, message: '请输入广告标题', trigger: 'blur' }
         ],
-        content: [
-          { required: true, message: '请输入文章内容', trigger: 'blur' }
+        dateRange: [
+          { required: true, type: 'array', min: 1, message: '请选择广告时间', trigger: 'change' }
         ],
+        image: [
+          { required: false } // 提交的时候验证， 这样只是为了保留 * 号
+        ]
       }
     }
   },
   methods: {
-    handleChange (html, text) {
-      this.formValidate.content = html;
+    dateHandle:function(range){
+      this.formValidate.dateRange[0] = range[0];
+      this.formValidate.dateRange[1] = range[1];
     },
     handleSubmit(name) {
       var _this = this
@@ -93,15 +95,21 @@ export default {
       _this.$refs[name].validate((valid) => {
         if (valid) {
           var method = 'post'
-          var url = '/adminapi/articles'
+          var url = '/adminapi/ads'
           if (_this.formValidate.id) { // 编辑
             method = 'patch'
-            var url = '/adminapi/articles/' + _this.formValidate.id
+            var url = '/adminapi/ads/' + _this.formValidate.id
           }
 
           // 获取文章图片
-          _this.formValidate.images = _this.$refs.images.imgList()
-          _this.formValidate.text = _this.$refs.editor.getText();
+          _this.formValidate.image = _this.$refs.adImg.imgList();
+          if (_this.formValidate.image == '') {
+            _this.$Notice.error({
+              title: '提示',
+              desc: '请上传广告图片'
+            })
+            return false;
+          }
 
           Util.ajax({
             url: url,
@@ -113,7 +121,7 @@ export default {
                   title: '提示',
                   desc: '保存成功'
                 })
-                _this.$router.push('/articleManage/articles/index')
+                _this.$router.push('/adManage/ads/index')
               } else {
                 _this.$Notice.error({
                   title: '提示',
@@ -138,24 +146,32 @@ export default {
   mounted: function() {},
   created() {
     var _this = this
+    // 获取所有广告位
+    Util.ajax({
+      url: "/adminapi/adPositions/all",
+      method: 'get',
+      success: function(result){
+        if (result.error == 0) {
+          _this.adPositions = result.result;
+        }
+      }
+    });
+
     if (_this.$route.params.id != undefined) {
       Util.ajax({
-        url: '/adminapi/articles/' + _this.$route.params.id,
+        url: '/adminapi/ads/' + _this.$route.params.id,
         method: 'get',
         success: function(result) {
           if (result.error == 0) {
             var info = result.result
             for (var i in _this.formValidate) {
-              if (i == 'images') {
-                  _this.formValidate[i] = info['images_arr']
-              } else if (i == 'cat_id') {
-                  _this.formValidate[i] = info['cat_id_arr']
+              if (i == 'dateRange') {
+                  _this.formValidate.dateRange[0] = info.start_at;
+                  _this.formValidate.dateRange[1] = info.end_at;
               } else {
                   _this.formValidate[i] = info[i]
               }
             }
-
-            _this.$refs.editor.setHtml(_this.formValidate.content);
           } else {
             _this.$Notice.error({
               title: '提示',
@@ -165,16 +181,6 @@ export default {
         }
       })
     }
-
-    Util.ajax({
-      url: '/adminapi/articleCats',
-      method: 'get',
-      success: function(result){
-        if (result.error == 0) {
-          _this.catList = result.result;
-        }
-      }
-    });
   }
 }
 </script>

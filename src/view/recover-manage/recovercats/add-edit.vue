@@ -1,20 +1,14 @@
 <template>
-  <div class="adpositions-add-edit">
+  <div class="recovercats-add-edit">
     <Form class="form-edit" ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120">
-      <Alert show-icon>
-        填写说明
-        <template slot="desc">
-          请不要随意添加广告位，添加的广告位不可用
-        </template>
-      </Alert>
-      <FormItem label="广告位名称" prop="name">
-        <Input v-model="formValidate.name" placeholder="请填写广告位名称"></Input>
-      </FormItem>
-      <FormItem label="广告位标识" prop="code">
-        <Input v-model="formValidate.code" placeholder="请填写广告位标识"></Input>
+      <FormItem label="类目名称" prop="name">
+        <Input v-model="formValidate.name" placeholder="请填写类目名称"></Input>
       </FormItem>
       <FormItem label="描述" prop="desc">
         <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 4,maxRows: 5}" placeholder=""></Input>
+      </FormItem>
+      <FormItem label="排序" prop="sort_order">
+        <Input v-model="formValidate.sort_order" placeholder="数字越大，优先级越高"></Input>
       </FormItem>
       <FormItem>
         <Button type="primary" @click.native="handleSubmit('formValidate')">提交</Button>
@@ -36,15 +30,14 @@ export default {
       formValidate: {
         id: 0,
         name: '',
-        code: '',
         desc: '',
+        sort_order: 50,
       },
       ruleValidate: {
         name: [
-          { required: true, message: '请填写广告位名称', trigger: 'blur' }
+          { required: true, message: '请填写类目名称', trigger: 'blur' }
         ],
       },
-      categorys: [],
     }
   },
   methods: {
@@ -55,10 +48,10 @@ export default {
         if (valid) {
           // 添加
           var method = 'post'
-          var url = '/adminapi/adPositions'
+          var url = '/adminapi/recoverCats'
           if (_this.formValidate.id) { // 编辑
             method = 'patch'
-            var url = '/adminapi/adPositions/' + _this.formValidate.id
+            var url = '/adminapi/recoverCats/' + _this.formValidate.id
           }
 
           Util.ajax({
@@ -71,7 +64,7 @@ export default {
                   title: '提示',
                   desc: '保存成功'
                 })
-                _this.$router.push('/adManage/adPositions/index')
+                _this.$router.push('/recoverManage/recoverCats/index')
               } else {
                 _this.$Notice.error({
                   title: '提示',
@@ -94,7 +87,7 @@ export default {
 
     if (_this.$route.params.id != undefined) {
       Util.ajax({
-        url: '/adminapi/adPositions/' + _this.$route.params.id,
+        url: '/adminapi/recoverCats/' + _this.$route.params.id,
         method: 'get',
         success: function(result) {
           if (result.error == 0) {

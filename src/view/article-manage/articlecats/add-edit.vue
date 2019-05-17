@@ -1,21 +1,23 @@
 <template>
-  <Form class="form-edit" ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120">
-    <FormItem label="分类名称" prop="name">
-      <Input v-model="formValidate.name" placeholder="请填写名称"></Input>
-    </FormItem>
-    <FormItem label="上级分类" prop="parent_id" >
-      <Cascader :data="categorys" v-model="formValidate.parent_id" placeholder="不选择默认为顶级" change-on-select></Cascader>
-    </FormItem>
-    <FormItem label="分类描述" prop="desc">
-      <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 4,maxRows: 5}" placeholder=""></Input>
-    </FormItem>
-    <FormItem label="排序" prop="sort_order">
-      <Input v-model="formValidate.sort_order" placeholder="数字越大，优先级越高"></Input>
-    </FormItem>
-    <FormItem>
-      <Button type="primary" @click.native="handleSubmit('formValidate')">提交</Button>
-    </FormItem>
-  </Form>
+  <div class="articlecats-add-edit">
+    <Form class="form-edit" ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120">
+      <FormItem label="分类名称" prop="name">
+        <Input v-model="formValidate.name" placeholder="请填写名称"></Input>
+      </FormItem>
+      <FormItem label="上级分类" prop="parent_id" >
+        <Cascader :data="categorys" v-model="formValidate.parent_id" placeholder="不选择默认为顶级" change-on-select></Cascader>
+      </FormItem>
+      <FormItem label="分类描述" prop="desc">
+        <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 4,maxRows: 5}" placeholder=""></Input>
+      </FormItem>
+      <FormItem label="排序" prop="sort_order">
+        <Input v-model="formValidate.sort_order" placeholder="数字越大，优先级越高"></Input>
+      </FormItem>
+      <FormItem>
+        <Button type="primary" @click.native="handleSubmit('formValidate')">提交</Button>
+      </FormItem>
+    </Form>
+  </div>
 </template>
 <script>
 

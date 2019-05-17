@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="categorys-index">
+  <div class="articlecats-index">
     <Button class="add-btn" type="primary" @click="jumpPage({ path: '/articleManage/articleCats/add' })">添加分类</Button>
     <Tree :data="categorys" :render="renderContent" empty-text=""></Tree>
   </div>
