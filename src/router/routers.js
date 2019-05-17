@@ -46,7 +46,7 @@ export default [{
     path: '/recoverManage',
     name: 'recovermanage',
     meta: {
-      icon: 'md-article',
+      icon: 'md-construct',
       title: '回收管理'
     },
     component: Main,
@@ -54,7 +54,7 @@ export default [{
         path: 'recovers',
         name: 'recovermanage-recovers',
         meta: {
-          icon: 'md-home',
+          icon: 'md-construct',
           title: '类目内容管理'
         },
         component: parentView,
@@ -62,7 +62,7 @@ export default [{
             path: 'index',
             name: 'recovermanage-recovers-index',
             meta: {
-              icon: 'md-home',
+              icon: 'md-construct',
               title: '类目内容管理',
             },
             component: () => import('@/view/recover-manage/recovers/index.vue')
@@ -93,7 +93,7 @@ export default [{
         path: 'recoverCats',
         name: 'recovermanage-recovercats',
         meta: {
-          icon: 'md-home',
+          icon: 'md-document',
           title: '类目管理'
         },
         component: parentView,
@@ -101,7 +101,7 @@ export default [{
             path: 'index',
             name: 'recovermanage-recovercats-index',
             meta: {
-              icon: 'md-home',
+              icon: 'md-document',
               title: '类目管理',
             },
             component: () => import('@/view/recover-manage/recovercats/index.vue')
@@ -131,10 +131,58 @@ export default [{
     ]
   },
   {
+    path: '/orderManage',
+    name: 'ordermanage',
+    meta: {
+      icon: 'md-albums',
+      title: '订单管理'
+    },
+    component: Main,
+    children: [{
+        path: 'orders/index',
+        name: 'ordermanage-orders-index',
+        meta: {
+          icon: 'md-albums',
+          title: '订单管理'
+        },
+        component: () => import('@/view/order-manage/orders/index.vue'),
+      },
+      {
+        path: 'show/:id',
+        name: 'ordermanage-orders-show',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-document',
+          title: '订单详情',
+        },
+        component: () => import('@/view/order-manage/orders/show.vue')
+      }
+    ]
+  },
+  {
+    path: '/feedbackManage',
+    name: 'feedbackmanage',
+    meta: {
+      icon: 'md-chatboxes',
+      title: '意见反馈'
+    },
+    component: Main,
+    children: [{
+        path: 'feedbacks/index',
+        name: 'feedbackmanage-feedbacks-index',
+        meta: {
+          icon: 'md-chatboxes',
+          title: '意见反馈'
+        },
+        component: () => import('@/view/feedback-manage/feedbacks/index.vue'),
+      }
+    ]
+  },
+  {
     path: '/articleManage',
     name: 'articlemanage',
     meta: {
-      icon: 'md-article',
+      icon: 'md-document',
       title: '文章管理'
     },
     component: Main,
@@ -142,7 +190,7 @@ export default [{
         path: 'articles',
         name: 'articlemanage-articles',
         meta: {
-          icon: 'md-home',
+          icon: 'md-document',
           title: '文章管理'
         },
         component: parentView,
@@ -150,7 +198,7 @@ export default [{
             path: 'index',
             name: 'articlemanage-articles-index',
             meta: {
-              icon: 'md-home',
+              icon: 'md-document',
               title: '文章管理',
             },
             component: () => import('@/view/article-manage/articles/index.vue')
@@ -181,7 +229,7 @@ export default [{
         path: 'articleCats',
         name: 'articlemanage-articlecats',
         meta: {
-          icon: 'md-home',
+          icon: 'md-browsers',
           title: '分类管理'
         },
         component: parentView,
@@ -189,7 +237,7 @@ export default [{
             path: 'index',
             name: 'articlemanage-articlecats-index',
             meta: {
-              icon: 'md-home',
+              icon: 'md-browsers',
               title: '分类管理',
             },
             component: () => import('@/view/article-manage/articlecats/index.vue')
@@ -222,7 +270,7 @@ export default [{
     path: '/adManage',
     name: 'admanage',
     meta: {
-      icon: 'md-article',
+      icon: 'md-basket',
       title: '广告管理'
     },
     component: Main,
@@ -230,7 +278,7 @@ export default [{
         path: 'ads',
         name: 'admanage-ads',
         meta: {
-          icon: 'md-home',
+          icon: 'md-basket',
           title: '广告管理'
         },
         component: parentView,
@@ -238,7 +286,7 @@ export default [{
             path: 'index',
             name: 'admanage-ads-index',
             meta: {
-              icon: 'md-home',
+              icon: 'md-basket',
               title: '广告管理',
             },
             component: () => import('@/view/ad-manage/ads/index.vue')
@@ -269,7 +317,7 @@ export default [{
         path: 'adPositions',
         name: 'admanage-adpositions',
         meta: {
-          icon: 'md-home',
+          icon: 'md-basket',
           title: '广告位管理'
         },
         component: parentView,
@@ -277,7 +325,7 @@ export default [{
             path: 'index',
             name: 'admanage-adpositions-index',
             meta: {
-              icon: 'md-home',
+              icon: 'md-basket',
               title: '广告位管理',
             },
             component: () => import('@/view/ad-manage/adpositions/index.vue')
@@ -310,7 +358,7 @@ export default [{
     path: '/settingManage',
     name: 'settingmanage',
     meta: {
-      icon: 'md-cog',
+      icon: 'md-settings',
       title: '设置管理'
     },
     component: Main,
@@ -318,7 +366,7 @@ export default [{
         path: 'settings',
         name: 'settingmanage-settings',
         meta: {
-          icon: 'md-person',
+          icon: 'md-settings',
           title: '设置管理'
         },
         component: () => import('@/view/setting-manage/settings/index.vue')

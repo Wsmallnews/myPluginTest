@@ -11,6 +11,10 @@
         </Select>
       </Form-item>
 
+      <FormItem label="指导价" prop="market_price">
+        <InputNumber v-model="formValidate.market_price" placeholder="市场指导价"></InputNumber>
+      </FormItem>
+
       <Form-item label="内容" prop="content">
         <editor ref="editor" :value="formValidate.content" @on-change="handleChange"/>
       </Form-item>
@@ -55,6 +59,7 @@ export default {
         id: 0,
         name: "",
         cat_id: 0,
+        market_price: 0,
         content: "",
         text: "",
         desc: "",
@@ -67,6 +72,9 @@ export default {
         ],
         cat_id: [
           { required: true, type: 'number', message: '请选择所属类目', min: 1, trigger: 'change' }
+        ],
+        market_price: [
+          { required: true, message: '请输入市场指导价', type: 'number', min: 0.01, trigger: 'blur' }
         ],
         content: [
           { required: true, message: '请输入类目内容', trigger: 'blur' }
