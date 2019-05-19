@@ -19,12 +19,19 @@
     <template v-else-if="item.type == 'color_picker'">
       <ColorPicker v-model="currentValue" />
     </template>
+    <template v-else-if="item.type == 'upload'">
+      <myUpload ref="upload" :data="item.store_range_array" :defaultImgs="currentValue" @currentFinish="uploadFinish"></myUpload>
+    </template>
   </div>
 </template>
 <script>
   import Util from '@/libs/util';
+  import myUpload from '@/view/includes/myUpload'
 
   export default {
+    components: {
+      myUpload
+    },
     props: [
       'item',
       'value'
@@ -32,6 +39,15 @@
     data () {
       return {
         currentValue: '',
+        uploadData: {
+          file_type: 'settings'
+        },
+      }
+    },
+    methods: {
+      uploadFinish () {
+        var imgs = this.$refs.upload.imgList();
+        this.$emit('input', imgs);
       }
     },
     watch: {

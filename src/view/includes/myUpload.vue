@@ -140,6 +140,8 @@
             }else {
               this.uploadList = [file];
             }
+
+            this.$emit('currentFinish');
           }else {
             this.$Notice.warning({
               title: '图片上传失败',

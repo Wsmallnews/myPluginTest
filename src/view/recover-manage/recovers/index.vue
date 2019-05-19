@@ -39,7 +39,9 @@ export default {
                 return h('span', params.row.recover_cat.name)
               }
             }},
-          {title: '指导价', align: 'center', width: 100, key: 'market_price'},
+          {title: '指导价', align: 'center', width: 100, key: 'market_price', render: (h, params) => {
+              return h('span', params.row.market_price + "元/" + params.row.unit)
+            }},
           {title: '描述', align: 'center', minWidth: 150, key: 'desc'},
           {title: '排序', align: 'center', width: 80, key: 'sort_order'},
           { title: '状态',

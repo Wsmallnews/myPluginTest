@@ -14,7 +14,7 @@
       </Form-item>
 
       <Form-item label="内容" prop="content">
-        <editor ref="editor" :value="formValidate.content" @on-change="handleChange"/>
+        <editor ref="editor" :value="formValidate.content" :cache="false" @on-change="handleChange"/>
       </Form-item>
 
       <Form-item label="摘要" prop="desc">

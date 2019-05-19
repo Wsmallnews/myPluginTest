@@ -15,8 +15,12 @@
         <InputNumber v-model="formValidate.market_price" placeholder="市场指导价"></InputNumber>
       </FormItem>
 
+      <FormItem label="单位" prop="unit">
+        <Input v-model="formValidate.unit" style="width: 100px;" placeholder="指导价单位 (斤)"></Input>
+      </FormItem>
+
       <Form-item label="内容" prop="content">
-        <editor ref="editor" :value="formValidate.content" @on-change="handleChange"/>
+        <editor ref="editor" :value="formValidate.content" :cache="false" @on-change="handleChange"/>
       </Form-item>
 
       <Form-item label="描述" prop="desc">
@@ -60,6 +64,7 @@ export default {
         name: "",
         cat_id: 0,
         market_price: 0,
+        unit: "",
         content: "",
         text: "",
         desc: "",
@@ -75,6 +80,9 @@ export default {
         ],
         market_price: [
           { required: true, message: '请输入市场指导价', type: 'number', min: 0.01, trigger: 'blur' }
+        ],
+        unit: [
+          { required: true, message: '指导价单位', trigger: 'blur' }
         ],
         content: [
           { required: true, message: '请输入类目内容', trigger: 'blur' }
