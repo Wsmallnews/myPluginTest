@@ -20,7 +20,7 @@
 
     <Modal v-model="feedbackShow" :closable='false' :mask-closable=false :width="400">
       <h3 slot="header" style="color:#2D8CF0">处理</h3>
-      <Form ref="feedbackForm" :model="feedbackForm" :label-width="100" label-position="right" :rules="passwordValidate">
+      <Form ref="feedbackForm" :model="feedbackForm" :label-width="100" label-position="right" :rules="feedbackValidate">
         <Form-item label="处理备注" prop="note">
           <Input v-model="feedbackForm.note" type="textarea" :autosize="{minRows: 3,maxRows: 5}" placeholder="请输入处理备注"></Input>
         </Form-item>
@@ -44,9 +44,15 @@
     data () {
       return {
         feedbackShow: false,
+        saveLoading: false,
         feedbackForm: {
           id: 0,
           note: ''
+        },
+        feedbackValidate: {
+          note: [
+            { required: true, message: '请输入处理备注', trigger: 'blur' }
+          ],
         },
         currentRow:{},
         typeAll: [],

@@ -97,7 +97,7 @@
         var defaultImgs = this.defaultImgs;
         var newImgs = [];
 
-        if (defaultImgs == '') {
+        if (defaultImgs == '' || defaultImgs == null) {
 
         } else if (typeof defaultImgs == 'string') {
           newImgs[0] = {name: "default_0", url: defaultImgs};

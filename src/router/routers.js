@@ -43,6 +43,112 @@ export default [{
     }]
   },
   {
+    path: '/userManage',
+    name: 'usermanage',
+    meta: {
+      icon: 'md-person',
+      title: '用户管理'
+    },
+    component: Main,
+    children: [{
+        path: 'users',
+        name: 'usermanage-users',
+        meta: {
+          icon: 'md-construct',
+          title: '用户管理'
+        },
+        component: parentView,
+        children: [{
+            path: 'index',
+            name: 'usermanage-users-index',
+            meta: {
+              icon: 'md-person',
+              title: '用户管理'
+            },
+            component: () => import('@/view/user-manage/users/index.vue')
+          }
+        ]
+      },
+      {
+        path: 'walletLogs/:user_id',
+        name: 'usermanage-walletLogs',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-cash',
+          title: '钱包日志'
+        },
+        component: () => import('@/view/user-manage/wallet-logs/index.vue'),
+      },
+      {
+        path: 'walletApplys',
+        name: 'usermanage-walletapplys',
+        meta: {
+          icon: 'md-cash',
+          title: '提现申请'
+        },
+        component: parentView,
+        children: [{
+            path: 'index',
+            name: 'usermanage-walletapplys-index',
+            meta: {
+              icon: 'md-cash',
+              title: '提现申请'
+            },
+            component: () => import('@/view/user-manage/wallet-applys/index.vue')
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '/salesmanManage',
+    name: 'salesmanmanage',
+    meta: {
+      icon: 'md-person',
+      title: '业务员管理'
+    },
+    component: Main,
+    children: [{
+        path: 'salesmans/index',
+        name: 'salesmanmanage-salesmans-index',
+        meta: {
+          icon: 'md-person',
+          title: '业务员管理'
+        },
+        component: () => import('@/view/salesman-manage/salesmans/index.vue')
+      },
+      {
+        path: 'salesmans/add',
+        name: 'salesmanmanage-salesmans-add',
+        meta: {
+          icon: 'md-person',
+          title: '业务员添加'
+        },
+        component: () => import('@/view/salesman-manage/salesmans/add-edit.vue')
+      },
+      {
+        path: 'salesmans/edit/:id',
+        name: 'salesmanmanage-salesmans-edit',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-person',
+          title: '业务员编辑'
+        },
+        component: () => import('@/view/salesman-manage/salesmans/add-edit.vue')
+      },
+      {
+        path: 'salesmans/resetPassword/:id',
+        name: 'salesmanmanage-salesmans-resetpassword',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-person',
+          title: '重置密码'
+        },
+        component: () => import('@/view/salesman-manage/salesmans/reset-password.vue')
+      }
+    ]
+  },
+  {
     path: '/recoverManage',
     name: 'recovermanage',
     meta: {
