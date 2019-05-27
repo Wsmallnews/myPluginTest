@@ -1,6 +1,6 @@
 <template>
   <div>
-    欢迎来到 99 成长呵护计划
+    欢迎来到废利宝
   </div>
 </template>
 
