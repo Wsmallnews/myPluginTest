@@ -36,7 +36,7 @@
       <h6>{{ cardInfo }}</h6>
       <img :src="cardImage" style="width: 500px;margin: 20px auto;" />
       <div slot="footer">
-        <Button type="text" @click="cardImageShow = false">取消</Button>
+        <Button type="text" @click="cardImageShow = false">关闭</Button>
       </div>
     </Modal>
   </div>

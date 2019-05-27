@@ -253,16 +253,16 @@ export default [{
         },
         component: () => import('@/view/order-manage/orders/index.vue'),
       },
-      {
-        path: 'show/:id',
-        name: 'ordermanage-orders-show',
-        meta: {
-          hideInMenu: true,
-          icon: 'md-document',
-          title: '订单详情',
-        },
-        component: () => import('@/view/order-manage/orders/show.vue')
-      }
+      // {
+      //   path: 'show/:id',
+      //   name: 'ordermanage-orders-show',
+      //   meta: {
+      //     hideInMenu: true,
+      //     icon: 'md-document',
+      //     title: '订单详情',
+      //   },
+      //   component: () => import('@/view/order-manage/orders/show.vue')
+      // }
     ]
   },
   {
