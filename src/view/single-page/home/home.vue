@@ -1,6 +1,6 @@
 <template>
   <div>
-    欢迎来到废利宝
+    欢迎来到猎鹰回收
   </div>
 </template>
 
