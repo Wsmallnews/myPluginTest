@@ -538,114 +538,114 @@ export default [{
             },
             component: () => import('@/view/admin-manage/admins/reset-password.vue')
           },
-          {
-            path: 'setRole/:id',
-            name: 'adminmanage-admins-setrole',
-            meta: {
-              hideInMenu: true,
-              icon: 'ios-build',
-              title: '设置角色',
-              // access: ['admins_roles']
-            },
-            component: () => import('@/view/admin-manage/admins/set-role.vue')
-          },
+          // {
+          //   path: 'setRole/:id',
+          //   name: 'adminmanage-admins-setrole',
+          //   meta: {
+          //     hideInMenu: true,
+          //     icon: 'ios-build',
+          //     title: '设置角色',
+          //     // access: ['admins_roles']
+          //   },
+          //   component: () => import('@/view/admin-manage/admins/set-role.vue')
+          // },
         ]
       },
-      {
-        path: 'roles',
-        name: 'adminmanage-roles',
-        meta: {
-          icon: 'md-person',
-          title: '角色管理'
-        },
-        component: parentView,
-        children: [{
-            path: 'index',
-            name: 'adminmanage-roles-index',
-            meta: {
-              icon: 'md-person',
-              title: '角色管理',
-              // access: ['roles_view']
-            },
-            component: () => import('@/view/admin-manage/roles/index.vue')
-          },
-          {
-            path: 'add',
-            name: 'adminmanage-roles-add',
-            meta: {
-              hideInMenu: true,
-              icon: 'md-person-add',
-              title: '角色添加',
-              // access: ['roles_edit']
-            },
-            component: () => import('@/view/admin-manage/roles/add-edit.vue')
-          },
-          {
-            path: 'edit/:id',
-            name: 'adminmanage-roles-edit',
-            meta: {
-              hideInMenu: true,
-              icon: 'md-person-add',
-              title: '角色编辑',
-              // access: ['roles_edit']
-            },
-            component: () => import('@/view/admin-manage/roles/add-edit.vue')
-          },
-          {
-            path: 'givePerm/:id',
-            name: 'adminmanage-roles-giveperm',
-            meta: {
-              hideInMenu: true,
-              icon: 'md-settings',
-              title: '分配权限',
-              // access: ['roles_permission']
-            },
-            component: () => import('@/view/admin-manage/roles/give-perm.vue')
-          },
-        ]
-      },
-      {
-        path: 'permissions',
-        name: 'adminmanage-permissions',
-        meta: {
-          icon: 'md-list-box',
-          title: '权限管理'
-        },
-        component: parentView,
-        children: [{
-            path: 'index',
-            name: 'adminmanage-permissions-index',
-            meta: {
-              icon: 'md-list-box',
-              title: '权限管理',
-              // access: ['permissions_oper']
-            },
-            component: () => import('@/view/admin-manage/permissions/index.vue')
-          },
-          {
-            path: 'add',
-            name: 'adminmanage-permissions-add',
-            meta: {
-              hideInMenu: true,
-              icon: 'md-person-add',
-              title: '权限添加',
-              // access: ['permissions_oper']
-            },
-            component: () => import('@/view/admin-manage/permissions/add-edit.vue')
-          },
-          {
-            path: 'edit/:id',
-            name: 'adminmanage-permissions-edit',
-            meta: {
-              hideInMenu: true,
-              icon: 'md-person-add',
-              title: '权限编辑',
-              // access: ['permissions_oper']
-            },
-            component: () => import('@/view/admin-manage/permissions/add-edit.vue')
-          },
-        ]
-      },
+      // {
+      //   path: 'roles',
+      //   name: 'adminmanage-roles',
+      //   meta: {
+      //     icon: 'md-person',
+      //     title: '角色管理'
+      //   },
+      //   component: parentView,
+      //   children: [{
+      //       path: 'index',
+      //       name: 'adminmanage-roles-index',
+      //       meta: {
+      //         icon: 'md-person',
+      //         title: '角色管理',
+      //         // access: ['roles_view']
+      //       },
+      //       component: () => import('@/view/admin-manage/roles/index.vue')
+      //     },
+      //     {
+      //       path: 'add',
+      //       name: 'adminmanage-roles-add',
+      //       meta: {
+      //         hideInMenu: true,
+      //         icon: 'md-person-add',
+      //         title: '角色添加',
+      //         // access: ['roles_edit']
+      //       },
+      //       component: () => import('@/view/admin-manage/roles/add-edit.vue')
+      //     },
+      //     {
+      //       path: 'edit/:id',
+      //       name: 'adminmanage-roles-edit',
+      //       meta: {
+      //         hideInMenu: true,
+      //         icon: 'md-person-add',
+      //         title: '角色编辑',
+      //         // access: ['roles_edit']
+      //       },
+      //       component: () => import('@/view/admin-manage/roles/add-edit.vue')
+      //     },
+      //     {
+      //       path: 'givePerm/:id',
+      //       name: 'adminmanage-roles-giveperm',
+      //       meta: {
+      //         hideInMenu: true,
+      //         icon: 'md-settings',
+      //         title: '分配权限',
+      //         // access: ['roles_permission']
+      //       },
+      //       component: () => import('@/view/admin-manage/roles/give-perm.vue')
+      //     },
+      //   ]
+      // },
+      // {
+      //   path: 'permissions',
+      //   name: 'adminmanage-permissions',
+      //   meta: {
+      //     icon: 'md-list-box',
+      //     title: '权限管理'
+      //   },
+      //   component: parentView,
+      //   children: [{
+      //       path: 'index',
+      //       name: 'adminmanage-permissions-index',
+      //       meta: {
+      //         icon: 'md-list-box',
+      //         title: '权限管理',
+      //         // access: ['permissions_oper']
+      //       },
+      //       component: () => import('@/view/admin-manage/permissions/index.vue')
+      //     },
+      //     {
+      //       path: 'add',
+      //       name: 'adminmanage-permissions-add',
+      //       meta: {
+      //         hideInMenu: true,
+      //         icon: 'md-person-add',
+      //         title: '权限添加',
+      //         // access: ['permissions_oper']
+      //       },
+      //       component: () => import('@/view/admin-manage/permissions/add-edit.vue')
+      //     },
+      //     {
+      //       path: 'edit/:id',
+      //       name: 'adminmanage-permissions-edit',
+      //       meta: {
+      //         hideInMenu: true,
+      //         icon: 'md-person-add',
+      //         title: '权限编辑',
+      //         // access: ['permissions_oper']
+      //       },
+      //       component: () => import('@/view/admin-manage/permissions/add-edit.vue')
+      //     },
+      //   ]
+      // },
       {
         path: 'adminLogs',
         name: 'adminmanage-adminlogs',
