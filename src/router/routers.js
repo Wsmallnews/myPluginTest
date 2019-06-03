@@ -665,25 +665,25 @@ export default [{
           component: () => import('@/view/admin-manage/admin-logs/index.vue')
         }, ]
       },
-      {
-        path: 'cronLogs',
-        name: 'adminmanage-cronlogs',
-        meta: {
-          icon: 'md-list-box',
-          title: '计划任务'
-        },
-        component: parentView,
-        children: [{
-          path: 'index',
-          name: 'adminmanage-cronlogs-index',
-          meta: {
-            icon: 'md-list-box',
-            title: '计划任务',
-            // access: ['cronLogs_view']
-          },
-          component: () => import('@/view/admin-manage/cron-logs/index.vue')
-        }, ]
-      }
+      // {
+      //   path: 'cronLogs',
+      //   name: 'adminmanage-cronlogs',
+      //   meta: {
+      //     icon: 'md-list-box',
+      //     title: '计划任务'
+      //   },
+      //   component: parentView,
+      //   children: [{
+      //     path: 'index',
+      //     name: 'adminmanage-cronlogs-index',
+      //     meta: {
+      //       icon: 'md-list-box',
+      //       title: '计划任务',
+      //       // access: ['cronLogs_view']
+      //     },
+      //     component: () => import('@/view/admin-manage/cron-logs/index.vue')
+      //   }, ]
+      // }
     ]
   },
 

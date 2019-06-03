@@ -65,7 +65,7 @@ export const ajax = function (options){
         .catch(function (error) {
             if (error.response) {
                 if (defaults_options.error) {
-                    defaults_options.error(response);
+                    defaults_options.error(error.response);
                 }else {
                     iView.Notice.error({ title: '提示', desc: '操作失败' });
                 }

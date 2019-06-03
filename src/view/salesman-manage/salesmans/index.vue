@@ -8,8 +8,16 @@
       </template>
       <template slot="formBtn" >
         <Button type="primary" @click="jumpPage({ path: '/salesmanManage/salesmans/add' })"><Icon type="plus-round"></Icon>业务员添加</Button>
+        <Button type="primary" @click="getInvite"><Icon type="plus-round"></Icon>绑定链接</Button>
       </template>
     </myTable>
+
+    <Modal v-model="inviteShow" :closable="true" :mask-closable="true" :footer-hide="true" width="700">
+      <h3 slot="header" style="color:#2D8CF0">订单详情</h3>
+      <h3>复制下面链接，发送给刚添加的业务员，绑定微信</h3>
+      <br>
+      <strong>{{ inviteUrl }}</strong>
+    </Modal>
   </div>
 </template>
 
@@ -24,6 +32,8 @@ export default {
   data () {
     return {
       currentRow: {},
+      inviteShow: false,
+      inviteUrl: '',
       listConf: {
         url: '/adminapi/salesmans',
         searchParams: {
@@ -152,6 +162,27 @@ export default {
           if (result.error == 0) {
             _this.$Notice.success({ title: '提示', desc: '删除成功' })
             _this.$refs.listTable.listLoad()
+          } else {
+            _this.$Notice.error({ title: '提示', desc: result.info })
+          }
+        }
+      })
+    },
+    getInvite () {
+      var _this = this
+
+      if (this.inviteUrl != '') {
+        this.inviteShow = true;
+        return true;
+      }
+
+      Util.ajax({
+        url: '/adminapi/salesmans/invite',
+        method: 'get',
+        success: function (result) {
+          if (result.error == 0) {
+            _this.inviteUrl = result.result.url;
+            _this.inviteShow = true;
           } else {
             _this.$Notice.error({ title: '提示', desc: result.info })
           }
