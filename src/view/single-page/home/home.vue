@@ -1,6 +1,6 @@
 <template>
   <div>
-    欢迎来到猎鹰回收
+    欢迎来到游隼回收
   </div>
 </template>
 
