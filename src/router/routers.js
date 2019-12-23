@@ -101,139 +101,99 @@ export default [{
     ]
   },
   {
-    path: '/salesmanManage',
-    name: 'salesmanmanage',
+    path: '/activityManage',
+    name: 'activitymanage',
     meta: {
-      icon: 'md-person',
-      title: '业务员管理'
+      icon: 'md-construct',
+      title: '活动管理'
     },
     component: Main,
     children: [{
-        path: 'salesmans/index',
-        name: 'salesmanmanage-salesmans-index',
+        path: 'index',
+        name: 'activitymanage-activities-index',
         meta: {
-          icon: 'md-person',
-          title: '业务员管理'
+          icon: 'md-construct',
+          title: '活动管理',
         },
-        component: () => import('@/view/salesman-manage/salesmans/index.vue')
+        component: () => import('@/view/activity-manage/activities/index.vue')
       },
       {
-        path: 'salesmans/add',
-        name: 'salesmanmanage-salesmans-add',
+        path: 'add',
+        name: 'activitymanage-activities-add',
         meta: {
-          icon: 'md-person',
-          title: '业务员添加'
+          icon: 'md-add',
+          title: '活动添加',
         },
-        component: () => import('@/view/salesman-manage/salesmans/add-edit.vue')
+        component: () => import('@/view/activity-manage/activities/add-edit.vue')
       },
       {
-        path: 'salesmans/edit/:id',
-        name: 'salesmanmanage-salesmans-edit',
+        path: 'edit/:id',
+        name: 'activitymanage-activities-edit',
         meta: {
           hideInMenu: true,
-          icon: 'md-person',
-          title: '业务员编辑'
+          icon: 'md-brush',
+          title: '活动编辑',
         },
-        component: () => import('@/view/salesman-manage/salesmans/add-edit.vue')
+        component: () => import('@/view/activity-manage/activities/add-edit.vue')
       },
       {
-        path: 'salesmans/resetPassword/:id',
-        name: 'salesmanmanage-salesmans-resetpassword',
+        path: 'user/:id',
+        name: 'activitymanage-activities-user',
         meta: {
           hideInMenu: true,
-          icon: 'md-person',
-          title: '重置密码'
+          icon: 'md-brush',
+          title: '活动用户',
         },
-        component: () => import('@/view/salesman-manage/salesmans/reset-password.vue')
-      }
+        component: () => import('@/view/activity-manage/activities/user.vue')
+      },
     ]
   },
   {
-    path: '/recoverManage',
-    name: 'recovermanage',
+    path: '/businessManage',
+    name: 'businessmanage',
     meta: {
       icon: 'md-construct',
-      title: '回收管理'
+      title: '薪商学管理'
     },
     component: Main,
     children: [{
-        path: 'recovers',
-        name: 'recovermanage-recovers',
+        path: 'index',
+        name: 'businessmanage-business-index',
         meta: {
           icon: 'md-construct',
-          title: '类目内容管理'
+          title: '薪商学管理',
         },
-        component: parentView,
-        children: [{
-            path: 'index',
-            name: 'recovermanage-recovers-index',
-            meta: {
-              icon: 'md-construct',
-              title: '类目内容管理',
-            },
-            component: () => import('@/view/recover-manage/recovers/index.vue')
-          },
-          {
-            path: 'add',
-            name: 'recovermanage-recovers-add',
-            meta: {
-              hideInMenu: true,
-              icon: 'md-add',
-              title: '类目内容添加',
-            },
-            component: () => import('@/view/recover-manage/recovers/add-edit.vue')
-          },
-          {
-            path: 'edit/:id',
-            name: 'recovermanage-recovers-edit',
-            meta: {
-              hideInMenu: true,
-              icon: 'md-brush',
-              title: '类目内容编辑',
-            },
-            component: () => import('@/view/recover-manage/recovers/add-edit.vue')
-          },
-        ]
+        component: () => import('@/view/business-manage/business/index.vue')
       },
       {
-        path: 'recoverCats',
-        name: 'recovermanage-recovercats',
+        path: 'add',
+        name: 'businessmanage-business-add',
         meta: {
-          icon: 'md-document',
-          title: '类目管理'
+          icon: 'md-add',
+          title: '薪商学添加',
         },
-        component: parentView,
-        children: [{
-            path: 'index',
-            name: 'recovermanage-recovercats-index',
-            meta: {
-              icon: 'md-document',
-              title: '类目管理',
-            },
-            component: () => import('@/view/recover-manage/recovercats/index.vue')
-          },
-          {
-            path: 'add',
-            name: 'recovermanage-recovercats-add',
-            meta: {
-              hideInMenu: true,
-              icon: 'md-add',
-              title: '类目添加',
-            },
-            component: () => import('@/view/recover-manage/recovercats/add-edit.vue')
-          },
-          {
-            path: 'edit/:id',
-            name: 'recovermanage-recovercats-edit',
-            meta: {
-              hideInMenu: true,
-              icon: 'md-brush',
-              title: '类目编辑',
-            },
-            component: () => import('@/view/recover-manage/recovercats/add-edit.vue')
-          },
-        ]
-      }
+        component: () => import('@/view/business-manage/business/add-edit.vue')
+      },
+      {
+        path: 'edit/:id',
+        name: 'businessmanage-business-edit',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-brush',
+          title: '薪商学编辑',
+        },
+        component: () => import('@/view/business-manage/business/add-edit.vue')
+      },
+      {
+        path: 'user/:id',
+        name: 'businessmanage-business-user',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-brush',
+          title: '薪商学用户',
+        },
+        component: () => import('@/view/business-manage/business/user.vue')
+      },
     ]
   },
   {

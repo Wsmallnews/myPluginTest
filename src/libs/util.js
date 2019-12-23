@@ -104,7 +104,7 @@ export const extend = function (objFirst, objSecond, mergeArray) {
     return objFirst;
 }
 
-util.baseUrl = process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro
+util.baseUrl = process.env.NODE_ENV === 'development' ? config.apiUrl.dev : config.apiUrl.pro
 util.apiUrl = function (url, noAuth) {
     var url = util.baseUrl + url;
 
@@ -122,6 +122,50 @@ util.extend = extend;
 
 export default util;
 
+
+/**
+ * inArray，仅支持 一维二维 数组
+ * name 要查找的字符串
+ * obj 数组，一维数组，或者二维数组
+ * field 如果是二维数组，要比较的二维数组中的 key 值
+ */
+export const inArray = function(name, obj, field = '') {
+  if ($.inArray(name, obj) >= 0) {
+    return true;
+  } else {
+    for (var i in obj) {
+      if (field != '' && obj[i][field] == name) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+util.inArray = inArray;
+
+
+/**
+ * inArray，仅支持 一维二维 数组
+ * name 要查找的字符串
+ * obj 数组，一维数组，或者二维数组
+ * field 如果是二维数组，要比较的二维数组中的 key 值
+ */
+export const getArrayKey = function(name, obj, field = '') {
+  let key = $.inArray(name, obj);
+  if (key >= 0) {
+    return key;
+  } else {
+    for (var i in obj) {
+      if (field != '' && obj[i][field] == name) {
+        return i;
+      }
+    }
+  }
+
+  return -1;
+}
+util.getArrayKey = getArrayKey;
 
 export const TOKEN_KEY = 'token'
 

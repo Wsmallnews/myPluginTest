@@ -1,6 +1,6 @@
 import HttpRequest from '@/libs/axios'
 import config from '@/config'
-const baseUrl = process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro
+const apiUrl = process.env.NODE_ENV === 'development' ? config.apiUrl.dev : config.apiUrl.pro
 
-const axios = new HttpRequest(baseUrl)
+const axios = new HttpRequest(apiUrl)
 export default axios
