@@ -1,13 +1,24 @@
 <template lang="html">
-  <div class="activities-index">
+  <div class="business-index">
     <myTable ref="listTable" :listConf="listConf" @select="selectRow" @searchReset="searchReset" >
       <template slot="formItem" >
         <Form-item prop="name">
-          <Input type="text" v-model="listConf.searchParams.name" placeholder="搜索活动名" ></Input>
+          <Input type="text" v-model="listConf.searchParams.name" placeholder="搜索商学名" ></Input>
+        </Form-item>
+
+        <Form-item prop="teach_id">
+          <Select style="width:200px" v-model="listConf.searchParams.teach_id" clearable placeholder="讲师">
+            <Option v-for="teacher in teachers" :label="teacher.name" :value="teacher.id" ></Option>
+          </Select>
+        </Form-item>
+        <Form-item prop="tag">
+          <Select style="width:200px" v-model="listConf.searchParams.tag" clearable placeholder="标签">
+            <Option v-for="tag in tags" :label="tag.name" :value="tag.name" ></Option>
+          </Select>
         </Form-item>
       </template>
       <template slot="formBtn" >
-        <Button type="primary" @click="jumpPage({ path: '/activityManage/add' })"><Icon type="plus-round"></Icon>活动添加</Button>
+        <Button type="primary" @click="jumpPage({ path: '/businessManage/add' })"><Icon type="plus-round"></Icon>薪商学添加</Button>
       </template>
     </myTable>
   </div>
@@ -24,56 +35,41 @@ export default {
   data () {
     return {
       currentRow: {},
+      teachers: [],
+      tags: [],
       listConf: {
-        url: '/adminapi/activities',
+        url: '/adminapi/business',
         searchParams: {
           name: '',
+          teach_id: 0,
+          tag: ''
         },
         item: [],
         columns: [
           {type: 'index', align: 'center', width: 100, fixed: 'left'},
-          {title: '活动名称', align: 'center', width: 200, key: 'name'},
+          {title: '商学名称', align: 'center', width: 200, key: 'name'},
           {title: '状态', align: 'center', width: 100, key: 'status_name'},
-          {title: '签到码', align: 'center', width: 100, key: 'sign_code'},
+          {title: '标签', align: 'center', width: 100, key: 'tagstr', render: (h, params) => {
+            return h('span', params.row.tag_arr.join(' '));
+          }},
           {title: '开始时间', align: 'center', width: 100, key: 'start_at'},
           {title: '结束时间', align: 'center', width: 100, key: 'end_at'},
-          {title: '线下可报名人数', align: 'center', width: 120, key: 'offline_join_num'},
-          {title: '线下已报名人数', align: 'center', width: 120, key: 'offline_joined_num'},
-          {title: '线上可报名人数', align: 'center', width: 100, key: 'online_join_num'},
-          {title: '线上已报名人数', align: 'center', width: 100, key: 'online_joined_num'},
-          {title: '线下报名截止时间', align: 'center', width: 100, key: 'offline_join_end_at'},
-          {title: '线上报名截止时间', align: 'center', width: 100, key: 'online_join_end_at'},
-          {title: '线下费用', align: 'center', minWidth: 150, key: 'offline_charge', render: (h, params) => {
+          {title: '报名人数', align: 'center', width: 120, key: 'join_num'},
+          {title: '已报名人数', align: 'center', width: 120, key: 'joined_num'},
+          {title: '报名截止时间', align: 'center', width: 120, key: 'join_end_at'},
+          {title: '费用', align: 'center', minWidth: 150, key: 'charge', render: (h, params) => {
             var text = '';
-            if (params.row.is_offline_charge) {
-              text = params.row.offline_money;
+            if (params.row.is_charge) {
+              text = params.row.charge_money;
             } else {
               text = '免费'
             }
             return h('span', text);
           }},
-          {title: '线上费用', align: 'center', minWidth: 150, key: 'online_charge', render: (h, params) => {
+          {title: 'VIP 费用', align: 'center', minWidth: 150, key: 'vip_charge', render: (h, params) => {
             var text = '';
-            if (params.row.is_online_charge) {
-              text = params.row.online_money;
-            } else {
-              text = '免费'
-            }
-            return h('span', text);
-          }},
-          {title: 'VIP 线下费用', align: 'center', minWidth: 150, key: 'vip_offline_charge', render: (h, params) => {
-            var text = '';
-            if (params.row.is_vip_offline_charge) {
-              text = params.row.vip_offline_money;
-            } else {
-              text = '免费'
-            }
-            return h('span', text);
-          }},
-          {title: 'VIP 线上费用', align: 'center', minWidth: 150, key: 'online_charge', render: (h, params) => {
-            var text = '';
-            if (params.row.is_vip_online_charge) {
-              text = params.row.vip_online_money;
+            if (params.row.is_vip_charge) {
+              text = params.row.vip_charge_money;
             } else {
               text = '免费'
             }
@@ -125,7 +121,7 @@ export default {
                   on: {
                     click: () => {
                       var id = params.row.id
-                      this.jumpPage('/activityManage/user/' + id)
+                      this.jumpPage('/businessManage/user/' + id)
                     }
                   }
                 }),
@@ -142,7 +138,7 @@ export default {
                   on: {
                     click: () => {
                       var id = params.row.id
-                      this.jumpPage('/activityManage/edit/' + id)
+                      this.jumpPage('/businessManage/edit/' + id)
                     }
                   }
                 }),
@@ -187,17 +183,17 @@ export default {
         title: '提示',
         content: '确定删除吗？删除之后不可恢复!',
         onOk: function () {
-          _this.activityDel(id)
+          _this.businessDel(id)
         },
         onCancel: function () {
           _this.$Notice.error({ title: '提示', desc: '操作取消' })
         }
       })
     },
-    activityDel (id) {
+    businessDel (id) {
       var _this = this
       Util.ajax({
-        url: '/adminapi/activities/' + id,
+        url: '/adminapi/business/' + id,
         method: 'DELETE',
         success: function (result) {
           if (result.error == 0) {
@@ -213,7 +209,7 @@ export default {
       var _this = this
 
       Util.ajax({
-        url: '/adminapi/activities/' + id + '/setStatus',
+        url: '/adminapi/business/' + id + '/setStatus',
         method: 'patch',
         data: {status: status},
         success: function (result) {
@@ -230,7 +226,7 @@ export default {
       var _this = this
 
       Util.ajax({
-        url: '/adminapi/activities/' + id + '/setRecommend',
+        url: '/adminapi/business/' + id + '/setRecommend',
         method: 'patch',
         data: {is_recommend: is_recommend},
         success: function (result) {
@@ -243,9 +239,50 @@ export default {
         }
       })
     },
+    getTeachers() {
+      // 获取所有老师
+      var _this = this;
+      Util.ajax({
+        url: '/adminapi/users/indexTeachAll',
+        method: 'get',
+        success: function(result) {
+          if (result.error == 0) {
+
+            _this.teachers = result.result;
+          } else {
+            _this.$Notice.error({
+              title: '提示',
+              desc: result.info
+            })
+          }
+        }
+      })
+    },
+    getTags() {
+      var _this = this;
+      // 获取所有标签
+      Util.ajax({
+        url: '/adminapi/tags/all',
+        method: 'get',
+        data: {type: 'business'},
+        success: function(result) {
+          if (result.error == 0) {
+            _this.tags = result.result;
+          } else {
+            _this.$Notice.error({
+              title: '提示',
+              desc: result.info
+            })
+          }
+        }
+      })
+    },
   },
   created: function () {
     var _this = this
+
+    this.getTeachers();
+    this.getTags();
   },
   mounted: function () {
   }

@@ -1,7 +1,8 @@
 <template>
   <div class="sm-Tags">
     <Tag
-      v-for="item in tags"
+      v-for="(item, index) in tags"
+      :key="index"
       checkable
       :checked="isChecked(item)"
       type="border"

@@ -112,18 +112,10 @@
         formVal: {},
       }
     },
-    watch: {
-      value: {
-        deep: true,
-        handler: function (newVal){
-          this.setFormVal();
-        }
-      }
-    },
     computed: {
       currentFields () {
         let newFields = [];
-        let fields = this.fields;
+        let fields = this.curFields;
 
         for (let field of fields) {
           if (field.type == 'group' && field.children && Array.isArray(field.children)) {
@@ -156,7 +148,18 @@
         return formRule;
       }
     },
+    watch: {
+      fields () {
+        this.setCurFields();
+      },
+      value () {
+        this.setFormVal();
+      }
+    },
     methods: {
+      setCurFields () {
+        this.curFields = this.fields
+      },
       setFormVal () {             // 初始化表单默认值
         let fields = this.fields;
         let formVal = {};
@@ -312,11 +315,9 @@
       },
       handleSubmit(name) {
         console.log(this.formVal)
-        console.log(this.formRule)
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.$emit('submit', this.formVal)
-            // this.$Message.success('Success!');
+            this.$Message.success('Success!');
           } else {
             this.$Message.error('Fail!');
           }
@@ -327,6 +328,7 @@
       }
     },
     created () {
+      this.setCurFields();
       this.setFormVal();
     }
   };

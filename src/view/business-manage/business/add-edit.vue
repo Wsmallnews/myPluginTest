@@ -1,5 +1,5 @@
 <template lang="html">
-	<div class="activities-add-edit">
+	<div class="business-add-edit">
     <sm-form ref="smForm" v-model="formValidate" :fields="formFields" @submit="handleSubmit">
 
     </sm-form>
@@ -264,13 +264,10 @@ export default {
             let key_teach = Util.getArrayKey('teach_id', _this.formFields, 'name');
             _this.formFields[key_teach]['options'] = teach;
 
-            _this.$set(_this.formFields, key_teach, _this.formFields[key_teach]);
-
             let key_coach = Util.getArrayKey('coach_id', _this.formFields, 'name');
 
             _this.formFields[key_coach]['options'] = teach;
 
-            _this.$set(_this.formFields, key_coach, _this.formFields[key_coach]);
           } else {
             _this.$Notice.error({
               title: '提示',
@@ -293,7 +290,6 @@ export default {
             let key = Util.getArrayKey('tags', _this.formFields, 'name');
 
             _this.formFields[key]['tags'] = result.result;
-            _this.$set(_this.formFields, key, _this.formFields[key]);
           } else {
             _this.$Notice.error({
               title: '提示',
@@ -305,9 +301,7 @@ export default {
     },
     handleSubmit(vals) {
       var _this = this
-      console.log(vals);
       var values = Util.extend(this.formValidate, vals)
-      console.log(values);
       var url = '/adminapi/business'
       var method = 'post'
       if (values.id) {
@@ -352,7 +346,7 @@ export default {
           if (result.error == 0) {
             var info = result.result
             for (var i in _this.formValidate) {
-              if (i == 'tag') {
+              if (i == 'tags') {
                 _this.formValidate[i] = info['tag_arr']
               } else {
                 _this.formValidate[i] = info[i]

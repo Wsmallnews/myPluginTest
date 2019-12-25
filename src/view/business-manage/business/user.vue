@@ -1,15 +1,7 @@
 <template lang="html">
-  <div class="activity-user-index">
-    <myTable ref="listTable" :listConf="listConf" @select="selectRow" @searchReset="searchReset" >
-      <template slot="formItem" >
-        <Form-item prop="name">
-          <Select style="width:200px" v-model="listConf.searchParams.join_type" placeholder="报名类型">
-            <Option label="全部" value="all" ></Option>
-            <Option label="线下报名" value="offline" ></Option>
-            <Option label="线上报名" value="online" ></Option>
-          </Select>
-        </Form-item>
-      </template>
+  <div class="business-user-index">
+    <myTable ref="listTable" :listConf="listConf" @select="selectRow" @searchReset="searchReset" :noSearch="true">
+
     </myTable>
   </div>
 </template>
@@ -26,9 +18,9 @@ export default {
     return {
       currentRow: {},
       listConf: {
-        url: '/adminapi/activityUsers',
+        url: '/adminapi/businessUsers',
         searchParams: {
-          activity_id: this.$route.params.id,
+          business_id: this.$route.params.id,
           join_type: 'all',
         },
         item: [],
@@ -58,8 +50,7 @@ export default {
                 return h('span', params.row.user.is_vip_name)
               }
             }},
-          {title: '是否签到', align: 'center', width: 120, key: 'is_sign_name'},
-          {title: '签到时间', align: 'center', width: 200, key: 'sign_at'},
+          {title: '过期时间', align: 'center', width: 200, key: 'expired_at'},
           {title: '报名时间', align: 'center', width: 200, key: 'created_at'},
         ]
       }

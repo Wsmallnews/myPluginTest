@@ -41,8 +41,8 @@ export default {
           {title: '线下已报名人数', align: 'center', width: 120, key: 'offline_joined_num'},
           {title: '线上可报名人数', align: 'center', width: 100, key: 'online_join_num'},
           {title: '线上已报名人数', align: 'center', width: 100, key: 'online_joined_num'},
-          {title: '线下报名截止时间', align: 'center', width: 100, key: 'offline_join_end_at'},
-          {title: '线上报名截止时间', align: 'center', width: 100, key: 'online_join_end_at'},
+          {title: '线下报名截止时间', align: 'center', width: 120, key: 'offline_join_end_at'},
+          {title: '线上报名截止时间', align: 'center', width: 120, key: 'online_join_end_at'},
           {title: '线下费用', align: 'center', minWidth: 150, key: 'offline_charge', render: (h, params) => {
             var text = '';
             if (params.row.is_offline_charge) {
