@@ -1,6 +1,6 @@
 <template>
   <div>
-    欢迎来到游隼回收
+    欢迎来到薪商学
   </div>
 </template>
 
