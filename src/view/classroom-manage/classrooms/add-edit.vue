@@ -1,5 +1,5 @@
 <template lang="html">
-	<div class="business-add-edit">
+  <div class="classrooms-add-edit">
     <sm-form ref="smForm" v-model="formValidate" :fields="formFields" @submit="handleSubmit">
 
     </sm-form>
@@ -8,40 +8,25 @@
 
 <script>
 import Util from '@/libs/util'
-import MyUpload from '@/view/includes/myUpload'
-import Editor from '@/components/editor'
 
 export default {
-  components: {
-    MyUpload,
-    Editor
-  },
   data() {
     return {
-      uploadData: {
-        file_type: 'activity'
-      },
       formValidate: {
         id: 0,
         name: '',
-        desc: '',
         image: '',
         tags: [],
-        start_at: '',
-        end_at: '',
         join_num: 0,
         join_end_at: '',
         teach_id: 0,
         coach_id: 0,
-        live_name: '',
-        live_id: '',
         content: '',
         reminder: '',
         is_charge: 0,
         charge_money: 0,
         is_vip_charge: 0,
         vip_charge_money: 0,
-        expire_day: 0,
         is_recommend: 0,
         sort_order: 50,
       },
@@ -49,10 +34,10 @@ export default {
         {
           type: 'text',
           name: 'name',
-          label: "薪商学名称",
-          placeholder: "请输入薪商学名称",
+          label: "薪课堂名称",
+          placeholder: "请输入薪课堂名称",
           required: {
-            message: '薪商学名称不能为空',
+            message: '薪课堂名称不能为空',
           }
         },
         {
@@ -72,26 +57,6 @@ export default {
           tags: [],
           required: {
             message: '请选择标签',
-          }
-        },
-        {
-          type: 'datetime',
-          name: 'start_at',
-          label: "薪商学开始时间",
-          placeholder: "请选择开始时间",
-          placement: "bottom-start",
-          required: {
-            message: '请选择开始时间',
-          }
-        },
-        {
-          type: 'datetime',
-          name: 'end_at',
-          label: "薪商学结束时间",
-          placeholder: "请选择结束时间",
-          placement: "bottom-start",
-          required: {
-            message: '请选择结束时间',
           }
         },
         {
@@ -145,25 +110,6 @@ export default {
           }
         },
         {
-          type: 'text',
-          name: 'live_name',
-          label: "课时名称",
-          placeholder: "请输入课时名称",
-          required: {
-            message: '课时名称不能为空',
-          }
-        },
-        {
-          type: 'text',
-          name: 'live_id',
-          label: "直播间 ID",
-          placeholder: "请输入直播间 ID",
-          required: {
-            message: '直播间 ID 不能为空',
-          }
-        },
-
-        {
           type: "group",
           name: 'group',
           label: '是否收费',
@@ -206,16 +152,6 @@ export default {
           ]
         },
         {
-          type: 'number',
-          name: 'expire_day',
-          label: "购买后有效天数",
-          placeholder: "请填写有效天数",
-          placement: "bottom-start",
-          required: {
-            message: '请填写有效天数',
-          }
-        },
-        {
           type: "switch",
           name: 'is_recommend',
           label: '是否推荐',
@@ -226,15 +162,9 @@ export default {
           label: '排序',
         },
         {
-          type: 'textarea',
-          name: 'desc',
-          label: "商学描述",
-          placeholder: "请输入商学描述",
-        },
-        {
           type: 'editor',
           name: 'content',
-          label: "商学详情",
+          label: "课堂详情",
           required: {
             message: '详情不能为空',
           }
@@ -283,7 +213,7 @@ export default {
       Util.ajax({
         url: '/adminapi/tags/all',
         method: 'get',
-        data: {type: 'business'},
+        data: {type: 'classroom'},
         success: function(result) {
           if (result.error == 0) {
             // 获取二位数组的下标
@@ -302,7 +232,7 @@ export default {
     handleSubmit(vals) {
       var _this = this
       var values = Util.extend(this.formValidate, vals)
-      var url = '/adminapi/business'
+      var url = '/adminapi/classrooms'
       var method = 'post'
       if (values.id) {
         url = url + '/' + values.id;
@@ -318,7 +248,7 @@ export default {
               title: '提示',
               desc: '保存成功'
             })
-            _this.$router.push('/businessManage/index')
+            _this.$router.push('/classroomManage/index')
           } else {
             _this.$Notice.error({
               title: '提示',
@@ -340,7 +270,7 @@ export default {
 
     if (_this.$route.params.id != undefined) {
       Util.ajax({
-        url: '/adminapi/business/' + _this.$route.params.id,
+        url: '/adminapi/classrooms/' + _this.$route.params.id,
         method: 'get',
         success: function(result) {
           if (result.error == 0) {

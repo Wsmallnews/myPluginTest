@@ -17,18 +17,20 @@
       </slot>
     </div>
 
-    <Table
-      :row-class-name="rowClassName"
-      :loading="loading"
-      :highlight-row="lighlightRow"
-      :border="border"
-      :stripe="stripe"
-      :columns="cListConf.columns"
-      :data="item"
-      @on-row-click="listSelect"
-      @on-sort-change="listChangeSort"
-      >
-    </Table>
+    <slot name="list" :item="item" :loading="loading">
+      <Table
+        :row-class-name="rowClassName"
+        :loading="loading"
+        :highlight-row="lighlightRow"
+        :border="border"
+        :stripe="stripe"
+        :columns="cListConf.columns"
+        :data="item"
+        @on-row-click="listSelect"
+        @on-sort-change="listChangeSort"
+        >
+      </Table>
+    </slot>
 
     <div style="margin: 10px;overflow: hidden" v-if="pagestatus">
       <div style="float: right;">

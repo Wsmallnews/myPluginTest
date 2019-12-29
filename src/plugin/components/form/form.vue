@@ -1,6 +1,6 @@
 <template>
   <div class="sm-form">
-    <Form ref="formValidate" :inline="form.inline" :model="formVal" :rules="formRule" :label-width="80">
+    <Form ref="formValidate" :inline="form.inline" :model="formVal" :rules="formRule" :label-width="120">
 
       <template v-for="(field, index) in currentFields">
         <template v-if="field.type == 'group' && field.children && Array.isArray(field.children)">

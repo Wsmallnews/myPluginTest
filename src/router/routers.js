@@ -105,7 +105,7 @@ export default [{
     name: 'activitymanage',
     meta: {
       icon: 'md-construct',
-      title: '活动管理'
+      title: '薪活动管理'
     },
     component: Main,
     children: [{
@@ -113,7 +113,7 @@ export default [{
         name: 'activitymanage-activities-index',
         meta: {
           icon: 'md-construct',
-          title: '活动管理',
+          title: '薪活动管理',
         },
         component: () => import('@/view/activity-manage/activities/index.vue')
       },
@@ -122,7 +122,7 @@ export default [{
         name: 'activitymanage-activities-add',
         meta: {
           icon: 'md-add',
-          title: '活动添加',
+          title: '薪活动添加',
         },
         component: () => import('@/view/activity-manage/activities/add-edit.vue')
       },
@@ -132,7 +132,7 @@ export default [{
         meta: {
           hideInMenu: true,
           icon: 'md-brush',
-          title: '活动编辑',
+          title: '薪活动编辑',
         },
         component: () => import('@/view/activity-manage/activities/add-edit.vue')
       },
@@ -142,7 +142,7 @@ export default [{
         meta: {
           hideInMenu: true,
           icon: 'md-brush',
-          title: '活动用户',
+          title: '薪活动用户',
         },
         component: () => import('@/view/activity-manage/activities/user.vue')
       },
@@ -193,6 +193,257 @@ export default [{
           title: '薪商学用户',
         },
         component: () => import('@/view/business-manage/business/user.vue')
+      },
+      {
+        path: 'tags/business',
+        name: 'businessmanage-tags-index',
+        meta: {
+          icon: 'md-add',
+          title: '商学标签管理',
+        },
+        component: () => import('@/view/tag-manage/tags/index.vue')
+      },
+    ]
+  },
+  {
+    path: '/classroomManage',
+    name: 'classroommanage',
+    meta: {
+      icon: 'md-construct',
+      title: '薪课堂管理'
+    },
+    component: Main,
+    children: [{
+        path: 'index',
+        name: 'classroommanage-classrooms-index',
+        meta: {
+          icon: 'md-construct',
+          title: '薪课堂管理',
+        },
+        component: () => import('@/view/classroom-manage/classrooms/index.vue')
+      },
+      {
+        path: 'add',
+        name: 'classroommanage-classrooms-add',
+        meta: {
+          icon: 'md-add',
+          title: '薪课堂添加',
+        },
+        component: () => import('@/view/classroom-manage/classrooms/add-edit.vue')
+      },
+      {
+        path: 'edit/:id',
+        name: 'classroommanage-classrooms-edit',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-brush',
+          title: '薪课堂编辑',
+        },
+        component: () => import('@/view/classroom-manage/classrooms/add-edit.vue')
+      },
+      {
+        path: 'user/:id',
+        name: 'classroommanage-classrooms-user',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-brush',
+          title: '薪课堂用户',
+        },
+        component: () => import('@/view/classroom-manage/classrooms/user.vue')
+      },
+      {
+        path: 'classroomContents/:classroom_id',
+        name: 'classroommanage-classroomcontents-index',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-construct',
+          title: '薪课堂课时',
+        },
+        component: () => import('@/view/classroom-manage/classroom-contents/index.vue')
+      },
+      {
+        path: 'classroomContents/add/:classroom_id',
+        name: 'classroommanage-classroomcontents-add',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-add',
+          title: '课时添加',
+        },
+        component: () => import('@/view/classroom-manage/classroom-contents/add-edit.vue')
+      },
+      {
+        path: 'classroomContents/edit/:classroom_id/:id',
+        name: 'classroommanage-classroomcontents-edit',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-brush',
+          title: '课时编辑',
+        },
+        component: () => import('@/view/classroom-manage/classroom-contents/add-edit.vue')
+      },
+      {
+        path: 'classroomComments',
+        name: 'classroommanage-classroomComments-index',
+        meta: {
+          icon: 'md-add',
+          title: '新课堂留言',
+        },
+        component: () => import('@/view/classroom-manage/classroom-comments/index.vue')
+      },
+      {
+        path: 'classroomComments/:classroom_id/:classroom_content_id',
+        name: 'classroommanage-classroomComments-index-params',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-add',
+          title: '新课堂留言',
+        },
+        component: () => import('@/view/classroom-manage/classroom-comments/index.vue')
+      },
+      {
+        path: 'tags/classroom',
+        name: 'classroommanage-tags-index',
+        meta: {
+          icon: 'md-add',
+          title: '课堂标签管理',
+        },
+        component: () => import('@/view/tag-manage/tags/index.vue')
+      },
+    ]
+  },
+  {
+    path: '/soundManage',
+    name: 'soundmanage',
+    meta: {
+      icon: 'md-construct',
+      title: '薪声管理'
+    },
+    component: Main,
+    children: [{
+        path: 'index',
+        name: 'soundmanage-sounds-index',
+        meta: {
+          icon: 'md-construct',
+          title: '薪声管理',
+        },
+        component: () => import('@/view/sound-manage/sounds/index.vue')
+      },
+      {
+        path: 'add',
+        name: 'soundmanage-sounds-add',
+        meta: {
+          icon: 'md-add',
+          title: '薪声添加',
+        },
+        component: () => import('@/view/sound-manage/sounds/add-edit.vue')
+      },
+      {
+        path: 'edit/:id',
+        name: 'soundmanage-sounds-edit',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-brush',
+          title: '薪声编辑',
+        },
+        component: () => import('@/view/sound-manage/sounds/add-edit.vue')
+      },
+      {
+        path: 'tags/sound',
+        name: 'soundmanage-tags-index',
+        meta: {
+          icon: 'md-add',
+          title: '薪声标签管理',
+        },
+        component: () => import('@/view/tag-manage/tags/index.vue')
+      },
+      {
+        path: 'soundComments/:sound_id',
+        name: 'soundmanage-soundComments-index',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-add',
+          title: '薪声留言',
+        },
+        component: () => import('@/view/sound-manage/sound-comments/index.vue')
+      },
+    ]
+  },
+  {
+    path: '/tagManage',
+    name: 'tagmanage',
+    meta: {
+      hideInMenu: true,
+      icon: 'md-construct',
+      title: '标签管理'
+    },
+    component: Main,
+    children: [{
+        path: 'add/:type',
+        name: 'tagManage-tags-add',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-add',
+          title: '标签添加',
+        },
+        component: () => import('@/view/tag-manage/tags/add-edit.vue')
+      },
+      {
+        path: 'edit/:type/:id',
+        name: 'tagManage-tags-edit',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-brush',
+          title: '标签编辑',
+        },
+        component: () => import('@/view/tag-manage/tags/add-edit.vue')
+      },
+    ]
+  },
+  {
+    path: '/couponManage',
+    name: 'couponmanage',
+    meta: {
+      icon: 'md-construct',
+      title: '优惠券管理'
+    },
+    component: Main,
+    children: [{
+        path: 'index',
+        name: 'couponmanage-coupontypes-index',
+        meta: {
+          icon: 'md-construct',
+          title: '优惠券管理',
+        },
+        component: () => import('@/view/coupon-manage/coupon-types/index.vue')
+      },
+      {
+        path: 'add',
+        name: 'couponmanage-coupontypes-add',
+        meta: {
+          icon: 'md-add',
+          title: '优惠券添加',
+        },
+        component: () => import('@/view/coupon-manage/coupon-types/add-edit.vue')
+      },
+      {
+        path: 'edit/:id',
+        name: 'couponmanage-coupontypes-edit',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-brush',
+          title: '优惠券编辑',
+        },
+        component: () => import('@/view/coupon-manage/coupon-types/add-edit.vue')
+      },
+      {
+        path: 'coupons/:coupon_type_id',
+        name: 'couponmanage-coupons-index',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-brush',
+          title: '优惠券记录',
+        },
+        component: () => import('@/view/coupon-manage/coupons/index.vue')
       },
     ]
   },

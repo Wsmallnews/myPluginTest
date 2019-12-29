@@ -363,8 +363,8 @@ export const defRules = {
   number: {
     required: true,
     message: '请输入正确的数字',
-    min: 1,
-    max: 100,
+    min: 0.01,
+    max: 999999,
     trigger: 'blur',
     type: 'number'
   },

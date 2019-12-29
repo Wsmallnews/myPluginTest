@@ -114,7 +114,7 @@
         default: 10
       },
       uploadUrl: {
-        default: "https://api-test.love.zhaotongye.com/api/myUpload"
+        default: window.publicPath + "api/myUpload"
       },
       data: {
         default: function () {

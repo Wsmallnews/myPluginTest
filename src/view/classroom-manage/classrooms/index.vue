@@ -1,24 +1,24 @@
 <template lang="html">
-  <div class="business-index">
+  <div class="classrooms-index">
     <myTable ref="listTable" :listConf="listConf" @select="selectRow" @searchReset="searchReset" >
       <template slot="formItem" >
         <Form-item prop="name">
-          <Input type="text" v-model="listConf.searchParams.name" placeholder="搜索商学名" ></Input>
+          <Input type="text" v-model="listConf.searchParams.name" placeholder="搜索课堂名" ></Input>
         </Form-item>
 
         <Form-item prop="teach_id">
           <Select style="width:200px" v-model="listConf.searchParams.teach_id" clearable placeholder="讲师">
-            <Option v-for="teacher in teachers" :label="teacher.name" :value="teacher.id" ></Option>
+            <Option v-for="(teacher, index) in teachers" :key="index" :label="teacher.name" :value="teacher.id" ></Option>
           </Select>
         </Form-item>
         <Form-item prop="tag">
           <Select style="width:200px" v-model="listConf.searchParams.tag" clearable placeholder="标签">
-            <Option v-for="tag in tags" :label="tag.name" :value="tag.name" ></Option>
+            <Option v-for="(tag, index) in tags" :label="tag.name" :key="index" :value="tag.name" ></Option>
           </Select>
         </Form-item>
       </template>
       <template slot="formBtn" >
-        <Button type="primary" @click="jumpPage({ path: '/businessManage/add' })"><Icon type="plus-round"></Icon>薪商学添加</Button>
+        <Button type="primary" @click="jumpPage({ path: '/classroomManage/add' })"><Icon type="plus-round"></Icon>薪课堂添加</Button>
       </template>
     </myTable>
   </div>
@@ -38,7 +38,7 @@ export default {
       teachers: [],
       tags: [],
       listConf: {
-        url: '/adminapi/business',
+        url: '/adminapi/classrooms',
         searchParams: {
           name: '',
           teach_id: 0,
@@ -47,13 +47,11 @@ export default {
         item: [],
         columns: [
           {type: 'index', align: 'center', width: 100, fixed: 'left'},
-          {title: '商学名称', align: 'center', width: 200, key: 'name'},
+          {title: '课堂名称', align: 'center', width: 200, key: 'name'},
           {title: '状态', align: 'center', width: 100, key: 'status_name'},
           {title: '标签', align: 'center', width: 100, key: 'tagstr', render: (h, params) => {
             return h('span', params.row.tag_arr.join(' '));
           }},
-          {title: '开始时间', align: 'center', width: 100, key: 'start_at'},
-          {title: '结束时间', align: 'center', width: 100, key: 'end_at'},
           {title: '报名人数', align: 'center', width: 120, key: 'join_num'},
           {title: '已报名人数', align: 'center', width: 120, key: 'joined_num'},
           {title: '报名截止时间', align: 'center', width: 120, key: 'join_end_at'},
@@ -104,7 +102,7 @@ export default {
           {title: '操作',
             key: 'action',
             align: 'center',
-            width: 150,
+            width: 170,
             fixed: 'right',
             render: (h, params) => {
               return h('div', [
@@ -121,7 +119,24 @@ export default {
                   on: {
                     click: () => {
                       var id = params.row.id
-                      this.jumpPage('/businessManage/user/' + id)
+                      this.jumpPage('/classroomManage/user/' + id)
+                    }
+                  }
+                }),
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small',
+                    icon: 'md-list-box'
+                  },
+                  style: {
+                    marginRight: '5px',
+                    marginBottom: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      var id = params.row.id
+                      this.jumpPage('/classroomManage/classroomContents/' + id)
                     }
                   }
                 }),
@@ -138,7 +153,7 @@ export default {
                   on: {
                     click: () => {
                       var id = params.row.id
-                      this.jumpPage('/businessManage/edit/' + id)
+                      this.jumpPage('/classroomManage/edit/' + id)
                     }
                   }
                 }),
@@ -183,17 +198,17 @@ export default {
         title: '提示',
         content: '确定删除吗？删除之后不可恢复!',
         onOk: function () {
-          _this.businessDel(id)
+          _this.classroomDel(id)
         },
         onCancel: function () {
           _this.$Notice.error({ title: '提示', desc: '操作取消' })
         }
       })
     },
-    businessDel (id) {
+    classroomDel (id) {
       var _this = this
       Util.ajax({
-        url: '/adminapi/business/' + id,
+        url: '/adminapi/classrooms/' + id,
         method: 'DELETE',
         success: function (result) {
           if (result.error == 0) {
@@ -209,7 +224,7 @@ export default {
       var _this = this
 
       Util.ajax({
-        url: '/adminapi/business/' + id + '/setStatus',
+        url: '/adminapi/classrooms/' + id + '/setStatus',
         method: 'patch',
         data: {status: status},
         success: function (result) {
@@ -226,7 +241,7 @@ export default {
       var _this = this
 
       Util.ajax({
-        url: '/adminapi/business/' + id + '/setRecommend',
+        url: '/adminapi/classrooms/' + id + '/setRecommend',
         method: 'patch',
         data: {is_recommend: is_recommend},
         success: function (result) {
@@ -264,7 +279,7 @@ export default {
       Util.ajax({
         url: '/adminapi/tags/all',
         method: 'get',
-        data: {type: 'business'},
+        data: {type: 'classroom'},
         success: function(result) {
           if (result.error == 0) {
             _this.tags = result.result;

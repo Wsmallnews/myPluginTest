@@ -116,7 +116,7 @@ export default {
                   props: {
                     type: 'primary',
                     size: 'small',
-                    icon: 'md-list-box'
+                    icon: 'md-contacts'
                   },
                   style: {
                     marginRight: '5px',
