@@ -34,7 +34,7 @@ export default {
         item: [],
         columns: [
           {type: 'index', align: 'center', width: 100, fixed: 'left'},
-          {title: '报名用户', align: 'center', key: 'max_num',
+          {title: '报名用户', align: 'center', width: 120, key: 'max_num',
             render: (h, params) => {
               if (params.row.user != null) {
                 return h('span', params.row.user.name)

@@ -13,7 +13,7 @@
         </Form-item>
         <Form-item prop="tag">
           <Select style="width:200px" v-model="listConf.searchParams.tag" clearable placeholder="标签">
-            <Option v-for="(author, index) in tags" :key="index" :label="tag.name" :value="tag.name" ></Option>
+            <Option v-for="(tag, index) in tags" :key="index" :label="tag.name" :value="tag.name" ></Option>
           </Select>
         </Form-item>
       </template>
@@ -54,12 +54,15 @@
                 <a type="text" style="color: #57a3f;" @click="jumpPage({ path: '/soundManage/soundComments/' + it.id })">查看留言</a>
               </li>
               <li>
-                <a type="text" style="color: #57a3f;" @click="jumpPage({ path: '/soundManage/edit/' + it.id })">编辑</a>
-              </li>
-              <li>
                 <Icon type="md-star" style="font-size: 18px" :style="recommendStyle(it.is_recommend)" />
                 <a v-if="it.is_recommend" type="text" style="color: #57a3f;" @click="recommendConf(it.id, 0)">取消推荐</a>
                 <a v-else type="text" style="color: #57a3f;" @click="recommendConf(it.id, 1)">设为推荐</a>
+              </li>
+              <li>
+                <a type="text" style="color: #57a3f;" @click="() => {detail = it; showDetail = true;}">详情</a>
+              </li>
+              <li>
+                <a type="text" style="color: #57a3f;" @click="jumpPage({ path: '/soundManage/edit/' + it.id })">编辑</a>
               </li>
               <li>
                 <a type="text" style="color: #57a3f;" @click="deleteConf(it.id)">删除</a>
@@ -70,6 +73,80 @@
         <div v-if="!loading && item.length <= 0" style="padding: 20px; text-align: center;background: #FFFFFF;border-radius: 10px;" >还没有发布薪声</div>
       </template>
     </myTable>
+
+    <Modal v-model="showDetail" :closable="true" :mask-closable=false :width="700">
+      <h3 slot="header" style="color:#2D8CF0">薪声详情</h3>
+      <div v-if="detail.name">
+        <Row >
+          <Col span="6" class="row-label">薪声名称：</Col>
+          <Col span="18" class="row-content">{{ detail.name }}</Col>
+        </Row>
+        <Row v-if="detail.image">
+          <Col span="6" class="row-label">薪声图片：</Col>
+          <Col span="18" class="row-content">
+            <img class="detail-images" style="width: 125px;height: 50px;" :src="detail.image" @click="showBigImg(detail.image)" />
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">标签：</Col>
+          <Col span="18" class="row-content">
+            <Tag
+                v-for="(item, ind) in detail.tag_arr"
+                :key="ind"
+                :checkable="false"
+                :checked="false"
+                type="border"
+                size="medium"
+                color="primary"
+                >
+                {{ item }}
+              </Tag>
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">作者：</Col>
+          <Col span="18" class="row-content">
+            <span v-if="detail.author">
+              {{ detail.author.name }}({{detail.author.phone}})
+            </span>
+          </Col>
+        </Row>
+       
+        <Row>
+          <Col span="6" class="row-label">浏览量：</Col>
+          <Col span="18" class="row-content">{{ detail.view_num }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">喜欢量：</Col>
+          <Col span="18" class="row-content">{{ detail.love_num }}</Col>
+        </Row>
+
+        <Row>
+          <Col span="6" class="row-label">推荐状态：</Col>
+          <Col span="18" class="row-content">
+            <span v-if="detail.is_recommend == 1">
+              推荐
+            </span>
+            <span v-else>
+              未推荐
+            </span>
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">创建时间：</Col>
+          <Col span="18" class="row-content">{{ detail.created_at }}</Col>
+        </Row>
+
+        <Row>
+          <Col span="6" class="row-label">详情：</Col>
+          <Col span="18" class="row-content" style="max-height: 300px;overflow-y:auto;" v-html="detail.content"></Col>
+        </Row>
+      </div>
+    </Modal>
+
+    <Modal v-model="bigImgShow" :closable="true" :mask-closable="true" :footer-hide="true" width="700">
+      <img :src="bigImg" style="width: 670px;margin-top: 30px;" alt="">
+    </Modal>
   </div>
 </template>
 
@@ -83,6 +160,10 @@ export default {
   },
   data () {
     return {
+      detail: {},
+      showDetail: false,
+      bigImgShow: false,
+      bigImg: '',
       currentRow: {},
       authors: [],
       tags: [],
@@ -212,6 +293,10 @@ export default {
         }
       })
     },
+    showBigImg (src) {
+      this.bigImg = src;
+      this.bigImgShow = true;
+    }
   },
   created: function () {
     var _this = this
@@ -224,5 +309,22 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style scoped>
+.ivu-row {
+  padding: 10px;
+}
+.row-label {
+  text-align: right;
+  padding-right: 10px;
+}
+
+.row-content {
+  text-align: left;
+  padding-left: 10px;
+}
+.detail-images {
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+}
 </style>

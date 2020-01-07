@@ -10,6 +10,144 @@
         <Button type="primary" @click="jumpPage({ path: '/activityManage/add' })"><Icon type="plus-round"></Icon>活动添加</Button>
       </template>
     </myTable>
+
+    <Modal v-model="showDetail" :closable="true" :mask-closable=false :width="700">
+      <h3 slot="header" style="color:#2D8CF0">活动详情</h3>
+      <div v-if="detail.name">
+        <Row >
+          <Col span="6" class="row-label">活动签到码：</Col>
+          <Col span="18" class="row-content">{{ detail.sign_code }}</Col>
+        </Row>
+        <Row >
+          <Col span="6" class="row-label">活动名称：</Col>
+          <Col span="18" class="row-content">{{ detail.name }}</Col>
+        </Row>
+        <Row >
+          <Col span="6" class="row-label">活动描述：</Col>
+          <Col span="18" class="row-content">{{ detail.desc }}</Col>
+        </Row>
+        <Row v-if="detail.image">
+          <Col span="6" class="row-label">活动图片：</Col>
+          <Col span="18" class="row-content">
+            <img class="detail-images" style="width: 125px;height: 50px;" :src="detail.image" @click="showBigImg(detail.image)" />
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">直播间 ID：</Col>
+          <Col span="18" class="row-content">{{ detail.live_id }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">活动开始时间：</Col>
+          <Col span="18" class="row-content">{{ detail.start_at }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">活动结束时间：</Col>
+          <Col span="18" class="row-content">{{ detail.end_at }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">线下报名人数：</Col>
+          <Col span="18" class="row-content">
+            可报名人数：{{ detail.offline_join_num }} &nbsp;&nbsp; 已报名人数：{{ detail.offline_joined_num }}
+            <Button type="text" @click="jumpPage('/activityManage/user/' + detail.id)">查看报名列表</Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">线上报名人数：</Col>
+          <Col span="18" class="row-content">可报名人数：{{ detail.online_join_num }} &nbsp;&nbsp; 已报名人数：{{ detail.online_joined_num }}</Col>
+        </Row>
+
+        <Row>
+          <Col span="6" class="row-label">线下报名截止时间：</Col>
+          <Col span="18" class="row-content">{{ detail.offline_join_end_at }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">线上报名截止时间：</Col>
+          <Col span="18" class="row-content">{{ detail.online_join_end_at }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">地址：</Col>
+          <Col span="18" class="row-content">{{ detail.address }}</Col>
+        </Row>
+        <!-- <Row>
+          <Col span="6" class="row-label">活动流程：</Col>
+          <Col span="18" class="row-content">{{ detail.flow_path }}</Col>
+        </Row> -->
+
+        <Row>
+          <Col span="6" class="row-label">线下费用：</Col>
+          <Col span="18" class="row-content">
+            <span v-if="detail.is_offline_charge">
+              ￥{{ detail.offline_money }}
+            </span>
+            <span v-else>
+              免费
+            </span>
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">线上费用：</Col>
+          <Col span="18" class="row-content">
+            <span v-if="detail.is_online_charge">
+              ￥{{ detail.online_money }}
+            </span>
+            <span v-else>
+              免费
+            </span>
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">VIP 线下费用：</Col>
+          <Col span="18" class="row-content">
+            <span v-if="detail.is_vip_offline_charge">
+              ￥{{ detail.vip_offline_money }}
+            </span>
+            <span v-else>
+              免费
+            </span>
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">VIP 线上费用：</Col>
+          <Col span="18" class="row-content">
+            <span v-if="detail.is_vip_online_charge">
+              ￥{{ detail.vip_online_money }}
+            </span>
+            <span v-else>
+              免费
+            </span>
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">浏览量：</Col>
+          <Col span="18" class="row-content">{{ detail.view_num }}</Col>
+        </Row>
+
+        <Row>
+          <Col span="6" class="row-label">推荐状态：</Col>
+          <Col span="18" class="row-content">
+            <span v-if="detail.is_recommend == 1">
+              推荐
+            </span>
+            <span v-else>
+              未推荐
+            </span>
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">创建时间：</Col>
+          <Col span="18" class="row-content">{{ detail.created_at }}</Col>
+        </Row>
+
+        <Row>
+          <Col span="6" class="row-label">详情：</Col>
+          <Col span="18" class="row-content" v-html="detail.content"></Col>
+        </Row>
+      </div>
+    </Modal>
+
+    <Modal v-model="bigImgShow" :closable="true" :mask-closable="true" :footer-hide="true" width="700">
+      <img :src="bigImg" style="width: 670px;margin-top: 30px;" alt="">
+    </Modal>
   </div>
 </template>
 
@@ -23,6 +161,10 @@ export default {
   },
   data () {
     return {
+      detail: {},
+      showDetail: false,
+      bigImgShow: false,
+      bigImg: '',
       currentRow: {},
       listConf: {
         url: '/adminapi/activities',
@@ -108,7 +250,7 @@ export default {
           {title: '操作',
             key: 'action',
             align: 'center',
-            width: 150,
+            width: 180,
             fixed: 'right',
             render: (h, params) => {
               return h('div', [
@@ -126,6 +268,23 @@ export default {
                     click: () => {
                       var id = params.row.id
                       this.jumpPage('/activityManage/user/' + id)
+                    }
+                  }
+                }),
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small',
+                    icon: 'md-eye'
+                  },
+                  style: {
+                    marginRight: '5px',
+                    marginBottom: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.detail = params.row;
+                      this.showDetail = true;
                     }
                   }
                 }),
@@ -243,6 +402,10 @@ export default {
         }
       })
     },
+    showBigImg (src) {
+      this.bigImg = src;
+      this.bigImgShow = true;
+    }
   },
   created: function () {
     var _this = this
@@ -252,5 +415,22 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style scoped>
+.ivu-row {
+  padding: 10px;
+}
+.row-label {
+  text-align: right;
+  padding-right: 10px;
+}
+
+.row-content {
+  text-align: left;
+  padding-left: 10px;
+}
+.detail-images {
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+}
 </style>

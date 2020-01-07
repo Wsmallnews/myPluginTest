@@ -54,7 +54,7 @@ export default {
     return {
       adPositions: [],
       uploadData: {
-        file_type: 'ads'
+        file_type: 'exhibitions'
       },
       formValidate: {
         id: 0,

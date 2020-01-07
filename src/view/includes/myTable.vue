@@ -17,6 +17,12 @@
       </slot>
     </div>
 
+    <div class="other_div">
+      <slot name="other" >
+
+      </slot>
+    </div>
+
     <slot name="list" :item="item" :loading="loading">
       <Table
         :row-class-name="rowClassName"
@@ -69,6 +75,7 @@
  *      setTotal: 加载第一页的时候 返回 总条数
  *      searchReset: 重置事件
  *      select: 选择一行的事件
+ *      startSearch: 开始搜索事件
  * }
  */
 
@@ -185,7 +192,7 @@
       },
       listSearch: function(){         // 上下页
         var _this = this;
-
+        _this.$emit('startSearch');
         _this.queryParams['page'] = 1;
         _this.listLoad();
       },

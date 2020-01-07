@@ -33,6 +33,7 @@ export default {
         join_end_at: '',
         teach_id: 0,
         coach_id: 0,
+        wechat_qrcode: '',
         live_name: '',
         live_id: '',
         content: '',
@@ -142,6 +143,17 @@ export default {
             type: 'number',
             min: 1,
             message: "请选择辅导老师"
+          }
+        },
+        {
+          type: 'upload',
+          name: 'wechat_qrcode',
+          label: "微信二维码",
+          width: "100px",
+          height: "100px",
+          noEdit: false,
+          required: {
+            message: '请上传辅导老师微信二维码',
           }
         },
         {

@@ -301,6 +301,26 @@ export default [{
         component: () => import('@/view/classroom-manage/classroom-comments/index.vue')
       },
       {
+        path: 'classroomTeachComments/:classroom_id',
+        name: 'classroommanage-classroomTeachComments-index-params',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-add',
+          title: '讲师评价',
+        },
+        component: () => import('@/view/classroom-manage/classroom-teach-comments/index.vue')
+      },
+      {
+        path: 'classroomTeachComments/:classroom_id/:classroom_content_id',
+        name: 'classroommanage-classroomTeachComments-index-params',
+        meta: {
+          hideInMenu: true,
+          icon: 'md-add',
+          title: '讲师评价',
+        },
+        component: () => import('@/view/classroom-manage/classroom-teach-comments/index.vue')
+      },
+      {
         path: 'tags/classroom',
         name: 'classroommanage-tags-index',
         meta: {

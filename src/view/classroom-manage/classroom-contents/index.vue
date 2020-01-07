@@ -33,7 +33,7 @@ export default {
           {title: '直播间 ID', align: 'center', width: 100, key: 'live_id'},
           {title: '开始时间', align: 'center', width: 120, key: 'start_at'},
           {title: '结束时间', align: 'center', width: 120, key: 'end_at'},
-          {title: '评价讲师', align: 'center', width: 80, key: 'is_teach_comment_name'},
+          {title: '评价讲师', align: 'center', width: 100, key: 'is_teach_comment_name'},
           {title: '排序', align: 'center', width: 80, key: 'sort_order'},
           {title: '添加时间', align: 'center', width: 180, key: 'created_at'},
           {title: '操作',
@@ -56,7 +56,24 @@ export default {
                   on: {
                     click: () => {
                       var id = params.row.id
-                      this.jumpPage('/classroomManage/classroomComments/' + this.$route.params.classroom_id + '/' + params.row.id)
+                      this.jumpPage('/classroomManage/classroomComments/' + this.$route.params.classroom_id + '/' + id)
+                    }
+                  }
+                }),
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small',
+                    icon: 'md-chatboxes'
+                  },
+                  style: {
+                    marginRight: '5px',
+                    marginBottom: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      var id = params.row.id
+                      this.jumpPage('/classroomManage/classroomTeachComments/' + this.$route.params.classroom_id + '/' + id)
                     }
                   }
                 }),

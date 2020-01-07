@@ -35,7 +35,7 @@ export default {
         online_join_end_at: '',
         address: '',
         content: '',
-        flow_path: '',
+        // flow_path: '',
         is_offline_charge: 0,
         offline_money: 0,
         is_online_charge: 0,
@@ -262,11 +262,11 @@ export default {
             message: '详情不能为空',
           }
         },
-        {
-          type: 'editor',
-          name: 'flow_path',
-          label: "活动流程",
-        },
+        // {
+        //   type: 'editor',
+        //   name: 'flow_path',
+        //   label: "活动流程",
+        // },
       ]
     }
   },

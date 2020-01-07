@@ -21,6 +21,161 @@
         <Button type="primary" @click="jumpPage({ path: '/classroomManage/add' })"><Icon type="plus-round"></Icon>薪课堂添加</Button>
       </template>
     </myTable>
+
+    <Modal v-model="showDetail" :closable="true" :mask-closable=false :width="700">
+      <h3 slot="header" style="color:#2D8CF0">薪课堂详情</h3>
+      <div v-if="detail.name">
+        <Row >
+          <Col span="6" class="row-label">薪课堂名称：</Col>
+          <Col span="18" class="row-content">{{ detail.name }}</Col>
+        </Row>
+        <Row v-if="detail.image">
+          <Col span="6" class="row-label">薪课堂图片：</Col>
+          <Col span="18" class="row-content">
+            <img class="detail-images" style="width: 125px;height: 50px;" :src="detail.image" @click="showBigImg(detail.image)" />
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">标签：</Col>
+          <Col span="18" class="row-content">
+            <Tag
+                v-for="(item, ind) in detail.tag_arr"
+                :key="ind"
+                :checkable="false"
+                :checked="false"
+                type="border"
+                size="medium"
+                color="primary"
+                >
+                {{ item }}
+              </Tag>
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">报名人数：</Col>
+          <Col span="18" class="row-content">
+            可报名人数：{{ detail.join_num }} &nbsp;&nbsp; 已报名人数：{{ detail.joined_num }}
+            <Button type="text" @click="jumpPage('/classroomManage/user/' + detail.id)">查看报名列表</Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">报名截止时间：</Col>
+          <Col span="18" class="row-content">{{ detail.join_end_at }}</Col>
+        </Row>
+
+        <Row>
+          <Col span="6" class="row-label">讲师：</Col>
+          <Col span="18" class="row-content">
+            <span v-if="detail.teach">
+              {{ detail.teach.name }}({{detail.teach.phone}})
+            </span>
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">辅导老师：</Col>
+          <Col span="18" class="row-content">
+            <span v-if="detail.coach">
+              {{ detail.coach.name }}({{detail.coach.phone}})
+            </span>
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">微信二维码：</Col>
+          <Col span="18" class="row-content">
+            <img class="detail-images" :src="detail.wechat_qrcode" @click="showBigImg(detail.wechat_qrcode)" />
+          </Col>
+        </Row>
+        <!-- <Row>
+          <Col span="6" class="row-label">直播间 ID：</Col>
+          <Col span="18" class="row-content">{{ detail.live_id }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">课时名称：</Col>
+          <Col span="18" class="row-content">{{ detail.live_name }}</Col>
+        </Row> -->
+        <Row>
+          <Col span="6" class="row-label">费用：</Col>
+          <Col span="18" class="row-content">
+            <span v-if="detail.is_charge">
+              ￥{{ detail.charge_money }}
+            </span>
+            <span v-else>
+              免费
+            </span>
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">VIP 费用：</Col>
+          <Col span="18" class="row-content">
+            <span v-if="detail.is_vip_charge">
+              ￥{{ detail.vip_charge_money }}
+            </span>
+            <span v-else>
+              免费
+            </span>
+          </Col>
+        </Row>
+        
+        <Row>
+          <Col span="6" class="row-label">浏览量：</Col>
+          <Col span="18" class="row-content">{{ detail.view_num }}</Col>
+        </Row>
+
+        <Row>
+          <Col span="6" class="row-label">推荐状态：</Col>
+          <Col span="18" class="row-content">
+            <span v-if="detail.is_recommend == 1">
+              推荐
+            </span>
+            <span v-else>
+              未推荐
+            </span>
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">创建时间：</Col>
+          <Col span="18" class="row-content">{{ detail.created_at }}</Col>
+        </Row>
+
+        <Row>
+          <Col span="6" class="row-label">详情：</Col>
+          <Col span="18" class="row-content" style="max-height: 300px;overflow-y:auto;" v-html="detail.content"></Col>
+        </Row>
+
+        <Row>
+          <Col span="6" class="row-label">温馨提醒：</Col>
+          <Col span="18" class="row-content" style="max-height: 300px;overflow-y:auto;" v-html="detail.reminder"></Col>
+        </Row>
+
+        <hr v-if="detail.contents.length" style="color: #e8eaec" />
+
+        <template v-for="(content, index) in detail.contents">
+          <Row>
+            <Col span="6" class="row-label">课时 {{ index + 1 }} 名称：</Col>
+            <Col span="18" class="row-content">
+              {{ content.name }} &nbsp;&nbsp; 评价讲师状态：{{ content.is_teach_comment ? '已开启' : '未开启' }}
+            </Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">课时 {{ index + 1 }} 直播间 ID：</Col>
+            <Col span="18" class="row-content">{{ content.live_id }}</Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">课时 {{ index + 1 }} 作业：</Col>
+            <Col span="18" class="row-content">{{ content.homework }}</Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">课时 {{ index + 1 }} 时间：</Col>
+            <Col span="18" class="row-content">{{ content.start_at }} - {{ content.end_at }}</Col>
+          </Row>
+
+        </template>
+      </div>
+    </Modal>
+
+    <Modal v-model="bigImgShow" :closable="true" :mask-closable="true" :footer-hide="true" width="700">
+      <img :src="bigImg" style="width: 670px;margin-top: 30px;" alt="">
+    </Modal>
   </div>
 </template>
 
@@ -34,6 +189,10 @@ export default {
   },
   data () {
     return {
+      detail: {},
+      showDetail: false,
+      bigImgShow: false,
+      bigImg: '',
       currentRow: {},
       teachers: [],
       tags: [],
@@ -102,7 +261,7 @@ export default {
           {title: '操作',
             key: 'action',
             align: 'center',
-            width: 170,
+            width: 240,
             fixed: 'right',
             render: (h, params) => {
               return h('div', [
@@ -137,6 +296,40 @@ export default {
                     click: () => {
                       var id = params.row.id
                       this.jumpPage('/classroomManage/classroomContents/' + id)
+                    }
+                  }
+                }),
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small',
+                    icon: 'md-chatboxes'
+                  },
+                  style: {
+                    marginRight: '5px',
+                    marginBottom: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      var id = params.row.id
+                      this.jumpPage('/classroomManage/classroomTeachComments/' + id)
+                    }
+                  }
+                }),
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small',
+                    icon: 'md-eye'
+                  },
+                  style: {
+                    marginRight: '5px',
+                    marginBottom: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.detail = params.row;
+                      this.showDetail = true;
                     }
                   }
                 }),
@@ -292,6 +485,10 @@ export default {
         }
       })
     },
+    showBigImg (src) {
+      this.bigImg = src;
+      this.bigImgShow = true;
+    }
   },
   created: function () {
     var _this = this
@@ -304,5 +501,22 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style scoped>
+.ivu-row {
+  padding: 10px;
+}
+.row-label {
+  text-align: right;
+  padding-right: 10px;
+}
+
+.row-content {
+  text-align: left;
+  padding-left: 10px;
+}
+.detail-images {
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+}
 </style>

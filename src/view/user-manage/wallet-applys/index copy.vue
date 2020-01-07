@@ -31,14 +31,14 @@
       </div>
     </Modal>
 
-    <!-- <Modal v-model="cardImageShow" :closable='false' :mask-closable=false :width="530">
+    <Modal v-model="cardImageShow" :closable='false' :mask-closable=false :width="530">
       <h3 slot="header" style="color:#2D8CF0">收款账号</h3>
       <h6>{{ cardInfo }}</h6>
       <img :src="cardImage" style="width: 500px;margin: 20px auto;" />
       <div slot="footer">
         <Button type="text" @click="cardImageShow = false">关闭</Button>
       </div>
-    </Modal> -->
+    </Modal>
   </div>
 </template>
 
@@ -62,52 +62,45 @@ export default {
         item: [],
         columns: [
           {type: 'index', align: 'center', width: 100, fixed: 'left'},
-          {title: '提现 ID', align: 'center', key: 'id'},
           {title: '用户名', align: 'center', key: 'user_name', render: (h, params) => {
             return h('span', params.row.user != null ? params.row.user.name : '');
           }},
-          {title: '手机号', align: 'center', key: 'user_phone', render: (h, params) => {
-            return h('span', params.row.user != null ? params.row.user.phone : '');
-          }},
-          {title: '可提现金额', align: 'center', key: 'total_money', render: (h, params) => {
-            return h('span', params.row.user != null ? params.row.user.money : '');
-          }},
-          {title: '提现金额', align: 'center', key: 'money'},
-          // {title: '收款账号', align: 'center', key: 'get_type_name'},
-          // {title: '真实姓名', align: 'center', key: 'real_name'},
-          // {title: '收款账号信息', align: 'center', key: 'bank_info', render: (h, params) => {
-          //   var btn = [h('span', params.row.bank_info + "  ")];
+          {title: '金额', align: 'center', key: 'money'},
+          {title: '收款账号', align: 'center', key: 'get_type_name'},
+          {title: '真实姓名', align: 'center', key: 'real_name'},
+          {title: '收款账号信息', align: 'center', key: 'bank_info', render: (h, params) => {
+            var btn = [h('span', params.row.bank_info + "  ")];
 
-          //   if (params.row.get_type != 'bank') {
-          //     btn.push(h('Button', {
-          //       props: {
-          //         type: 'primary',
-          //         size: 'small',
-          //         icon: 'md-eye'
-          //       },
-          //       style: {
-          //         marginRight: '5px',
-          //         marginBottom: '5px'
-          //       },
-          //       on: {
-          //         click: () => {
-          //           this.cardImage = params.row.image;
-          //           if (params.row.status == 0) {
-          //             this.cardInfo = this.applyInfo = "扫码向 " + (params.row.user != null ? params.row.user.name : '未知') + " 付款 " + params.row.money + " 元";
-          //           } else {
-          //             this.cardInfo = "该申请已处理";
-          //           }
-          //           this.cardImageShow = true;
-          //         }
-          //       }
-          //     }));
-          //   }
+            if (params.row.get_type != 'bank') {
+              btn.push(h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small',
+                  icon: 'md-eye'
+                },
+                style: {
+                  marginRight: '5px',
+                  marginBottom: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.cardImage = params.row.image;
+                    if (params.row.status == 0) {
+                      this.cardInfo = this.applyInfo = "扫码向 " + (params.row.user != null ? params.row.user.name : '未知') + " 付款 " + params.row.money + " 元";
+                    } else {
+                      this.cardInfo = "该申请已处理";
+                    }
+                    this.cardImageShow = true;
+                  }
+                }
+              }));
+            }
 
-          //   return h('div', btn);
-          // }},
-          {title: '处理状态', align: 'center', key: 'status_name'},
+            return h('div', btn);
+          }},
+          {title: '状态', align: 'center', key: 'status_name'},
           {title: '备注信息', align: 'center', key: 'status_msg'},
-          {title: '提现时间', align: 'center', width: 180, key: 'created_at'},
+          {title: '添加时间', align: 'center', width: 180, key: 'created_at'},
         ]
       },
       applyShow: false,
