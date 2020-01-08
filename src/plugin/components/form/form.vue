@@ -110,6 +110,7 @@
       return {
         curFields: [],    // 留作修改 field 用
         formVal: {},
+        rules:null
       }
     },
     watch: {
@@ -141,6 +142,8 @@
         return newFields;
       },
       formRule () {     // 验证规则
+
+        if (this.rules) return this.rules;
         let fields = this.currentFields;
         let formRule = {};
         for (let field of fields) {
@@ -153,6 +156,7 @@
           }
         }
 
+        this.rules = formRule;
         return formRule;
       }
     },
