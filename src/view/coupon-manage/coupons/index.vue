@@ -44,6 +44,7 @@ export default {
         item: [],
         columns: [
           {type: 'index', align: 'center', width: 100, fixed: 'left'},
+          {title: 'UID', align: 'center', width: 80, key: 'user_id'},
           {title: '用户名称', align: 'center', width: 120, key: 'user_name',
             render: (h, params) => {
               if (params.row.user != null) {
@@ -64,6 +65,7 @@ export default {
           {title: '使用状态', align: 'center', minWidth: 120, key: 'status_name'},
           {title: '过期时间', align: 'center', width: 180, key: 'expired_at'},
           {title: '领取时间', align: 'center', width: 180, key: 'created_at'},
+          {title: '备注', align: 'center', width: 180, key: 'remark'},
           {title: '操作',
             key: 'action',
             align: 'center',

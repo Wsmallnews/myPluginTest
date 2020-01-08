@@ -2,13 +2,31 @@
   <div class="users-walletapplys-index">
     <myTable ref="listTable" :listConf="listConf" @select="selectRow" @searchReset="searchReset" >
       <template slot="formItem" >
-        <Form-item prop="status">
+        <Form-item prop="id">
+          <Input type="text" v-model="listConf.searchParams.id" placeholder="提现 ID" ></Input>
+        </Form-item>
+        <Form-item prop="user_id">
+          <Input type="text" v-model="listConf.searchParams.user_id" placeholder="UID" ></Input>
+        </Form-item>
+        <Form-item prop="user_name">
+          <Input type="text" v-model="listConf.searchParams.user_name" placeholder="用户名称" ></Input>
+        </Form-item>
+        <Form-item prop="user_phone">
+          <Input type="text" v-model="listConf.searchParams.user_phone" placeholder="手机号" ></Input>
+        </Form-item>
+        <Form-item prop="status" style="width: 150px;">
           <Select v-model="listConf.searchParams.status" placeholder="处理状态">
-            <Option value="all" key="all">全部</Option>
+            <Option value="all" key="all">全部(处理状态)</Option>
             <Option :value="0" :key="0">未处理</Option>
             <Option :value="1" :key="1">已通过</Option>
             <Option :value="-1" :key="-1">已驳回</Option>
           </Select>
+        </Form-item>
+        <Form-Item prop="created_at">
+          <sm-field
+            v-model="listConf.searchParams.created_at"
+            :field="{type: 'datetimerange', placeholder: '提现时间'}"
+            />
         </Form-item>
       </template>
       <template slot="formBtn" >
@@ -57,12 +75,18 @@ export default {
       listConf: {
         url: '/adminapi/walletApplys',
         searchParams: {
-          status: 'all'
+          id: '',
+          user_id: '',
+          user_name: '',
+          user_phone: '',
+          status: 'all',
+          created_at: []
         },
         item: [],
         columns: [
           {type: 'index', align: 'center', width: 100, fixed: 'left'},
           {title: '提现 ID', align: 'center', key: 'id'},
+          {title: 'UID', align: 'center', key: 'user_id'},
           {title: '用户名', align: 'center', key: 'user_name', render: (h, params) => {
             return h('span', params.row.user != null ? params.row.user.name : '');
           }},

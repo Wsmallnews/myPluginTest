@@ -45,6 +45,88 @@
         </Form-item>
       </template>
     </myTable>
+
+    <Modal v-model="showDetail" :closable="true" :mask-closable=false :width="700">
+      <h3 slot="header" style="color:#2D8CF0">用户详情</h3>
+      <div v-if="detail.id">
+        <h3 slot="header" style="color:#2D8CF0">系统信息</h3>
+        <Row >
+          <Col span="6" class="row-label">UID：</Col>
+          <Col span="18" class="row-content">{{ detail.id }}</Col>
+        </Row>
+        <Row >
+          <Col span="6" class="row-label">姓名：</Col>
+          <Col span="18" class="row-content">{{ detail.name }}</Col>
+        </Row>
+        <Row >
+          <Col span="6" class="row-label">手机号：</Col>
+          <Col span="18" class="row-content">{{ detail.phone }}</Col>
+        </Row>
+        <Row v-if="detail.is_vip">
+          <Col span="6" class="row-label">VIP 到期时间：</Col>
+          <Col span="18" class="row-content">{{ detail.vip_expired_at }}</Col>
+        </Row>
+
+        <Row>
+          <Col span="6" class="row-label">是否讲师：</Col>
+          <Col span="18" class="row-content">
+            {{ detail.is_teach_name }}
+            
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">注册时间：</Col>
+          <Col span="18" class="row-content">{{ detail.created_at }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">最近登录时间：</Col>
+          <Col span="18" class="row-content">{{ detail.last_login_at }}</Col>
+        </Row>
+      </div>
+
+
+      <div v-if="detail.id">
+        <h3 slot="header" style="color:#2D8CF0">个人信息</h3>
+        <Row v-if="detail.avatar">
+          <Col span="6" class="row-label">头像：</Col>
+          <Col span="18" class="row-content">
+            <img class="detail-images" style="width: 100px;height: 100px;border-radius: 50%;" :src="detail.avatar" @click="showBigImg(detail.avatar)" />
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">性别：</Col>
+          <Col span="18" class="row-content">{{ detail.sex_name }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">生日：</Col>
+          <Col span="18" class="row-content">{{ detail.birth }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">所在地：</Col>
+          <Col span="18" class="row-content">{{ detail.province }} {{ detail.city }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">工作年限：</Col>
+          <Col span="18" class="row-content">{{ detail.work }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">行业：</Col>
+          <Col span="18" class="row-content">{{ detail.industry }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">职务：</Col>
+          <Col span="18" class="row-content">{{ detail.job }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">提升技能：</Col>
+          <Col span="18" class="row-content">{{ detail.skill }}</Col>
+        </Row>
+      </div>
+    </Modal>
+
+    <Modal v-model="bigImgShow" :closable="true" :mask-closable="true" :footer-hide="true" width="700">
+      <img :src="bigImg" style="width: 670px;margin-top: 30px;" alt="">
+    </Modal>
   </div>
 </template>
 
@@ -58,6 +140,10 @@ export default {
   },
   data () {
     return {
+      detail: {},
+      showDetail: false,
+      bigImgShow: false,
+      bigImg: '',
       currentRow: {},
       categorys: [],
       listConf: {
@@ -74,6 +160,7 @@ export default {
         item: [],
         columns: [
           {type: 'index', align: 'center', width: 100, fixed: 'left'},
+          {title: 'UID', align: 'center', width: 80, key: 'id'},
           {title: '用户名', align: 'center', width: 120, key: 'name'},
           {title: '头像', align: 'center', key: 'cat_name',
             width: 80,
@@ -178,12 +265,27 @@ export default {
           {title: '操作',
             key: 'action',
             align: 'center',
-            width: 100,
+            width: 120,
             fixed: 'right',
             render: (h, params) => {
-              let btn = [];
-
-              btn.push(
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small',
+                    icon: 'md-eye'
+                  },
+                  style: {
+                    marginRight: '5px',
+                    marginBottom: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.detail = params.row;
+                      this.showDetail = true;
+                    }
+                  }
+                }),
                 h('Button', {
                   props: {
                     type: 'primary',
@@ -201,9 +303,7 @@ export default {
                     }
                   }
                 })
-              )
-
-              return h('div', btn)
+              ])
             }
           }
         ]
@@ -255,6 +355,10 @@ export default {
         }
       })
     },
+    showBigImg (src) {
+      this.bigImg = src;
+      this.bigImgShow = true;
+    }
   },
   created: function () {
     var _this = this
@@ -264,5 +368,22 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style scoped>
+.ivu-row {
+  padding: 10px;
+}
+.row-label {
+  text-align: right;
+  padding-right: 10px;
+}
+
+.row-content {
+  text-align: left;
+  padding-left: 10px;
+}
+.detail-images {
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+}
 </style>

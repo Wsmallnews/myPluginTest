@@ -286,7 +286,7 @@ export default [{
         name: 'classroommanage-classroomComments-index',
         meta: {
           icon: 'md-add',
-          title: '新课堂留言',
+          title: '薪课堂留言',
         },
         component: () => import('@/view/classroom-manage/classroom-comments/index.vue')
       },

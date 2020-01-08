@@ -114,8 +114,15 @@
           columns: [
             {type: 'index', align: 'center', width:100, fixed: 'left'},
             {title: '订单号', align: 'center', width: 170, key: 'order_sn'},
+            {title: 'UID', align: 'center', width: 80, key: 'user_id'},
             {title: '用户名', align: 'center', width: 120, key: 'user_name', render:(h, params)=>{
               return params.row.user ? h('span', params.row.user.name) : h('span', '');
+            }},
+            {title: '手机号', align: 'center', width: 120, key: 'user_phone', render:(h, params)=>{
+              return params.row.user ? h('span', params.row.user.phone) : h('span', '');
+            }},
+            {title: '是否 VIP', align: 'center', width: 120, key: 'user_vip', render:(h, params)=>{
+              return params.row.user ? h('span', (params.row.user.is_vip_name)) : h('span', '');
             }},
             {title: '类型', align: 'center', width: 100, key: 'type_name'},
             {title: '订单内容', align: 'center', width: 150, key: 'subject'},

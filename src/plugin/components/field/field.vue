@@ -362,7 +362,7 @@
         :show-week-numbers="currentField['show-week-numbers']"
         :start-date="currentField['start-date']"
         :confirm="currentField['confirm']"
-        style="width: 200px"
+        style="width: 400px"
         @on-change="(val, type) => {onDateChange(val, type, currentField)}"
         >
       </DatePicker>
