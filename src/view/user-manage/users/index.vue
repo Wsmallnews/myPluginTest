@@ -160,8 +160,8 @@ export default {
         item: [],
         columns: [
           {type: 'index', align: 'center', width: 100, fixed: 'left'},
-          {title: 'UID', align: 'center', width: 80, key: 'id'},
-          {title: '用户名', align: 'center', width: 120, key: 'name'},
+          {title: 'UID', align: 'center', width: 120, key: 'id'},
+          {title: '用户名', align: 'center', width: 150, key: 'name'},
           {title: '头像', align: 'center', key: 'cat_name',
             width: 80,
             render: (h, params) => {
@@ -182,7 +182,7 @@ export default {
             }},
           {title: '手机号', align: 'center', width: 120, key: 'phone'},
           {title: '性别', align: 'center', width: 80, key: 'sex_name'},
-          {title: 'VIP过期时间', align: 'center', width: 120, key: 'vip_expired', render: (h, params) => {
+          {title: 'VIP过期时间', align: 'center', width: 200, key: 'vip_expired', render: (h, params) => {
             if (params.row.is_vip) {
               return h('span', params.row.vip_expired_at);
             } else {
@@ -224,7 +224,7 @@ export default {
               })
             ])
           }},
-          {title: '状态', align: 'center', width: 80, key: 'is_invalid', render: (h, params) => {
+          {title: '状态', align: 'center', width: 100, key: 'is_invalid', render: (h, params) => {
             return h('div', [
               h('i-switch', {
                 props: {
@@ -259,8 +259,8 @@ export default {
               })
             ])
           }},
-          {title: '余额', align: 'center', width: 80, key: 'money'},
-          {title: '已提现金额', align: 'center', width: 100, key: 'money_cash_total'},
+          {title: '余额', align: 'center', width: 130, key: 'money'},
+          {title: '已提现金额', align: 'center', width: 130, key: 'money_cash_total'},
           {title: '注册时间', align: 'center', width: 200, key: 'created_at'},
           {title: '操作',
             key: 'action',

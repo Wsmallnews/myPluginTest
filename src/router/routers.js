@@ -51,23 +51,13 @@ export default [{
     },
     component: Main,
     children: [{
-        path: 'users',
-        name: 'usermanage-users',
+        path: 'index',
+        name: 'usermanage-users-index',
         meta: {
-          icon: 'md-construct',
+          icon: 'md-person',
           title: '用户管理'
         },
-        component: parentView,
-        children: [{
-            path: 'index',
-            name: 'usermanage-users-index',
-            meta: {
-              icon: 'md-person',
-              title: '用户管理'
-            },
-            component: () => import('@/view/user-manage/users/index.vue')
-          }
-        ]
+        component: () => import('@/view/user-manage/users/index.vue')
       },
       {
         path: 'walletLogs/:user_id',
@@ -80,6 +70,36 @@ export default [{
         component: () => import('@/view/user-manage/wallet-logs/index.vue'),
       }
     ]
+    // children: [{
+    //     path: 'users',
+    //     name: 'usermanage-users',
+    //     meta: {
+    //       icon: 'md-construct',
+    //       title: '用户管理'
+    //     },
+    //     component: parentView,
+    //     children: [{
+    //         path: 'index',
+    //         name: 'usermanage-users-index',
+    //         meta: {
+    //           icon: 'md-person',
+    //           title: '用户管理'
+    //         },
+    //         component: () => import('@/view/user-manage/users/index.vue')
+    //       }
+    //     ]
+    //   },
+    //   {
+    //     path: 'walletLogs/:user_id',
+    //     name: 'usermanage-walletLogs',
+    //     meta: {
+    //       hideInMenu: true,
+    //       icon: 'md-cash',
+    //       title: '钱包日志'
+    //     },
+    //     component: () => import('@/view/user-manage/wallet-logs/index.vue'),
+    //   }
+    // ]
   },
   {
     path: '/activityManage',
