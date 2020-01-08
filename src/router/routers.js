@@ -78,25 +78,6 @@ export default [{
           title: '钱包日志'
         },
         component: () => import('@/view/user-manage/wallet-logs/index.vue'),
-      },
-      {
-        path: 'walletApplys',
-        name: 'usermanage-walletapplys',
-        meta: {
-          icon: 'md-cash',
-          title: '提现申请'
-        },
-        component: parentView,
-        children: [{
-            path: 'index',
-            name: 'usermanage-walletapplys-index',
-            meta: {
-              icon: 'md-cash',
-              title: '提现申请'
-            },
-            component: () => import('@/view/user-manage/wallet-applys/index.vue')
-          }
-        ]
       }
     ]
   },
@@ -494,6 +475,25 @@ export default [{
       //   },
       //   component: () => import('@/view/order-manage/orders/show.vue')
       // }
+    ]
+  },
+  {
+    path: 'walletApplys',
+    name: 'usermanage-walletapplys',
+    meta: {
+      icon: 'md-cash',
+      title: '提现管理'
+    },
+    component: Main,
+    children: [{
+        path: 'index',
+        name: 'usermanage-walletapplys-index',
+        meta: {
+          icon: 'md-cash',
+          title: '提现管理'
+        },
+        component: () => import('@/view/user-manage/wallet-applys/index.vue')
+      }
     ]
   },
   {
