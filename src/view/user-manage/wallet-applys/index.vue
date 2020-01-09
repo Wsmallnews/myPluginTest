@@ -44,8 +44,8 @@
       </Form>
       <div slot="footer">
         <Button type="text" @click="cancel">取消</Button>
-        <Button type="warning" :loading="saveLoading" @click="error">驳回</Button>
-        <Button type="primary" :loading="saveLoading" @click="ok">同意</Button>
+        <Button type="warning" :loading="saveLoading" @click="error">拒绝</Button>
+        <Button type="primary" :loading="saveLoading" @click="ok">确认已打款</Button>
       </div>
     </Modal>
 

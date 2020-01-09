@@ -142,7 +142,6 @@
         return newFields;
       },
       formRule () {     // 验证规则
-
         if (this.rules) return this.rules;
         let fields = this.currentFields;
         let formRule = {};
@@ -155,7 +154,6 @@
             formRule = this.setRule(field, formRule);
           }
         }
-
         this.rules = formRule;
         return formRule;
       }

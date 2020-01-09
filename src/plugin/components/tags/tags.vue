@@ -18,7 +18,7 @@
 <script>
 import Util from '../../libs/util'
 export default {
-  name: 'Editor',
+  name: 'Tags',
   props: {
     value: {
       type: Array,
@@ -31,23 +31,24 @@ export default {
   },
   data() {
     return {
+      currentValue: []
     }
   },
   watch: {
-    value () {
-      this.setValue();
+    value (val) {
+      this.currentValue = JSON.parse(JSON.stringify(val));
     }
   },
   methods: {
-    setValue () {
-      for (let i in this.value) {
-        if (!Util.inArray(this.value[i], this.tags, 'name')) {
-          this.value.splice(i, 1)
+    setCurrentValue () {
+      for (let i in this.currentValue) {
+        if (!Util.inArray(this.currentValue[i], this.tags, 'name')) {
+          this.currentValue.splice(i, 1)
         }
       }
     },
     isChecked(item) {
-      if (Util.inArray(item.name, this.value)) {
+      if (Util.inArray(item.name, this.currentValue)) {
         return true;
       }
 
@@ -57,20 +58,21 @@ export default {
       return this.isChecked(item) ? '' : 'border';
     },
     onChange (checked, item) {
+      this.setCurrentValue();
       if (checked) {
-        if (!Util.inArray(item.name, this.value)) {
-          this.value.push(item.name)
+        if (!Util.inArray(item.name, this.currentValue)) {
+          this.currentValue.push(item.name)
         }
       } else {
-        var index = this.value.indexOf(item.name);
-        this.value.splice(index, 1)
+        var index = this.currentValue.indexOf(item.name);
+        this.currentValue.splice(index, 1)
       }
 
-      this.$emit('on-change', item, this.value)
+      this.$emit('on-change', this.currentValue, item)
     }
   },
   created () {
-    this.setValue();
+    this.currentValue = this.value
   }
 }
 </script>

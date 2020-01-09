@@ -29,6 +29,9 @@
               <li>
                 喜欢 {{ it.love_num }}
               </li>
+              <li v-if="it.reply == null">
+                <a type="text" style="color: #57a3f;" @click="showReply(it)"> 回复 </a>
+              </li>
               <li>
                 <Icon type="md-star" style="font-size: 18px" :style="qulityStyle(it.is_quality)" />
                 <a v-if="it.is_quality" type="text" style="color: #57a3f;" @click="setQulity(it.id, 0)">取消精选</a>
@@ -43,6 +46,20 @@
         <div v-if="!loading && item.length <= 0" style="padding: 20px; text-align: center;background: #FFFFFF;border-radius: 10px;" >还没有留言</div>
       </template>
     </myTable>
+
+    <Modal v-model="replyShow" :closable='false' :mask-closable=false :width="600">
+      <h3 slot="header" style="color:#2D8CF0">回复留言</h3>
+      <h6 style="margin-bottom: 20px;">回复评论：{{ replyInfo }}</h6>
+      <Form ref="replyForm" :model="replyForm" :label-width="100" label-position="right" :rules="replyValidate">
+        <Form-item label="回复内容" prop="content">
+          <Input v-model="replyForm.content" type="textarea" :autosize="{minRows: 6,maxRows: 6}" placeholder="请输入回复内容"></Input>
+        </Form-item>
+      </Form>
+      <div slot="footer">
+        <Button type="text" @click="cancel">取消</Button>
+        <Button type="primary" :loading="saveLoading" @click="ok">回复</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -56,6 +73,21 @@ export default {
   },
   data () {
     return {
+      replyShow: false,
+      saveLoading: false,
+      replyInfo: '',
+      replyForm: {
+        id: 0,
+        classroom_id: 0,
+        classroom_content_id: 0,
+        content: ''
+      },
+      replyValidate: {
+        content: [
+          { required: true, message: '请输入回复内容', trigger: 'blur' }
+        ],
+      },
+
       classrooms: [],
       classroomContents: [],
       noSearch: true,
@@ -192,6 +224,57 @@ export default {
         }
       })
     },
+    showReply (item) {
+      if (item.reply != null) {
+        this.$Notice.error({
+          title: '提示',
+          desc: "当前留言已回复"
+        });
+        return false;
+      }
+      this.replyForm.id = item.id;
+      this.replyForm.classroom_id = item.classroom_id;
+      this.replyForm.classroom_content_id = item.classroom_content_id;
+      this.replyInfo = item.content;
+      this.replyShow = true;
+    },
+    cancel: function () {
+      this.replyShow = false;
+      this.replyForm.id = 0;
+      this.replyForm.classroom_id = 0;
+      this.replyForm.classroom_content_id = 0;
+      this.replyForm.content = '';
+      this.replyInfo = "";
+    },
+    ok: function () {
+      var _this = this;
+      _this.$refs['replyForm'].validate((valid) => {
+        if (valid) {
+          _this.saveLoading = true;
+          Util.ajax({
+            url: '/adminapi/classroomComments/'+ _this.replyForm.id +'/reply',
+            method: 'post',
+            data: {classroom_id: this.replyForm.classroom_id, classroom_content_id: this.replyForm.classroom_content_id, content: this.replyForm.content},
+            success: function(result) {
+              _this.saveLoading = false;
+              if (result.error == 0) {
+                _this.$Notice.success({
+                  title: '提示',
+                  desc: "回复成功"
+                });
+                _this.cancel();
+                _this.$refs.listTable.listLoad();
+              } else {
+                _this.$Notice.error({
+                  title: '提示',
+                  desc: result.info
+                });
+              }
+            }
+          })
+        }
+      });
+    }
   },
   created: function () {
     var _this = this

@@ -310,17 +310,17 @@ export const defRules = {
   markdown: {
     required: true,
     message: 'markdown 不能为空',
-    trigger: 'blur'
+    trigger: 'change'
   },
   editor: {
     required: true,
     message: '详情不能为空',
-    trigger: 'blur'
+    trigger: 'change'
   },
   upload: {
     required: true,
     message: '请上传封面',
-    trigger: 'blur'
+    trigger: 'change'
   },
   'upload-album': [
     {
