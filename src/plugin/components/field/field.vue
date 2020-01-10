@@ -245,7 +245,7 @@
           <OptionGroup v-for="(options, inds) in currentField.optionGroups" :key="inds" :label="options.label">
             <Option
               v-for="(option, ind) in options.options"
-              :key="index"
+              :key="ind"
               :value="option.value"
               :label="option.label"
               :disabled="option.disabled"
@@ -362,7 +362,7 @@
         :show-week-numbers="currentField['show-week-numbers']"
         :start-date="currentField['start-date']"
         :confirm="currentField['confirm']"
-        style="width: 400px"
+        style="width: 300px"
         @on-change="(val, type) => {onDateChange(val, type, currentField)}"
         >
       </DatePicker>
@@ -371,7 +371,7 @@
     <!-- 时间选择框 -->
     <template v-if="isTimePicker(currentField.type)">
       <TimePicker
-        :value="currentValue"
+        v-model="currentValue"
         :type="currentField.type"
         :format="getDateTimeFormat(currentField)"
         :placeholder="currentField.placeholder"
@@ -390,10 +390,12 @@
         :options="currentField.options"
         :show-week-numbers="currentField['show-week-numbers']"
         :start-date="currentField['start-date']"
-        style="width: 200px"
-        @on-change="(val, type) => {onDateChange(val, type, currentField)}"
+        style="width: 300px"
+        @on-change="(val, type) => {onTimeChange(val, type, currentField)}"
         >
       </TimePicker>
+      <!-- timePicker v-model 得到的是字符串 -->
+      <!-- @on-change="(val, type) => {onDateChange(val, type, currentField)}" -->
     </template>
 
     <template v-if="currentField.type == 'upload'">
@@ -411,6 +413,7 @@
         :height="currentField.height"
         :handleResult="currentField.handleResult"
         :no-edit="currentField.noEdit ? currentField.noEdit : false"
+        @on-change="(val) => {onUploadChange(val, currentField)}"
         >
       </sm-upload>
     </template>
@@ -431,7 +434,7 @@
         :height="currentField.height"
         :handleResult="currentField.handleResult"
         :no-edit="currentField.noEdit ? currentField.noEdit : false"
-        @on-change="currentField['on-change']"
+        @on-change="(val) => {onUploadChange(val, currentField)}"
         >
       </sm-upload>
     </template>
@@ -443,7 +446,7 @@
         :localCache="false"
         :width="currentField.width"
         :height="currentField.height"
-        @on-change="currentField['on-change']"
+        @on-change="(val, text) => {onEditorChange(val, text, currentField)}"
         />
     </template>
 
@@ -455,7 +458,7 @@
         :options="currentField.options"
         :width="currentField.width"
         :height="currentField.height"
-        @on-change="currentField['on-change']"
+        @on-change="(val) => {onMarkdownChange(val, currentField)}"
         />
     </template>
 
@@ -464,16 +467,19 @@
         :ref="currentField.name + '-tags'"
         :value="currentValue"
         :tags="currentField.tags"
-        @on-change="currentField['on-change']"
+        @on-change="(value, item) => {onTagsChange(value, item, currentField)}"
         />
     </template>
-
   </div>
 </template>
 <script>
   import Util from '../../libs/util';
 
+  import Emitter from 'iview/src/mixins/emitter';
+
   export default {
+    name: 'SmField',
+    mixins: [ Emitter ],
     props: {
       value: {
         default: null
@@ -563,14 +569,51 @@
         }
         return format;
       },
+      triggerValidate(value) {
+        setTimeout(() => {
+          this.dispatch('FormItem', 'on-form-change', value);
+        })
+      },
       onDateChange (value, type, field) {   // value 格式化的值，type 日期选择框类型，field 表单名字
         this.currentValue = value;
+        // 触发 表单验证
+        this.triggerValidate(new Date(value))
+        field['on-change'](value);    // 触发父组件回调方法
+      },
+      onTimeChange (value, type, field) {   // value 格式化的值，type 日期选择框类型，field 表单名字
+        this.currentValue = value;
+        // 触发 表单验证
+        this.triggerValidate(value)
         field['on-change'](value);    // 触发父组件回调方法
       },
       onTransferChange (targetKeys, direction, moveKeys, field) {
         this.currentValue = targetKeys;
+        // 触发 表单验证
+        this.triggerValidate(value);
         field['on-change'](targetKeys, direction, moveKeys);    // 触发父组件回调方法
-      }
+      },
+      onUploadChange (value, field) {
+        // 触发 表单验证
+        this.triggerValidate(value)
+        field['on-change'](value);          // 触发父组件回调方法
+      },
+      onEditorChange (value, text, field) {
+        console.log(value)
+        // 触发 表单验证
+        this.triggerValidate(value)
+        field['on-change'](value);          // 触发父组件回调方法
+      },
+      onMarkdownChange (value, field) {
+        // 触发 表单验证
+        this.triggerValidate(value)
+        field['on-change'](value);          // 触发父组件回调方法
+      },
+      onTagsChange (value, item, field) {
+        this.currentValue = value;
+        // 触发 表单验证
+        this.triggerValidate(value)
+        field['on-change'](value, item);    // 触发父组件回调方法
+      },
     },
     created () {
     }

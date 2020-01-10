@@ -10,6 +10,36 @@
         <Button type="primary" @click="jumpPage({ path: '/couponManage/add' })"><Icon type="plus-round"></Icon>优惠券添加</Button>
       </template>
     </myTable>
+
+    <Modal v-model="sendShow" :closable='false' :mask-closable=false :width="600">
+      <h3 slot="header" style="color:#2D8CF0">发送优惠券</h3>
+      <h6 style="margin-bottom: 20px;">即将发送优惠券 “{{ sendInfo.name }}”</h6>
+
+      <Row >
+        <Col span="6" class="row-label">优惠券金额：</Col>
+        <Col span="18" class="row-content">{{ sendInfo.money }}</Col>
+      </Row>
+      <Row >
+        <Col span="6" class="row-label">可用场景：</Col>
+        <Col span="18" class="row-content">{{ sendInfo.apply_type_name }}</Col>
+      </Row>
+      <Row >
+        <Col span="6" class="row-label">有效天数：</Col>
+        <Col span="18" class="row-content">{{ sendInfo.expire_days }}天</Col>
+      </Row>
+      <div style="height: 20px;"></div>
+      <Form ref="sendForm" :model="sendForm" :label-width="100" label-position="right" :rules="sendValidate">
+        <Form-item label="选择用户" prop="user_id">
+          <Select style="width:200px" v-model="sendForm.user_id" filterable clearable placeholder="发放用户">
+            <Option v-for="(user, index) in users" :key="index" :label="user.name + (user.phone != null ? ' - ' + user.phone : '')" :value="user.id" ></Option>
+          </Select>
+        </Form-item>
+      </Form>
+      <div slot="footer">
+        <Button type="text" @click="cancel">取消</Button>
+        <Button type="primary" :loading="saveLoading" @click="ok">发送</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -23,6 +53,20 @@ export default {
   },
   data () {
     return {
+      sendShow: false,
+      saveLoading: false,
+      sendInfo: {},
+      sendForm: {
+        id: 0,
+        user_id: 0,
+      },
+      sendValidate: {
+        user_id: [
+          { required: true, type: 'number', min: 1, message: '请选择要发放的用户', trigger: 'change' }
+        ],
+      },
+      users: [],
+
       currentRow: {},
       teachers: [],
       tags: [],
@@ -67,6 +111,22 @@ export default {
                     click: () => {
                       var id = params.row.id
                       this.jumpPage('/couponManage/coupons/' + id)
+                    }
+                  }
+                }),
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small',
+                    icon: 'md-send'
+                  },
+                  style: {
+                    marginRight: '5px',
+                    marginBottom: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.showSend(params.row);
                     }
                   }
                 }),
@@ -149,6 +209,83 @@ export default {
           }
         }
       })
+    },
+    getUsers() {
+      // 获取所有老师
+      var _this = this;
+      Util.ajax({
+        url: '/adminapi/users/all',
+        method: 'get',
+        success: function(result) {
+          if (result.error == 0) {
+
+            _this.users = result.result;
+          } else {
+            _this.$Notice.error({
+              title: '提示',
+              desc: result.info
+            })
+          }
+        }
+      })
+    },
+    showSend (item) {
+      if (this.users.length <= 0) {
+        this.getUsers();
+      } 
+
+      this.sendForm.id = item.id;
+      this.sendInfo = item;
+      this.sendShow = true;
+    },
+    cancel: function () {
+      this.sendShow = false;
+      this.sendForm.id = 0;
+      this.sendForm.user_id = 0;
+      this.sendInfo = {};
+    },
+    ok: function () {
+      var _this = this;
+
+      _this.$Modal.confirm({
+        title: '提示',
+        content: '确定要发送吗？',
+        onOk: function () {
+          _this.sendOper()
+        },
+        onCancel: function () {
+          _this.$Notice.error({ title: '提示', desc: '操作取消' })
+        }
+      })
+    },
+    sendOper () {
+      var _this = this;
+      _this.$refs['sendForm'].validate((valid) => {
+        if (valid) {
+          _this.saveLoading = true;
+          Util.ajax({
+            url: '/adminapi/couponTypes/'+ _this.sendForm.id +'/sendCoupon',
+            method: 'post',
+            data: {user_id: this.sendForm.user_id},
+            success: function(result) {
+              _this.saveLoading = false;
+              if (result.error == 0) {
+                _this.$Notice.success({
+                  title: '提示',
+                  desc: "发送成功"
+                });
+                _this.cancel();
+                _this.$refs.listTable.listLoad();
+              } else {
+                _this.$Notice.error({
+                  title: '提示',
+                  desc: result.info
+                });
+              }
+            }
+          })
+        }
+      });
     }
   },
   created: function () {
@@ -160,4 +297,24 @@ export default {
 </script>
 
 <style lang="css">
+</style>
+
+<style scoped>
+.ivu-row {
+  padding: 10px;
+}
+.row-label {
+  text-align: right;
+  padding-right: 10px;
+}
+
+.row-content {
+  text-align: left;
+  padding-left: 10px;
+}
+.detail-images {
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+}
 </style>
