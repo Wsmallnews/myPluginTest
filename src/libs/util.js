@@ -206,7 +206,7 @@ export const getMenuByRouter = (list, access, is_super) => {
         meta: item.meta
       }
       if ((hasChild(item) || (item.meta && item.meta.showAlways)) && showThisMenuEle(item, access, is_super)) {
-        obj.children = getMenuByRouter(item.children, access)
+        obj.children = getMenuByRouter(item.children, access, is_super)
       }
       if (item.meta && item.meta.href) obj.href = item.meta.href
       if (showThisMenuEle(item, access, is_super)) res.push(obj)

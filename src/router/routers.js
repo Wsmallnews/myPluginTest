@@ -27,7 +27,6 @@ export default [{
     redirect: '/home',
     component: Main,
     meta: {
-      access: ['basic:welcome'],
       hideInMenu: true,
       notCache: true
     },
@@ -35,7 +34,6 @@ export default [{
       path: '/home',
       name: 'home',
       meta: {
-        access: ['basic:welcome'],
         hideInMenu: true,
         title: '首页',
         notCache: true,
