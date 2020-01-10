@@ -27,6 +27,7 @@ export default [{
     redirect: '/home',
     component: Main,
     meta: {
+      access: ['basic:welcome'],
       hideInMenu: true,
       notCache: true
     },
@@ -34,6 +35,7 @@ export default [{
       path: '/home',
       name: 'home',
       meta: {
+        access: ['basic:welcome'],
         hideInMenu: true,
         title: '首页',
         notCache: true,
@@ -46,6 +48,7 @@ export default [{
     path: '/userManage',
     name: 'usermanage',
     meta: {
+      access: ['user:view', 'user:wallet_logs'],
       icon: 'md-person',
       title: '用户管理'
     },
@@ -54,6 +57,7 @@ export default [{
         path: 'index',
         name: 'usermanage-users-index',
         meta: {
+          access: ['user:view'],
           icon: 'md-person',
           title: '用户管理'
         },
@@ -63,6 +67,7 @@ export default [{
         path: 'walletLogs/:user_id',
         name: 'usermanage-walletLogs',
         meta: {
+          access: ['user:wallet_logs'],
           hideInMenu: true,
           icon: 'md-cash',
           title: '钱包日志'
@@ -105,6 +110,7 @@ export default [{
     path: '/activityManage',
     name: 'activitymanage',
     meta: {
+      access: ['activity:view', 'activity:edit'],
       icon: 'md-construct',
       title: '薪活动管理'
     },
@@ -113,6 +119,7 @@ export default [{
         path: 'index',
         name: 'activitymanage-activities-index',
         meta: {
+          access: ['activity:view'],
           icon: 'md-construct',
           title: '薪活动管理',
         },
@@ -122,6 +129,7 @@ export default [{
         path: 'add',
         name: 'activitymanage-activities-add',
         meta: {
+          access: ['activity:edit'],
           icon: 'md-add',
           title: '薪活动添加',
         },
@@ -131,6 +139,7 @@ export default [{
         path: 'edit/:id',
         name: 'activitymanage-activities-edit',
         meta: {
+          access: ['activity:edit'],
           hideInMenu: true,
           icon: 'md-brush',
           title: '薪活动编辑',
@@ -141,6 +150,7 @@ export default [{
         path: 'user/:id',
         name: 'activitymanage-activities-user',
         meta: {
+          access: ['activity_user:view'],
           hideInMenu: true,
           icon: 'md-brush',
           title: '薪活动用户',
@@ -153,6 +163,7 @@ export default [{
     path: '/businessManage',
     name: 'businessmanage',
     meta: {
+      access: ['business:view', 'business:edit', 'tag:view'],
       icon: 'md-construct',
       title: '薪商学管理'
     },
@@ -161,6 +172,7 @@ export default [{
         path: 'index',
         name: 'businessmanage-business-index',
         meta: {
+          access: ['business:view'],
           icon: 'md-construct',
           title: '薪商学管理',
         },
@@ -170,6 +182,7 @@ export default [{
         path: 'add',
         name: 'businessmanage-business-add',
         meta: {
+          access: ['business:edit'],
           icon: 'md-add',
           title: '薪商学添加',
         },
@@ -179,6 +192,7 @@ export default [{
         path: 'edit/:id',
         name: 'businessmanage-business-edit',
         meta: {
+          access: ['business:edit'],
           hideInMenu: true,
           icon: 'md-brush',
           title: '薪商学编辑',
@@ -189,6 +203,7 @@ export default [{
         path: 'user/:id',
         name: 'businessmanage-business-user',
         meta: {
+          access: ['business_user:view'],
           hideInMenu: true,
           icon: 'md-brush',
           title: '薪商学用户',
@@ -199,6 +214,7 @@ export default [{
         path: 'tags/business',
         name: 'businessmanage-tags-index',
         meta: {
+          access: ['tag:view'],
           icon: 'md-add',
           title: '商学标签管理',
         },
@@ -210,6 +226,7 @@ export default [{
     path: '/classroomManage',
     name: 'classroommanage',
     meta: {
+      access: ['classroom:view', 'classroom:edit', 'classroom_comment:view', 'tag:view'],
       icon: 'md-construct',
       title: '薪课堂管理'
     },
@@ -218,6 +235,7 @@ export default [{
         path: 'index',
         name: 'classroommanage-classrooms-index',
         meta: {
+          access: ['classroom:view'],
           icon: 'md-construct',
           title: '薪课堂管理',
         },
@@ -227,6 +245,7 @@ export default [{
         path: 'add',
         name: 'classroommanage-classrooms-add',
         meta: {
+          access: ['classroom:edit'],
           icon: 'md-add',
           title: '薪课堂添加',
         },
@@ -236,6 +255,7 @@ export default [{
         path: 'edit/:id',
         name: 'classroommanage-classrooms-edit',
         meta: {
+          access: ['classroom:edit'],
           hideInMenu: true,
           icon: 'md-brush',
           title: '薪课堂编辑',
@@ -246,6 +266,7 @@ export default [{
         path: 'user/:id',
         name: 'classroommanage-classrooms-user',
         meta: {
+          access: ['classroom_user:view'],
           hideInMenu: true,
           icon: 'md-brush',
           title: '薪课堂用户',
@@ -256,6 +277,7 @@ export default [{
         path: 'classroomContents/:classroom_id',
         name: 'classroommanage-classroomcontents-index',
         meta: {
+          access: ['classroom_content:view'],
           hideInMenu: true,
           icon: 'md-construct',
           title: '薪课堂课时',
@@ -266,6 +288,7 @@ export default [{
         path: 'classroomContents/add/:classroom_id',
         name: 'classroommanage-classroomcontents-add',
         meta: {
+          access: ['classroom_content:edit'],
           hideInMenu: true,
           icon: 'md-add',
           title: '课时添加',
@@ -276,6 +299,7 @@ export default [{
         path: 'classroomContents/edit/:classroom_id/:id',
         name: 'classroommanage-classroomcontents-edit',
         meta: {
+          access: ['classroom_content:edit'],
           hideInMenu: true,
           icon: 'md-brush',
           title: '课时编辑',
@@ -286,6 +310,7 @@ export default [{
         path: 'classroomComments',
         name: 'classroommanage-classroomComments-index',
         meta: {
+          access: ['classroom_comment:view'],
           icon: 'md-add',
           title: '薪课堂留言',
         },
@@ -295,6 +320,7 @@ export default [{
         path: 'classroomComments/:classroom_id/:classroom_content_id',
         name: 'classroommanage-classroomComments-index-params',
         meta: {
+          access: ['classroom_comment:view'],
           hideInMenu: true,
           icon: 'md-add',
           title: '新课堂留言',
@@ -305,6 +331,7 @@ export default [{
         path: 'classroomTeachComments/:classroom_id',
         name: 'classroommanage-classroomTeachComments-index-params',
         meta: {
+          access: ['classroom_teach_comment:view'],
           hideInMenu: true,
           icon: 'md-add',
           title: '讲师评价',
@@ -315,6 +342,7 @@ export default [{
         path: 'classroomTeachComments/:classroom_id/:classroom_content_id',
         name: 'classroommanage-classroomTeachComments-index-params',
         meta: {
+          access: ['classroom_teach_comment:view'],
           hideInMenu: true,
           icon: 'md-add',
           title: '讲师评价',
@@ -325,6 +353,7 @@ export default [{
         path: 'tags/classroom',
         name: 'classroommanage-tags-index',
         meta: {
+          access: ['tag:view'],
           icon: 'md-add',
           title: '课堂标签管理',
         },
@@ -336,6 +365,7 @@ export default [{
     path: '/soundManage',
     name: 'soundmanage',
     meta: {
+      access: ['sound:view', 'sound:edit', 'tag:view'],
       icon: 'md-construct',
       title: '薪声管理'
     },
@@ -344,6 +374,7 @@ export default [{
         path: 'index',
         name: 'soundmanage-sounds-index',
         meta: {
+          access: ['sound:view'],
           icon: 'md-construct',
           title: '薪声管理',
         },
@@ -353,6 +384,7 @@ export default [{
         path: 'add',
         name: 'soundmanage-sounds-add',
         meta: {
+          access: ['sound:edit'],
           icon: 'md-add',
           title: '薪声添加',
         },
@@ -362,6 +394,7 @@ export default [{
         path: 'edit/:id',
         name: 'soundmanage-sounds-edit',
         meta: {
+          access: ['sound:edit'],
           hideInMenu: true,
           icon: 'md-brush',
           title: '薪声编辑',
@@ -372,6 +405,7 @@ export default [{
         path: 'tags/sound',
         name: 'soundmanage-tags-index',
         meta: {
+          access: ['tag:view'],
           icon: 'md-add',
           title: '薪声标签管理',
         },
@@ -381,6 +415,7 @@ export default [{
         path: 'soundComments/:sound_id',
         name: 'soundmanage-soundComments-index',
         meta: {
+          access: ['sound_comment:view'],
           hideInMenu: true,
           icon: 'md-add',
           title: '薪声留言',
@@ -393,6 +428,7 @@ export default [{
     path: '/tagManage',
     name: 'tagmanage',
     meta: {
+      access: ['tag:edit'],
       hideInMenu: true,
       icon: 'md-construct',
       title: '标签管理'
@@ -424,6 +460,7 @@ export default [{
     path: '/couponManage',
     name: 'couponmanage',
     meta: {
+      access: ['coupon_type:view', 'coupon_type:edit'],
       icon: 'md-construct',
       title: '优惠券管理'
     },
@@ -432,6 +469,7 @@ export default [{
         path: 'index',
         name: 'couponmanage-coupontypes-index',
         meta: {
+          access: ['coupon_type:view'],
           icon: 'md-construct',
           title: '优惠券管理',
         },
@@ -441,6 +479,7 @@ export default [{
         path: 'add',
         name: 'couponmanage-coupontypes-add',
         meta: {
+          access: ['coupon_type:edit'],
           icon: 'md-add',
           title: '优惠券添加',
         },
@@ -450,6 +489,7 @@ export default [{
         path: 'edit/:id',
         name: 'couponmanage-coupontypes-edit',
         meta: {
+          access: ['coupon_type:edit'],
           hideInMenu: true,
           icon: 'md-brush',
           title: '优惠券编辑',
@@ -460,6 +500,7 @@ export default [{
         path: 'coupons/:coupon_type_id',
         name: 'couponmanage-coupons-index',
         meta: {
+          access: ['coupon:view'],
           hideInMenu: true,
           icon: 'md-brush',
           title: '优惠券记录',
@@ -472,6 +513,7 @@ export default [{
     path: '/orderManage',
     name: 'ordermanage',
     meta: {
+      access: ['order:view'],
       icon: 'md-albums',
       title: '订单管理'
     },
@@ -480,6 +522,7 @@ export default [{
         path: 'orders/index',
         name: 'ordermanage-orders-index',
         meta: {
+          access: ['order:view'],
           icon: 'md-albums',
           title: '订单管理'
         },
@@ -501,6 +544,7 @@ export default [{
     path: 'walletApplys',
     name: 'usermanage-walletapplys',
     meta: {
+      access: ['wallet_apply:view'],
       icon: 'md-cash',
       title: '提现管理'
     },
@@ -509,6 +553,7 @@ export default [{
         path: 'index',
         name: 'usermanage-walletapplys-index',
         meta: {
+          access: ['wallet_apply:view'],
           icon: 'md-cash',
           title: '提现管理'
         },
@@ -520,6 +565,7 @@ export default [{
     path: '/feedbackManage',
     name: 'feedbackmanage',
     meta: {
+      access: ['feedback:view'],
       icon: 'md-chatboxes',
       title: '意见反馈'
     },
@@ -528,6 +574,7 @@ export default [{
         path: 'feedbacks/index',
         name: 'feedbackmanage-feedbacks-index',
         meta: {
+          access: ['feedback:view'],
           icon: 'md-chatboxes',
           title: '意见反馈'
         },
@@ -539,6 +586,7 @@ export default [{
     path: '/articleManage',
     name: 'articlemanage',
     meta: {
+      access: ['article:view', 'article_cat:view'],
       icon: 'md-document',
       title: '文章管理'
     },
@@ -547,6 +595,7 @@ export default [{
         path: 'articles',
         name: 'articlemanage-articles',
         meta: {
+          access: ['article:view'],
           icon: 'md-document',
           title: '文章管理'
         },
@@ -555,6 +604,7 @@ export default [{
             path: 'index',
             name: 'articlemanage-articles-index',
             meta: {
+              access: ['article:view'],
               icon: 'md-document',
               title: '文章管理',
             },
@@ -564,6 +614,7 @@ export default [{
             path: 'add',
             name: 'articlemanage-articles-add',
             meta: {
+              access: ['article:edit'],
               hideInMenu: true,
               icon: 'md-add',
               title: '文章添加',
@@ -574,6 +625,7 @@ export default [{
             path: 'edit/:id',
             name: 'articlemanage-articles-edit',
             meta: {
+              access: ['article:edit'],
               hideInMenu: true,
               icon: 'md-brush',
               title: '文章编辑',
@@ -586,6 +638,7 @@ export default [{
         path: 'articleCats',
         name: 'articlemanage-articlecats',
         meta: {
+          access: ['article_cat:view'],
           icon: 'md-browsers',
           title: '分类管理'
         },
@@ -594,6 +647,7 @@ export default [{
             path: 'index',
             name: 'articlemanage-articlecats-index',
             meta: {
+              access: ['article_cat:view'],
               icon: 'md-browsers',
               title: '分类管理',
             },
@@ -603,6 +657,7 @@ export default [{
             path: 'add',
             name: 'articlemanage-articlecats-add',
             meta: {
+              access: ['article_cat:edit'],
               hideInMenu: true,
               icon: 'md-add',
               title: '分类添加',
@@ -613,6 +668,7 @@ export default [{
             path: 'edit/:id',
             name: 'articlemanage-articlecats-edit',
             meta: {
+              access: ['article_cat:edit'],
               hideInMenu: true,
               icon: 'md-brush',
               title: '分类编辑',
@@ -627,6 +683,7 @@ export default [{
     path: '/adManage',
     name: 'admanage',
     meta: {
+      access: ['ad:view', 'ad_position:view'],
       icon: 'md-basket',
       title: '广告管理'
     },
@@ -635,6 +692,7 @@ export default [{
         path: 'ads',
         name: 'admanage-ads',
         meta: {
+          access: ['ad:view'],
           icon: 'md-basket',
           title: '广告管理'
         },
@@ -643,6 +701,7 @@ export default [{
             path: 'index',
             name: 'admanage-ads-index',
             meta: {
+              access: ['ad:view'],
               icon: 'md-basket',
               title: '广告管理',
             },
@@ -652,6 +711,7 @@ export default [{
             path: 'add',
             name: 'admanage-ads-add',
             meta: {
+              access: ['ad:edit'],
               hideInMenu: true,
               icon: 'md-add',
               title: '广告添加',
@@ -662,6 +722,7 @@ export default [{
             path: 'edit/:id',
             name: 'admanage-ads-edit',
             meta: {
+              access: ['ad:edit'],
               hideInMenu: true,
               icon: 'md-brush',
               title: '广告编辑',
@@ -674,6 +735,7 @@ export default [{
         path: 'adPositions',
         name: 'admanage-adpositions',
         meta: {
+          access: ['ad_position:view'],
           icon: 'md-basket',
           title: '广告位管理'
         },
@@ -682,6 +744,7 @@ export default [{
             path: 'index',
             name: 'admanage-adpositions-index',
             meta: {
+              access: ['ad_position:view'],
               icon: 'md-basket',
               title: '广告位管理',
             },
@@ -691,6 +754,7 @@ export default [{
             path: 'add',
             name: 'admanage-adpositions-add',
             meta: {
+              access: ['ad_position:edit'],
               hideInMenu: true,
               icon: 'md-add',
               title: '广告位添加',
@@ -701,6 +765,7 @@ export default [{
             path: 'edit/:id',
             name: 'admanage-adpositions-edit',
             meta: {
+              access: ['ad_position:edit'],
               hideInMenu: true,
               icon: 'md-brush',
               title: '广告位编辑',
@@ -715,6 +780,7 @@ export default [{
     path: '/settingManage',
     name: 'settingmanage',
     meta: {
+      access: ['setting:view'],
       icon: 'md-settings',
       title: '设置管理'
     },
@@ -723,6 +789,7 @@ export default [{
         path: 'settings',
         name: 'settingmanage-settings',
         meta: {
+          access: ['setting:view'],
           icon: 'md-settings',
           title: '设置管理'
         },
@@ -734,6 +801,7 @@ export default [{
     path: '/adminManage',
     name: 'adminmanage',
     meta: {
+      access: ['admin:view', 'role:view', 'admin_log:view'],
       icon: 'md-cog',
       title: '管理设置'
     },
@@ -742,6 +810,7 @@ export default [{
         path: 'admins',
         name: 'adminmanage-admins',
         meta: {
+          access: ['admin:view'],
           icon: 'md-person',
           title: '管理员管理'
         },
@@ -750,9 +819,9 @@ export default [{
             path: 'index',
             name: 'adminmanage-admins-index',
             meta: {
+              access: ['admin:view'],
               icon: 'md-person',
               title: '管理员管理',
-              // access: ['admins_view']
             },
             component: () => import('@/view/admin-manage/admins/index.vue')
           },
@@ -760,10 +829,10 @@ export default [{
             path: 'add',
             name: 'adminmanage-admins-add',
             meta: {
+              access: ['admin:edit'],
               hideInMenu: true,
               icon: 'md-person-add',
               title: '管理员添加',
-              // access: ['admins_edit']
             },
             component: () => import('@/view/admin-manage/admins/add-edit.vue')
           },
@@ -771,6 +840,7 @@ export default [{
             path: 'edit/:id',
             name: 'adminmanage-admins-edit',
             meta: {
+              access: ['admin:edit'],
               hideInMenu: true,
               icon: 'md-person-add',
               title: '管理员编辑',
@@ -782,79 +852,84 @@ export default [{
             path: 'resetPassword/:id',
             name: 'adminmanage-admins-resetpassword',
             meta: {
+              access: ['admin:password'],
               hideInMenu: true,
               icon: 'ios-build',
               title: '管理员重置密码',
-              // access: ['admins_edit']
             },
             component: () => import('@/view/admin-manage/admins/reset-password.vue')
           },
-          // {
-          //   path: 'setRole/:id',
-          //   name: 'adminmanage-admins-setrole',
-          //   meta: {
-          //     hideInMenu: true,
-          //     icon: 'ios-build',
-          //     title: '设置角色',
-          //     // access: ['admins_roles']
-          //   },
-          //   component: () => import('@/view/admin-manage/admins/set-role.vue')
-          // },
+          {
+            path: 'setRole/:id',
+            name: 'adminmanage-admins-setrole',
+            meta: {
+              access: ['admin:role'],
+              hideInMenu: true,
+              icon: 'ios-build',
+              title: '设置角色',
+              // access: ['admins_roles']
+            },
+            component: () => import('@/view/admin-manage/admins/set-role.vue')
+          },
         ]
       },
-      // {
-      //   path: 'roles',
-      //   name: 'adminmanage-roles',
-      //   meta: {
-      //     icon: 'md-person',
-      //     title: '角色管理'
-      //   },
-      //   component: parentView,
-      //   children: [{
-      //       path: 'index',
-      //       name: 'adminmanage-roles-index',
-      //       meta: {
-      //         icon: 'md-person',
-      //         title: '角色管理',
-      //         // access: ['roles_view']
-      //       },
-      //       component: () => import('@/view/admin-manage/roles/index.vue')
-      //     },
-      //     {
-      //       path: 'add',
-      //       name: 'adminmanage-roles-add',
-      //       meta: {
-      //         hideInMenu: true,
-      //         icon: 'md-person-add',
-      //         title: '角色添加',
-      //         // access: ['roles_edit']
-      //       },
-      //       component: () => import('@/view/admin-manage/roles/add-edit.vue')
-      //     },
-      //     {
-      //       path: 'edit/:id',
-      //       name: 'adminmanage-roles-edit',
-      //       meta: {
-      //         hideInMenu: true,
-      //         icon: 'md-person-add',
-      //         title: '角色编辑',
-      //         // access: ['roles_edit']
-      //       },
-      //       component: () => import('@/view/admin-manage/roles/add-edit.vue')
-      //     },
-      //     {
-      //       path: 'givePerm/:id',
-      //       name: 'adminmanage-roles-giveperm',
-      //       meta: {
-      //         hideInMenu: true,
-      //         icon: 'md-settings',
-      //         title: '分配权限',
-      //         // access: ['roles_permission']
-      //       },
-      //       component: () => import('@/view/admin-manage/roles/give-perm.vue')
-      //     },
-      //   ]
-      // },
+      {
+        path: 'roles',
+        name: 'adminmanage-roles',
+        meta: {
+          access: ['role:view'],
+          icon: 'md-person',
+          title: '角色管理'
+        },
+        component: parentView,
+        children: [{
+            path: 'index',
+            name: 'adminmanage-roles-index',
+            meta: {
+              access: ['role:view'],
+              icon: 'md-person',
+              title: '角色管理',
+            },
+            component: () => import('@/view/admin-manage/roles/index.vue')
+          },
+          {
+            path: 'add',
+            name: 'adminmanage-roles-add',
+            meta: {
+              access: ['role:edit'],
+              hideInMenu: true,
+              icon: 'md-person-add',
+              title: '角色添加',
+              // access: ['roles_edit']
+            },
+            component: () => import('@/view/admin-manage/roles/add-edit.vue')
+          },
+          {
+            path: 'edit/:id',
+            name: 'adminmanage-roles-edit',
+            meta: {
+              access: ['role:edit'],
+              hideInMenu: true,
+              icon: 'md-person-add',
+              title: '角色编辑',
+              // access: ['roles_edit']
+            },
+            component: () => import('@/view/admin-manage/roles/add-edit.vue')
+          },
+          {
+            path: 'givePerm/:id',
+            name: 'adminmanage-roles-giveperm',
+            meta: {
+              access: ['role:permission'],
+              hideInMenu: true,
+              icon: 'md-settings',
+              title: '分配权限',
+              // access: ['roles_permission']
+            },
+            component: () => import('@/view/admin-manage/roles/give-perm.vue')
+          },
+        ]
+      },
       // {
       //   path: 'permissions',
       //   name: 'adminmanage-permissions',
@@ -901,6 +976,7 @@ export default [{
         path: 'adminLogs',
         name: 'adminmanage-adminlogs',
         meta: {
+          access: ['admin_log:view'],
           icon: 'md-list-box',
           title: '操作日志'
         },
@@ -909,12 +985,12 @@ export default [{
           path: 'index',
           name: 'adminmanage-adminlogs-index',
           meta: {
+            access: ['admin_log:view'],
             icon: 'md-list-box',
             title: '操作日志',
-            // access: ['adminLogs_view']
           },
           component: () => import('@/view/admin-manage/admin-logs/index.vue')
-        }, ]
+        }]
       },
       // {
       //   path: 'cronLogs',
