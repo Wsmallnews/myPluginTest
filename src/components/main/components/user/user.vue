@@ -1,7 +1,7 @@
 <template>
   <div class="user-avator-dropdown">
     <Dropdown @on-click="handleClick">
-      <Avatar :src="userAvator"/>
+      <Avatar :src="userAvatar"/>
       <Icon :size="18" type="md-arrow-dropdown"></Icon>
       <DropdownMenu slot="list">
         <DropdownItem name="editpass">修改密码</DropdownItem>
@@ -38,7 +38,7 @@ import Util from '@/libs/util'
 export default {
   name: 'User',
   props: {
-    userAvator: {
+    userAvatar: {
       type: String,
       default: ''
     }

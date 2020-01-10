@@ -183,7 +183,10 @@ export const hasChild = (item) => {
   return item.children && item.children.length !== 0
 }
 
-const showThisMenuEle = (item, access) => {
+const showThisMenuEle = (item, access, is_super) => {
+  if (is_super) {   // 如果超级管理员，不处理隐藏菜单
+    return true;
+  }
   if (item.meta && item.meta.access && item.meta.access.length) {
     if (hasOneOf(item.meta.access, access)) return true
     else return false
@@ -193,7 +196,7 @@ const showThisMenuEle = (item, access) => {
  * @param {Array} list 通过路由列表得到菜单列表
  * @returns {Array}
  */
-export const getMenuByRouter = (list, access) => {
+export const getMenuByRouter = (list, access, is_super) => {
   let res = []
   forEach(list, item => {
     if (!item.meta || (item.meta && !item.meta.hideInMenu)) {
@@ -202,11 +205,11 @@ export const getMenuByRouter = (list, access) => {
         name: item.name,
         meta: item.meta
       }
-      if ((hasChild(item) || (item.meta && item.meta.showAlways)) && showThisMenuEle(item, access)) {
+      if ((hasChild(item) || (item.meta && item.meta.showAlways)) && showThisMenuEle(item, access, is_super)) {
         obj.children = getMenuByRouter(item.children, access)
       }
       if (item.meta && item.meta.href) obj.href = item.meta.href
-      if (showThisMenuEle(item, access)) res.push(obj)
+      if (showThisMenuEle(item, access, is_super)) res.push(obj)
     }
   })
   return res

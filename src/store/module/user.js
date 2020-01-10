@@ -5,15 +5,15 @@ export default {
   state: {
     userName: '',
     userId: '',
-    avatorImgPath: '',
+    avatarImgPath: '',
     token: getToken(),
-    access: '',
+    access: [],
     superAdmin: 0,
     hasGetInfo: false
   },
   mutations: {
-    setAvator (state, avatorPath) {
-      state.avatorImgPath = avatorPath
+    setAvatar (state, avatarPath) {
+      state.avatarImgPath = avatarPath
     },
     setUserId (state, id) {
       state.userId = id
@@ -78,7 +78,7 @@ export default {
             if (res.error == 0) {
                 const data = res.result;
 
-                commit('setAvator', data.avator)
+                commit('setAvatar', data.avatar)
                 commit('setUserName', data.name)
                 commit('setUserId', data.id)
                 commit('setAccess', data.permissions)

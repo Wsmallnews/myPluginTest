@@ -16,7 +16,7 @@ const LOGIN_PAGE_NAME = 'login'
 
 const turnTo = (to, access, next, is_super) => {
   if (is_super) {
-    // 超级管理员
+    // 超级管理员，不验证权限
     next()
   } else {
     if (canTurnTo(to.name, access, routes)){
