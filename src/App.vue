@@ -35,4 +35,7 @@ form.form-edit .ivu-cascader, form.form-edit .ivu-input-wrapper, form.form-edit 
   margin-left: 10px;
 }
 
+.sm-form .ivu-row {
+  padding: 0px;
+}
 </style>

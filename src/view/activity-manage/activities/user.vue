@@ -34,31 +34,26 @@ export default {
         item: [],
         columns: [
           {type: 'index', align: 'center', width: 100, fixed: 'left'},
-          {title: '报名用户', align: 'center', width: 120, key: 'max_num',
+          {title: '报名用户', align: 'center', minWidth: 120, key: 'max_num',
             render: (h, params) => {
               if (params.row.user != null) {
                 return h('span', params.row.user.name)
               }
             }},
-          {title: '手机号', align: 'center', width: 150, key: 'max_num',
+          {title: '手机号', align: 'center', minWidth: 150, key: 'max_num',
             render: (h, params) => {
               if (params.row.user != null) {
                 return h('span', params.row.user.phone)
               }
             }},
-          {title: '性别', align: 'center', width: 80, key: 'sex_name',
+          {title: '性别', align: 'center', width: 120, key: 'sex_name',
             render: (h, params) => {
               if (params.row.user != null) {
                 return h('span', params.row.user.sex_name)
               }
             }},
-          {title: '是否vip', align: 'center', width: 80, key: 'is_vip',
-            render: (h, params) => {
-              if (params.row.user != null) {
-                return h('span', params.row.user.is_vip_name)
-              }
-            }},
-          {title: '是否签到', align: 'center', width: 120, key: 'is_sign_name'},
+          {title: '是否vip', align: 'center', width: 120, key: 'is_vip_name'},
+          {title: '是否签到', align: 'center', width: 150, key: 'is_sign_name'},
           {title: '签到时间', align: 'center', width: 200, key: 'sign_at'},
           {title: '报名时间', align: 'center', width: 200, key: 'created_at'},
         ]

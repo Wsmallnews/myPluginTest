@@ -3,7 +3,7 @@
     <myTable ref="listTable" :listConf="listConf" @select="selectRow" @searchReset="searchReset" :no-search="true">
       <template slot="formBtn" >
         <Button type="primary" @click="jumpPage({ path: '/adminManage/admins/add' })"><Icon type="plus-round"></Icon>管理员添加</Button>
-        <!-- <Button type="primary" @click="setRole"><Icon type="plus-round"></Icon>设置角色</Button> -->
+        <Button type="primary" @click="setRole"><Icon type="plus-round"></Icon>设置角色</Button>
       </template>
     </myTable>
   </div>
@@ -48,7 +48,7 @@ export default {
               }
             }},
           {title: '手机', align: 'center', key: 'phone'},
-          {title: '邮箱', align: 'center', key: 'email'},
+          // {title: '邮箱', align: 'center', key: 'email'},
           {title: '添加时间', align: 'center', key: 'created_at'},
           {title: '操作',
             key: 'action',

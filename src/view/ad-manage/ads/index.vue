@@ -59,9 +59,9 @@ export default {
                 ])
               }
             }},
-          {title: '小程序链接', align: 'center', width: 150, key: 'link_mini'},
+          // {title: '小程序链接', align: 'center', width: 150, key: 'link_mini'},
           {title: '网页链接', align: 'center', width: 150, key: 'link'},
-          {title: 'app 链接', align: 'center', width: 150, key: 'link_app'},
+          // {title: 'app 链接', align: 'center', width: 150, key: 'link_app'},
           {title: '广告开始时间', align: 'center', width: 180, key: 'start_at'},
           {title: '广告结束时间', align: 'center', width: 180, key: 'end_at'},
           {title: '状态',

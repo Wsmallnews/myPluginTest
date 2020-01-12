@@ -1,9 +1,12 @@
 <template lang="html">
-  <div class="admin-logs-index">
+  <div class="orders-index">
     <myTable ref="listTable" :listConf="listConf" @select="selectRow" @searchReset="searchReset">
       <template slot="formItem">
         <Form-item prop="order_sn">
           <Input type="text" v-model="listConf.searchParams.order_sn" placeholder="搜索订单号"></Input>
+        </Form-item>
+        <Form-item prop="transaction_id">
+          <Input type="text" v-model="listConf.searchParams.transaction_id" placeholder="搜索流水号"></Input>
         </Form-item>
         <Form-item prop="user_name">
           <Input type="text" v-model="listConf.searchParams.user_name" placeholder="搜索用户名"></Input>
@@ -15,8 +18,15 @@
         </Form-item>
         <Form-item prop="order_status">
           <Select v-model="listConf.searchParams.order_status" placeholder="搜索订单状态">
+            <Option value="all" >全部(订单状态)</Option>
             <Option v-for="item in orderStatusAll" :value="item.value" :key="item.value">{{ item.name }}</Option>
           </Select>
+        </Form-item>
+        <Form-Item prop="created_at">
+          <sm-field
+            v-model="listConf.searchParams.created_at"
+            :field="{type: 'datetimerange', placeholder: '下单时间'}"
+            />
         </Form-item>
       </template>
     </myTable>
@@ -33,9 +43,19 @@
           <Col span="18" class="row-content">{{ orderDetail.order_sn }}</Col>
         </Row>
         <Row>
+          <Col span="6" class="row-label">流水号：</Col>
+          <Col span="18" class="row-content">{{ orderDetail.transaction_id }}</Col>
+        </Row>
+        <Row>
           <Col span="6" class="row-label">用户昵称：</Col>
           <Col span="18" class="row-content">
             {{ orderDetail.user != null ? orderDetail.user.name + '-' + orderDetail.user.phone  : '' }}
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">是否 VIP：</Col>
+          <Col span="18" class="row-content">
+            {{ orderDetail.ext_decode && orderDetail.ext_decode.is_vip ? '是' : '否' }}
           </Col>
         </Row>
         <Row>
@@ -69,7 +89,7 @@
           <Col span="18" class="row-content">{{ orderDetail.payed_at }}</Col>
         </Row>
         <Row>
-          <Col span="6" class="row-label">创建时间：</Col>
+          <Col span="6" class="row-label">下单时间：</Col>
           <Col span="18" class="row-content">{{ orderDetail.created_at }}</Col>
         </Row>
       </div>
@@ -103,9 +123,11 @@
           url: "/adminapi/orders",
           searchParams: {
             order_sn: "",
+            transaction_id: "",
             user_name: "",
             type: "",
-            order_status: ""
+            order_status: "",
+            created_at: []
           },
           rowClass: [
             {name: 'order_status',value: 'geted', type: 'warning'}
@@ -114,6 +136,8 @@
           columns: [
             {type: 'index', align: 'center', width:100, fixed: 'left'},
             {title: '订单号', align: 'center', width: 170, key: 'order_sn'},
+            {title: '流水号', align: 'center', width: 170, key: 'transaction_id'},
+            {title: '类型', align: 'center', width: 100, key: 'type_name'},
             {title: 'UID', align: 'center', width: 80, key: 'user_id'},
             {title: '用户名', align: 'center', width: 120, key: 'user_name', render:(h, params)=>{
               return params.row.user ? h('span', params.row.user.name) : h('span', '');
@@ -121,17 +145,16 @@
             {title: '手机号', align: 'center', width: 120, key: 'user_phone', render:(h, params)=>{
               return params.row.user ? h('span', params.row.user.phone) : h('span', '');
             }},
-            {title: '是否 VIP', align: 'center', width: 120, key: 'user_vip', render:(h, params)=>{
-              return params.row.user ? h('span', (params.row.user.is_vip_name)) : h('span', '');
+            {title: '是否 VIP', align: 'center', width: 120, key: 'ext_vip', render:(h, params)=>{
+              return (params.row.ext_decode && params.row.ext_decode.is_vip) ? h('span', '是') : h('span', '否');
             }},
-            {title: '类型', align: 'center', width: 100, key: 'type_name'},
             {title: '订单内容', align: 'center', width: 150, key: 'subject'},
             {title: '订单状态', align: 'center', width: 100, key: 'order_status_name'},
             {title: '订单总金额', align: 'center', width: 100, key: 'total_money'},
             {title: '支付总金额', align: 'center', width: 100, key: 'wechat_fee'},
             {title: '优惠总金额', align: 'center', width: 100, key: 'discount_fee'},
-            {title: '支付时间', align: 'center', width: 180, key: 'pay_at'},
-            {title: '添加时间', align: 'center', width: 180, key: 'created_at'},
+            {title: '支付时间', align: 'center', width: 180, key: 'payed_at'},
+            {title: '下单时间', align: 'center', width: 180, key: 'created_at'},
             {title: '操作',
               key: 'action',
               align: 'center',

@@ -16,7 +16,7 @@
                     </sm-field>
                   </FormItem>
                 </Col>
-                <Col v-if="ind < (field.children.length - 1)" span="2">&nbsp;</Col>
+                <!-- <Col v-if="ind < (field.children.length - 1)" span="2">&nbsp;</Col> -->
               </template>
             </Row>
           </FormItem>
@@ -297,7 +297,7 @@
             var span = 4;
         }
 
-        return span;
+        return 3;
       },
       showFormItem(field, index, parent) {      // 当前字段 或者当前字段父字段 的下标
         var isShow = false;
@@ -313,8 +313,6 @@
         return this.formVal;
       },
       handleSubmit(name) {
-        console.log(this.formVal)
-        console.log(this.formRule)
         this.$refs[name].validate((valid) => {
           if (valid) {
             this.$emit('submit', this.formVal)

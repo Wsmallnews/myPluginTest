@@ -13,7 +13,7 @@
 
     <Modal v-model="sendShow" :closable='false' :mask-closable=false :width="600">
       <h3 slot="header" style="color:#2D8CF0">发送优惠券</h3>
-      <h6 style="margin-bottom: 20px;">即将发送优惠券 “{{ sendInfo.name }}”</h6>
+      <h3 style="color: #ffad33;margin-bottom: 10px;">即将发送优惠券 “{{ sendInfo.name }}”</h3>
 
       <Row >
         <Col span="6" class="row-label">优惠券金额：</Col>
@@ -33,6 +33,9 @@
           <Select style="width:200px" v-model="sendForm.user_id" filterable clearable placeholder="发放用户">
             <Option v-for="(user, index) in users" :key="index" :label="user.name + (user.phone != null ? ' - ' + user.phone : '')" :value="user.id" ></Option>
           </Select>
+        </Form-item>
+        <Form-item label="备注" prop="remark">
+          <Input v-model="sendForm.remark" type="textarea" :autosize="{minRows: 2,maxRows: 3}" placeholder="请输入发送备注"></Input>
         </Form-item>
       </Form>
       <div slot="footer">
@@ -59,6 +62,7 @@ export default {
       sendForm: {
         id: 0,
         user_id: 0,
+        remark: ''
       },
       sendValidate: {
         user_id: [
@@ -242,6 +246,7 @@ export default {
       this.sendShow = false;
       this.sendForm.id = 0;
       this.sendForm.user_id = 0;
+      this.sendForm.remark = '';
       this.sendInfo = {};
     },
     ok: function () {
@@ -266,7 +271,7 @@ export default {
           Util.ajax({
             url: '/adminapi/couponTypes/'+ _this.sendForm.id +'/sendCoupon',
             method: 'post',
-            data: {user_id: this.sendForm.user_id},
+            data: {user_id: this.sendForm.user_id, remark: this.sendForm.remark},
             success: function(result) {
               _this.saveLoading = false;
               if (result.error == 0) {

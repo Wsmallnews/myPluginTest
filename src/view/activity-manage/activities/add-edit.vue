@@ -166,6 +166,11 @@ export default {
           label: '线下费用',
           children: [
             {
+              type: "switch",
+              name: 'is_offline_charge',
+              label: '是否收费',
+            },
+            {
               type: "number",
               name: 'offline_money',
               label: '线下费用',
@@ -173,11 +178,6 @@ export default {
                 message: '请输入线下费用'
               },
               showIf: 'is_offline_charge',
-            },
-            {
-              type: "switch",
-              name: 'is_offline_charge',
-              label: '是否收费',
             },
           ]
         },
@@ -187,6 +187,11 @@ export default {
           label: '线上费用',
           children: [
             {
+              type: "switch",
+              name: 'is_online_charge',
+              label: '是否收费',
+            },
+            {
               type: "number",
               name: 'online_money',
               label: '线上费用',
@@ -194,11 +199,6 @@ export default {
                 message: '请输入线上费用'
               },
               showIf: 'is_online_charge',
-            },
-            {
-              type: "switch",
-              name: 'is_online_charge',
-              label: '是否收费',
             },
           ]
         },
@@ -208,6 +208,11 @@ export default {
           label: 'VIP 线下费用',
           children: [
             {
+              type: "switch",
+              name: 'is_vip_offline_charge',
+              label: '是否收费',
+            },
+            {
               type: "number",
               name: 'vip_offline_money',
               label: 'VIP 线下费用',
@@ -215,11 +220,6 @@ export default {
                 message: '请输入 VIP 线下费用'
               },
               showIf: 'is_vip_offline_charge',
-            },
-            {
-              type: "switch",
-              name: 'is_vip_offline_charge',
-              label: '是否收费',
             },
           ]
         },
@@ -229,6 +229,11 @@ export default {
           label: 'VIP 线上费用',
           children: [
             {
+              type: "switch",
+              name: 'is_vip_online_charge',
+              label: '是否收费',
+            },
+            {
               type: "number",
               name: 'vip_online_money',
               label: 'VIP 线上费用',
@@ -236,11 +241,6 @@ export default {
                 message: '请输入 VIP 线上费用'
               },
               showIf: 'is_vip_online_charge',
-            },
-            {
-              type: "switch",
-              name: 'is_vip_online_charge',
-              label: '是否收费',
             },
           ]
         },

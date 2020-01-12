@@ -73,43 +73,13 @@ export default [{
         component: () => import('@/view/user-manage/wallet-logs/index.vue'),
       }
     ]
-    // children: [{
-    //     path: 'users',
-    //     name: 'usermanage-users',
-    //     meta: {
-    //       icon: 'md-construct',
-    //       title: '用户管理'
-    //     },
-    //     component: parentView,
-    //     children: [{
-    //         path: 'index',
-    //         name: 'usermanage-users-index',
-    //         meta: {
-    //           icon: 'md-person',
-    //           title: '用户管理'
-    //         },
-    //         component: () => import('@/view/user-manage/users/index.vue')
-    //       }
-    //     ]
-    //   },
-    //   {
-    //     path: 'walletLogs/:user_id',
-    //     name: 'usermanage-walletLogs',
-    //     meta: {
-    //       hideInMenu: true,
-    //       icon: 'md-cash',
-    //       title: '钱包日志'
-    //     },
-    //     component: () => import('@/view/user-manage/wallet-logs/index.vue'),
-    //   }
-    // ]
   },
   {
     path: '/activityManage',
     name: 'activitymanage',
     meta: {
       access: ['activity:view', 'activity:edit'],
-      icon: 'md-construct',
+      icon: 'md-book',
       title: '薪活动管理'
     },
     component: Main,
@@ -118,7 +88,7 @@ export default [{
         name: 'activitymanage-activities-index',
         meta: {
           access: ['activity:view'],
-          icon: 'md-construct',
+          icon: 'md-book',
           title: '薪活动管理',
         },
         component: () => import('@/view/activity-manage/activities/index.vue')
@@ -162,7 +132,7 @@ export default [{
     name: 'businessmanage',
     meta: {
       access: ['business:view', 'business:edit', 'tag:view'],
-      icon: 'md-construct',
+      icon: 'md-bookmarks',
       title: '薪商学管理'
     },
     component: Main,
@@ -171,7 +141,7 @@ export default [{
         name: 'businessmanage-business-index',
         meta: {
           access: ['business:view'],
-          icon: 'md-construct',
+          icon: 'md-bookmarks',
           title: '薪商学管理',
         },
         component: () => import('@/view/business-manage/business/index.vue')
@@ -213,7 +183,7 @@ export default [{
         name: 'businessmanage-tags-index',
         meta: {
           access: ['tag:view'],
-          icon: 'md-add',
+          icon: 'md-pricetag',
           title: '商学标签管理',
         },
         component: () => import('@/view/tag-manage/tags/index.vue')
@@ -225,7 +195,7 @@ export default [{
     name: 'classroommanage',
     meta: {
       access: ['classroom:view', 'classroom:edit', 'classroom_comment:view', 'tag:view'],
-      icon: 'md-construct',
+      icon: 'md-bookmark',
       title: '薪课堂管理'
     },
     component: Main,
@@ -234,7 +204,7 @@ export default [{
         name: 'classroommanage-classrooms-index',
         meta: {
           access: ['classroom:view'],
-          icon: 'md-construct',
+          icon: 'md-bookmark',
           title: '薪课堂管理',
         },
         component: () => import('@/view/classroom-manage/classrooms/index.vue')
@@ -309,7 +279,7 @@ export default [{
         name: 'classroommanage-classroomComments-index',
         meta: {
           access: ['classroom_comment:view'],
-          icon: 'md-add',
+          icon: 'md-chatboxes',
           title: '薪课堂留言',
         },
         component: () => import('@/view/classroom-manage/classroom-comments/index.vue')
@@ -327,7 +297,7 @@ export default [{
       },
       {
         path: 'classroomTeachComments/:classroom_id',
-        name: 'classroommanage-classroomTeachComments-index-params',
+        name: 'classroommanage-classroomTeachComments-index-classroom',
         meta: {
           access: ['classroom_teach_comment:view'],
           hideInMenu: true,
@@ -352,7 +322,7 @@ export default [{
         name: 'classroommanage-tags-index',
         meta: {
           access: ['tag:view'],
-          icon: 'md-add',
+          icon: 'md-pricetag',
           title: '课堂标签管理',
         },
         component: () => import('@/view/tag-manage/tags/index.vue')
@@ -364,7 +334,7 @@ export default [{
     name: 'soundmanage',
     meta: {
       access: ['sound:view', 'sound:edit', 'tag:view'],
-      icon: 'md-construct',
+      icon: 'md-microphone',
       title: '薪声管理'
     },
     component: Main,
@@ -373,7 +343,7 @@ export default [{
         name: 'soundmanage-sounds-index',
         meta: {
           access: ['sound:view'],
-          icon: 'md-construct',
+          icon: 'md-microphone',
           title: '薪声管理',
         },
         component: () => import('@/view/sound-manage/sounds/index.vue')
@@ -404,7 +374,7 @@ export default [{
         name: 'soundmanage-tags-index',
         meta: {
           access: ['tag:view'],
-          icon: 'md-add',
+          icon: 'md-pricetag',
           title: '薪声标签管理',
         },
         component: () => import('@/view/tag-manage/tags/index.vue')
@@ -415,7 +385,7 @@ export default [{
         meta: {
           access: ['sound_comment:view'],
           hideInMenu: true,
-          icon: 'md-add',
+          icon: 'md-chatboxes',
           title: '薪声留言',
         },
         component: () => import('@/view/sound-manage/sound-comments/index.vue')
@@ -428,7 +398,7 @@ export default [{
     meta: {
       access: ['tag:edit'],
       hideInMenu: true,
-      icon: 'md-construct',
+      icon: 'md-pricetag',
       title: '标签管理'
     },
     component: Main,
@@ -459,7 +429,7 @@ export default [{
     name: 'couponmanage',
     meta: {
       access: ['coupon_type:view', 'coupon_type:edit'],
-      icon: 'md-construct',
+      icon: 'md-card',
       title: '优惠券管理'
     },
     component: Main,
@@ -468,7 +438,7 @@ export default [{
         name: 'couponmanage-coupontypes-index',
         meta: {
           access: ['coupon_type:view'],
-          icon: 'md-construct',
+          icon: 'md-card',
           title: '优惠券管理',
         },
         component: () => import('@/view/coupon-manage/coupon-types/index.vue')
@@ -539,8 +509,29 @@ export default [{
     ]
   },
   {
-    path: 'walletApplys',
-    name: 'usermanage-walletapplys',
+    path: '/staticsManage',
+    name: 'staticsmanage',
+    meta: {
+      access: ['statics:view'],
+      icon: 'md-stats',
+      title: '收入统计'
+    },
+    component: Main,
+    children: [{
+        path: 'statics/index',
+        name: 'staticsmanage-statics-index',
+        meta: {
+          access: ['statics:view'],
+          icon: 'md-stats',
+          title: '收入统计'
+        },
+        component: () => import('@/view/statics-manage/statics/index.vue'),
+      },
+    ]
+  },
+  {
+    path: '/walletApplys',
+    name: 'walletapplys',
     meta: {
       access: ['wallet_apply:view'],
       icon: 'md-cash',
@@ -549,7 +540,7 @@ export default [{
     component: Main,
     children: [{
         path: 'index',
-        name: 'usermanage-walletapplys-index',
+        name: 'walletapplys-index',
         meta: {
           access: ['wallet_apply:view'],
           icon: 'md-cash',
@@ -590,91 +581,69 @@ export default [{
     },
     component: Main,
     children: [{
-        path: 'articles',
-        name: 'articlemanage-articles',
+      path: 'articles/index',
+        name: 'articlemanage-articles-index',
         meta: {
           access: ['article:view'],
           icon: 'md-document',
-          title: '文章管理'
+          title: '文章管理',
         },
-        component: parentView,
-        children: [{
-            path: 'index',
-            name: 'articlemanage-articles-index',
-            meta: {
-              access: ['article:view'],
-              icon: 'md-document',
-              title: '文章管理',
-            },
-            component: () => import('@/view/article-manage/articles/index.vue')
-          },
-          {
-            path: 'add',
-            name: 'articlemanage-articles-add',
-            meta: {
-              access: ['article:edit'],
-              hideInMenu: true,
-              icon: 'md-add',
-              title: '文章添加',
-            },
-            component: () => import('@/view/article-manage/articles/add-edit.vue')
-          },
-          {
-            path: 'edit/:id',
-            name: 'articlemanage-articles-edit',
-            meta: {
-              access: ['article:edit'],
-              hideInMenu: true,
-              icon: 'md-brush',
-              title: '文章编辑',
-            },
-            component: () => import('@/view/article-manage/articles/add-edit.vue')
-          },
-        ]
+        component: () => import('@/view/article-manage/articles/index.vue')
       },
       {
-        path: 'articleCats',
-        name: 'articlemanage-articlecats',
+        path: 'articles/add',
+        name: 'articlemanage-articles-add',
+        meta: {
+          access: ['article:edit'],
+          hideInMenu: true,
+          icon: 'md-add',
+          title: '文章添加',
+        },
+        component: () => import('@/view/article-manage/articles/add-edit.vue')
+      },
+      {
+        path: 'articles/edit/:id',
+        name: 'articlemanage-articles-edit',
+        meta: {
+          access: ['article:edit'],
+          hideInMenu: true,
+          icon: 'md-brush',
+          title: '文章编辑',
+        },
+        component: () => import('@/view/article-manage/articles/add-edit.vue')
+      },
+      {
+        path: 'articlecats/index',
+        name: 'articlemanage-articlecats-index',
         meta: {
           access: ['article_cat:view'],
           icon: 'md-browsers',
-          title: '分类管理'
+          title: '分类管理',
         },
-        component: parentView,
-        children: [{
-            path: 'index',
-            name: 'articlemanage-articlecats-index',
-            meta: {
-              access: ['article_cat:view'],
-              icon: 'md-browsers',
-              title: '分类管理',
-            },
-            component: () => import('@/view/article-manage/articlecats/index.vue')
-          },
-          {
-            path: 'add',
-            name: 'articlemanage-articlecats-add',
-            meta: {
-              access: ['article_cat:edit'],
-              hideInMenu: true,
-              icon: 'md-add',
-              title: '分类添加',
-            },
-            component: () => import('@/view/article-manage/articlecats/add-edit.vue')
-          },
-          {
-            path: 'edit/:id',
-            name: 'articlemanage-articlecats-edit',
-            meta: {
-              access: ['article_cat:edit'],
-              hideInMenu: true,
-              icon: 'md-brush',
-              title: '分类编辑',
-            },
-            component: () => import('@/view/article-manage/articlecats/add-edit.vue')
-          },
-        ]
-      }
+        component: () => import('@/view/article-manage/articlecats/index.vue')
+      },
+      {
+        path: 'articlecats/add',
+        name: 'articlemanage-articlecats-add',
+        meta: {
+          access: ['article_cat:edit'],
+          hideInMenu: true,
+          icon: 'md-add',
+          title: '分类添加',
+        },
+        component: () => import('@/view/article-manage/articlecats/add-edit.vue')
+      },
+      {
+        path: 'articlecats/edit/:id',
+        name: 'articlemanage-articlecats-edit',
+        meta: {
+          access: ['article_cat:edit'],
+          hideInMenu: true,
+          icon: 'md-brush',
+          title: '分类编辑',
+        },
+        component: () => import('@/view/article-manage/articlecats/add-edit.vue')
+      },
     ]
   },
   {
@@ -687,91 +656,69 @@ export default [{
     },
     component: Main,
     children: [{
-        path: 'ads',
-        name: 'admanage-ads',
+        path: 'ads/index',
+        name: 'admanage-ads-index',
         meta: {
           access: ['ad:view'],
           icon: 'md-basket',
-          title: '广告管理'
+          title: '广告管理',
         },
-        component: parentView,
-        children: [{
-            path: 'index',
-            name: 'admanage-ads-index',
-            meta: {
-              access: ['ad:view'],
-              icon: 'md-basket',
-              title: '广告管理',
-            },
-            component: () => import('@/view/ad-manage/ads/index.vue')
-          },
-          {
-            path: 'add',
-            name: 'admanage-ads-add',
-            meta: {
-              access: ['ad:edit'],
-              hideInMenu: true,
-              icon: 'md-add',
-              title: '广告添加',
-            },
-            component: () => import('@/view/ad-manage/ads/add-edit.vue')
-          },
-          {
-            path: 'edit/:id',
-            name: 'admanage-ads-edit',
-            meta: {
-              access: ['ad:edit'],
-              hideInMenu: true,
-              icon: 'md-brush',
-              title: '广告编辑',
-            },
-            component: () => import('@/view/ad-manage/ads/add-edit.vue')
-          },
-        ]
+        component: () => import('@/view/ad-manage/ads/index.vue')
       },
       {
-        path: 'adPositions',
-        name: 'admanage-adpositions',
+        path: 'ads/add',
+        name: 'admanage-ads-add',
+        meta: {
+          access: ['ad:edit'],
+          hideInMenu: true,
+          icon: 'md-add',
+          title: '广告添加',
+        },
+        component: () => import('@/view/ad-manage/ads/add-edit.vue')
+      },
+      {
+        path: 'ads/edit/:id',
+        name: 'admanage-ads-edit',
+        meta: {
+          access: ['ad:edit'],
+          hideInMenu: true,
+          icon: 'md-brush',
+          title: '广告编辑',
+        },
+        component: () => import('@/view/ad-manage/ads/add-edit.vue')
+      },
+      {
+        path: 'adPositions/index',
+        name: 'admanage-adpositions-index',
         meta: {
           access: ['ad_position:view'],
           icon: 'md-basket',
-          title: '广告位管理'
+          title: '广告位管理',
         },
-        component: parentView,
-        children: [{
-            path: 'index',
-            name: 'admanage-adpositions-index',
-            meta: {
-              access: ['ad_position:view'],
-              icon: 'md-basket',
-              title: '广告位管理',
-            },
-            component: () => import('@/view/ad-manage/adpositions/index.vue')
-          },
-          {
-            path: 'add',
-            name: 'admanage-adpositions-add',
-            meta: {
-              access: ['ad_position:edit'],
-              hideInMenu: true,
-              icon: 'md-add',
-              title: '广告位添加',
-            },
-            component: () => import('@/view/ad-manage/adpositions/add-edit.vue')
-          },
-          {
-            path: 'edit/:id',
-            name: 'admanage-adpositions-edit',
-            meta: {
-              access: ['ad_position:edit'],
-              hideInMenu: true,
-              icon: 'md-brush',
-              title: '广告位编辑',
-            },
-            component: () => import('@/view/ad-manage/adpositions/add-edit.vue')
-          },
-        ]
-      }
+        component: () => import('@/view/ad-manage/adpositions/index.vue')
+      },
+      {
+        path: 'adPositions/add',
+        name: 'admanage-adpositions-add',
+        meta: {
+          access: ['ad_position:edit'],
+          hideInMenu: true,
+          icon: 'md-add',
+          title: '广告位添加',
+        },
+        component: () => import('@/view/ad-manage/adpositions/add-edit.vue')
+      },
+      {
+        path: 'adPositions/edit/:id',
+        name: 'admanage-adpositions-edit',
+        meta: {
+          access: ['ad_position:edit'],
+          hideInMenu: true,
+          icon: 'md-brush',
+          title: '广告位编辑',
+        },
+        component: () => import('@/view/ad-manage/adpositions/add-edit.vue')
+      },
     ]
   },
   {
@@ -805,129 +752,119 @@ export default [{
     },
     component: Main,
     children: [{
-        path: 'admins',
-        name: 'adminmanage-admins',
+      path: 'admins/index',
+        name: 'adminmanage-admins-index',
         meta: {
           access: ['admin:view'],
           icon: 'md-person',
-          title: '管理员管理'
+          title: '管理员管理',
         },
-        component: parentView,
-        children: [{
-            path: 'index',
-            name: 'adminmanage-admins-index',
-            meta: {
-              access: ['admin:view'],
-              icon: 'md-person',
-              title: '管理员管理',
-            },
-            component: () => import('@/view/admin-manage/admins/index.vue')
-          },
-          {
-            path: 'add',
-            name: 'adminmanage-admins-add',
-            meta: {
-              access: ['admin:edit'],
-              hideInMenu: true,
-              icon: 'md-person-add',
-              title: '管理员添加',
-            },
-            component: () => import('@/view/admin-manage/admins/add-edit.vue')
-          },
-          {
-            path: 'edit/:id',
-            name: 'adminmanage-admins-edit',
-            meta: {
-              access: ['admin:edit'],
-              hideInMenu: true,
-              icon: 'md-person-add',
-              title: '管理员编辑',
-              // access: ['admins_edit']
-            },
-            component: () => import('@/view/admin-manage/admins/add-edit.vue')
-          },
-          {
-            path: 'resetPassword/:id',
-            name: 'adminmanage-admins-resetpassword',
-            meta: {
-              access: ['admin:password'],
-              hideInMenu: true,
-              icon: 'ios-build',
-              title: '管理员重置密码',
-            },
-            component: () => import('@/view/admin-manage/admins/reset-password.vue')
-          },
-          {
-            path: 'setRole/:id',
-            name: 'adminmanage-admins-setrole',
-            meta: {
-              access: ['admin:role'],
-              hideInMenu: true,
-              icon: 'ios-build',
-              title: '设置角色',
-              // access: ['admins_roles']
-            },
-            component: () => import('@/view/admin-manage/admins/set-role.vue')
-          },
-        ]
+        component: () => import('@/view/admin-manage/admins/index.vue')
       },
       {
-        path: 'roles',
-        name: 'adminmanage-roles',
+        path: 'admins/add',
+        name: 'adminmanage-admins-add',
+        meta: {
+          access: ['admin:edit'],
+          hideInMenu: true,
+          icon: 'md-person-add',
+          title: '管理员添加',
+        },
+        component: () => import('@/view/admin-manage/admins/add-edit.vue')
+      },
+      {
+        path: 'admins/edit/:id',
+        name: 'adminmanage-admins-edit',
+        meta: {
+          access: ['admin:edit'],
+          hideInMenu: true,
+          icon: 'md-person-add',
+          title: '管理员编辑',
+          // access: ['admins_edit']
+        },
+        component: () => import('@/view/admin-manage/admins/add-edit.vue')
+      },
+      {
+        path: 'admins/resetPassword/:id',
+        name: 'adminmanage-admins-resetpassword',
+        meta: {
+          access: ['admin:password'],
+          hideInMenu: true,
+          icon: 'ios-build',
+          title: '管理员重置密码',
+        },
+        component: () => import('@/view/admin-manage/admins/reset-password.vue')
+      },
+      {
+        path: 'admins/setRole/:id',
+        name: 'adminmanage-admins-setrole',
+        meta: {
+          access: ['admin:role'],
+          hideInMenu: true,
+          icon: 'ios-build',
+          title: '设置角色',
+          // access: ['admins_roles']
+        },
+        component: () => import('@/view/admin-manage/admins/set-role.vue')
+      },
+      {
+        path: 'roles/index',
+        name: 'adminmanage-roles-index',
         meta: {
           access: ['role:view'],
-          icon: 'md-person',
-          title: '角色管理'
+          icon: 'md-contacts',
+          title: '角色管理',
         },
-        component: parentView,
-        children: [{
-            path: 'index',
-            name: 'adminmanage-roles-index',
-            meta: {
-              access: ['role:view'],
-              icon: 'md-person',
-              title: '角色管理',
-            },
-            component: () => import('@/view/admin-manage/roles/index.vue')
-          },
-          {
-            path: 'add',
-            name: 'adminmanage-roles-add',
-            meta: {
-              access: ['role:edit'],
-              hideInMenu: true,
-              icon: 'md-person-add',
-              title: '角色添加',
-              // access: ['roles_edit']
-            },
-            component: () => import('@/view/admin-manage/roles/add-edit.vue')
-          },
-          {
-            path: 'edit/:id',
-            name: 'adminmanage-roles-edit',
-            meta: {
-              access: ['role:edit'],
-              hideInMenu: true,
-              icon: 'md-person-add',
-              title: '角色编辑',
-              // access: ['roles_edit']
-            },
-            component: () => import('@/view/admin-manage/roles/add-edit.vue')
-          },
-          {
-            path: 'givePerm/:id',
-            name: 'adminmanage-roles-giveperm',
-            meta: {
-              access: ['role:permission'],
-              hideInMenu: true,
-              icon: 'md-settings',
-              title: '分配权限',
-              // access: ['roles_permission']
-            },
-            component: () => import('@/view/admin-manage/roles/give-perm.vue')
-          },
-        ]
+        component: () => import('@/view/admin-manage/roles/index.vue')
       },
+      {
+        path: 'roles/add',
+        name: 'adminmanage-roles-add',
+        meta: {
+          access: ['role:edit'],
+          hideInMenu: true,
+          icon: 'md-person-add',
+          title: '角色添加',
+          // access: ['roles_edit']
+        },
+        component: () => import('@/view/admin-manage/roles/add-edit.vue')
+      },
+      {
+        path: 'roles/edit/:id',
+        name: 'adminmanage-roles-edit',
+        meta: {
+          access: ['role:edit'],
+          hideInMenu: true,
+          icon: 'md-person-add',
+          title: '角色编辑',
+          // access: ['roles_edit']
+        },
+        component: () => import('@/view/admin-manage/roles/add-edit.vue')
+      },
+      {
+        path: 'roles/givePerm/:id',
+        name: 'adminmanage-roles-giveperm',
+        meta: {
+          access: ['role:permission'],
+          hideInMenu: true,
+          icon: 'md-settings',
+          title: '分配权限',
+          // access: ['roles_permission']
+        },
+        component: () => import('@/view/admin-manage/roles/give-perm.vue')
+      },
+      {
+        path: 'adminLogs/index',
+        name: 'adminmanage-adminlogs-index',
+        meta: {
+          access: ['admin_log:view'],
+          icon: 'md-list-box',
+          title: '操作日志',
+        },
+        component: () => import('@/view/admin-manage/admin-logs/index.vue')
+      }
+    ]
+
       // {
       //   path: 'permissions',
       //   name: 'adminmanage-permissions',
@@ -970,26 +907,6 @@ export default [{
       //     },
       //   ]
       // },
-      {
-        path: 'adminLogs',
-        name: 'adminmanage-adminlogs',
-        meta: {
-          access: ['admin_log:view'],
-          icon: 'md-list-box',
-          title: '操作日志'
-        },
-        component: parentView,
-        children: [{
-          path: 'index',
-          name: 'adminmanage-adminlogs-index',
-          meta: {
-            access: ['admin_log:view'],
-            icon: 'md-list-box',
-            title: '操作日志',
-          },
-          component: () => import('@/view/admin-manage/admin-logs/index.vue')
-        }]
-      },
       // {
       //   path: 'cronLogs',
       //   name: 'adminmanage-cronlogs',
@@ -1009,7 +926,6 @@ export default [{
       //     component: () => import('@/view/admin-manage/cron-logs/index.vue')
       //   }, ]
       // }
-    ]
   },
 
   {

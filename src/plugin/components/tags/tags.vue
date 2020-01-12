@@ -72,7 +72,7 @@ export default {
     }
   },
   created () {
-    this.currentValue = this.value
+    this.currentValue = JSON.parse(JSON.stringify(this.value))
   }
 }
 </script>

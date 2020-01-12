@@ -224,7 +224,7 @@ export default {
               })
             ])
           }},
-          {title: '状态', align: 'center', width: 100, key: 'is_invalid', render: (h, params) => {
+          {title: '禁用状态', align: 'center', width: 100, key: 'is_invalid', render: (h, params) => {
             return h('div', [
               h('i-switch', {
                 props: {

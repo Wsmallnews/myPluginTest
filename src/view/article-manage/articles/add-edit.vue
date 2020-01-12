@@ -179,5 +179,7 @@ export default {
 </script>
 
 <style lang="css">
-
+.ivu-select-dropdown {
+  z-index: 100000;
+}
 </style>

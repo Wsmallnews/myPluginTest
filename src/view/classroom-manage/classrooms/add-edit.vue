@@ -127,6 +127,11 @@ export default {
           label: '是否收费',
           children: [
             {
+              type: "switch",
+              name: 'is_charge',
+              label: '是否收费',
+            },
+            {
               type: "number",
               name: 'charge_money',
               label: '费用',
@@ -134,11 +139,6 @@ export default {
                 message: '请输入费用'
               },
               showIf: 'is_charge',
-            },
-            {
-              type: "switch",
-              name: 'is_charge',
-              label: '是否收费',
             },
           ]
         },
@@ -148,6 +148,11 @@ export default {
           label: 'VIP 是否收费',
           children: [
             {
+              type: "switch",
+              name: 'is_vip_charge',
+              label: '是否收费',
+            },
+            {
               type: "number",
               name: 'vip_charge_money',
               label: 'VIP费用',
@@ -155,11 +160,6 @@ export default {
                 message: '请输入VIP费用'
               },
               showIf: 'is_vip_charge',
-            },
-            {
-              type: "switch",
-              name: 'is_vip_charge',
-              label: '是否收费',
             },
           ]
         },

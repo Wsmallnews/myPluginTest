@@ -11,6 +11,7 @@
           @click.prevent.native="all()">
           全选
         </Checkbox>
+        <Button type="default" class="sync-btn" @click="syncPermission">同步权限</Button>
         <table border="1" cellspacing="0" cellpadding="0" class="table">
           <tr>
             <th width="200">模块</th>
@@ -118,6 +119,7 @@ export default {
       }
 
       this.checkIsAll(index)
+      this.allChecked = this.isAll()
     },
     second: function(index, ind) {
       this.permissions[index]['children'][ind].checked = !this.permissions[index]['children'][ind].checked
@@ -136,6 +138,7 @@ export default {
       }
 
       this.checkIsAll(index, ind)
+      this.allChecked = this.isAll()
     },
     third: function(index, ind, i) {
       var id = this.permissions[index]['children'][ind]['children'][i].id
@@ -146,6 +149,7 @@ export default {
       }
 
       this.checkIsAll(index, ind, i)
+      this.allChecked = this.isAll()
     },
     checkIsAll: function(index, ind, i) {
       if (i != undefined) {
@@ -168,8 +172,6 @@ export default {
           }
         }
         this.permissions[index].checked = is_sceond_all
-
-        this.allChecked = this.isAll()
       } else if (ind != undefined) {
         var children = this.permissions[index]['children']
         var is_all = true
@@ -181,15 +183,15 @@ export default {
         }
 
         this.permissions[index].checked = is_all
-        this.allChecked = this.isAll()
       } else if (index != undefined) {
-        this.allChecked = this.isAll()
+        // this.allChecked = this.isAll()
       }
     },
     isAll: function() {
       var is_all = true
-      for (let per of this.permissions) {
-        if (!per.checked) {
+
+      for (let i in this.permissions) {
+        if (!this.permissions[i].checked) {
           is_all = false
         }
       }
@@ -234,53 +236,82 @@ export default {
         }
       })
     },
+    syncPermission () {
+      var _this = this;
+      Util.ajax({
+        url: '/adminapi/permissions/permissionSync',
+        method: 'get',
+        success: function(result) {
+          if (result.error == 0) {
+            _this.$Notice.success({
+              title: '提示',
+              desc: '同步成功'
+            });
+            _this.getPermission();
+          } else {
+            _this.$Notice.error({
+              title: '提示',
+              desc: result.info
+            })
+          }
+        }
+      })
+    },
     handleReset() { // 表单数据重置, name ,表单数据
       var _this = this
       _this.$refs['formValidate'].resetFields()
+    },
+    getRole() {
+      var _this = this
+      Util.ajax({
+        url: '/adminapi/roles/' + _this.$route.params.id,
+        method: 'get',
+        success: function(result) {
+          if (result.error == 0) {
+            var info = result.result
+
+            _this.formValidate.id = info.id
+            _this.formValidate.name = info.name
+            var role_permissions = info.role_has_ps
+
+            for (var i = 0; i < role_permissions.length; i++) {
+              _this.formValidate.permission_arr.push(role_permissions[i].permission_id)
+            }
+          } else {
+            _this.$Notice.error({
+              title: '提示',
+              desc: result.info
+            })
+          }
+        }
+      })
+    },
+    getPermission () {
+      var _this = this;
+      Util.ajax({
+        url: '/adminapi/permissions/givePermissions',
+        method: 'get',
+        success: function(result) {
+          _this.permissions = result.permissions
+          _this.$nextTick(function() {
+            for (let permission in _this.permissions) {
+              for (let perm in _this.permissions[permission]['children']) {
+                for (let per in _this.permissions[permission]['children'][perm]['children']) {
+                  // _this.checkIsAll(permission, perm, per)
+                }
+              }
+            }
+          })
+        }
+      })
     }
   },
   mounted: function() {},
   created() {
-    var _this = this
-    Util.ajax({
-      url: '/adminapi/roles/' + _this.$route.params.id,
-      method: 'get',
-      success: function(result) {
-        if (result.error == 0) {
-          var info = result.result
+    var _this = this;
 
-          _this.formValidate.id = info.id
-          _this.formValidate.name = info.name
-          var role_permissions = info.role_has_ps
-
-          for (var i = 0; i < role_permissions.length; i++) {
-              _this.formValidate.permission_arr.push(role_permissions[i].permission_id)
-          }
-        } else {
-          _this.$Notice.error({
-            title: '提示',
-            desc: result.info
-          })
-        }
-      }
-    })
-
-    Util.ajax({
-      url: '/adminapi/permissions/givePermissions',
-      method: 'get',
-      success: function(result) {
-        _this.permissions = result.permissions
-        _this.$nextTick(function() {
-          for (let permission in _this.permissions) {
-            for (let perm in _this.permissions[permission]['children']) {
-              for (let per in _this.permissions[permission]['children'][perm]['children']) {
-                _this.checkIsAll(permission, perm, per)
-              }
-            }
-          }
-        })
-      }
-    })
+    _this.getRole();
+    _this.getPermission();
   }
 }
 </script>
@@ -288,3 +319,11 @@ export default {
 <style lang="css">
 	.table { width: 100%;border:1px solid #9e9c9c;border-collapse: collapse; word-wrap:break-word; word-break:break-all;}
 </style>
+
+<style scoped>
+  .sync-btn {
+    float: right;
+    margin-bottom: 10px;
+  }
+</style>
+

@@ -178,7 +178,7 @@ export default {
     var _this = this
 
     Util.ajax({
-      url: '/adminapi/articleCats',
+      url: '/adminapi/articleCats/all',
       method: 'get',
       success: function (result) {
         if (result.error == 0) {

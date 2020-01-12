@@ -13,9 +13,9 @@
 				<myUpload ref="avatar" :data="uploadData" :defaultImgs="formValidate.avatar"></myUpload>
       </Form-item>
 
-      <Form-item label="邮箱" prop="email" required>
+      <!-- <Form-item label="邮箱" prop="email" required>
           <Input v-model="formValidate.email" placeholder="邮箱"></Input>
-      </Form-item>
+      </Form-item> -->
 
       <Form-item v-if="type == 'add'" label="密码" prop="password" required >
         <Input v-model="formValidate.password" type="password" placeholder="密码"></Input>
@@ -48,7 +48,7 @@ export default {
         name: '',
         avatar: '',
         phone: '',
-        email: '',
+        // email: '',
         password: ''
       },
       ruleValidate: {
@@ -79,6 +79,8 @@ export default {
             method = 'patch'
             var url = '/adminapi/admins/' + _this.formValidate.id
           }
+
+          _this.formValidate.avatar = _this.$refs['avatar'].imgList();
 
           Util.ajax({
             url: url,

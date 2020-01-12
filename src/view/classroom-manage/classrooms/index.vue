@@ -211,6 +211,12 @@ export default {
           {title: '标签', align: 'center', width: 100, key: 'tagstr', render: (h, params) => {
             return h('span', params.row.tag_arr.join(' '));
           }},
+          {title: '讲师', align: 'center', width: 120, key: 'teach_name', render: (h, params) => {
+            return h('span', params.row.teach != null ? params.row.teach.name : '');
+          }},
+          {title: '讲师手机号', align: 'center', width: 120, key: 'teach_phone', render: (h, params) => {
+            return h('span', params.row.teach != null ? params.row.teach.phone : '');
+          }},
           {title: '报名人数', align: 'center', width: 120, key: 'join_num'},
           {title: '已报名人数', align: 'center', width: 120, key: 'joined_num'},
           {title: '报名截止时间', align: 'center', width: 120, key: 'join_end_at'},

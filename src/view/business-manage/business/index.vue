@@ -203,6 +203,12 @@ export default {
           {title: '标签', align: 'center', width: 100, key: 'tagstr', render: (h, params) => {
             return h('span', params.row.tag_arr.join(' '));
           }},
+          {title: '讲师', align: 'center', width: 120, key: 'teach_name', render: (h, params) => {
+            return h('span', params.row.teach != null ? params.row.teach.name : '');
+          }},
+          {title: '讲师手机号', align: 'center', width: 120, key: 'teach_phone', render: (h, params) => {
+            return h('span', params.row.teach != null ? params.row.teach.phone : '');
+          }},
           {title: '开始时间', align: 'center', width: 100, key: 'start_at'},
           {title: '结束时间', align: 'center', width: 100, key: 'end_at'},
           {title: '报名人数', align: 'center', width: 120, key: 'join_num'},

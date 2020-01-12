@@ -598,7 +598,6 @@
         field['on-change'](value);          // 触发父组件回调方法
       },
       onEditorChange (value, text, field) {
-        console.log(value)
         // 触发 表单验证
         this.triggerValidate(value)
         field['on-change'](value);          // 触发父组件回调方法

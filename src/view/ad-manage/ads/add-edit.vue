@@ -13,21 +13,25 @@
 				<myUpload ref="adImg" :data="uploadData" :defaultImgs="formValidate.image"></myUpload>
       </Form-item>
       <Form-item label="广告有效时间" prop="dateRange">
-        <Date-Picker :value="formValidate.dateRange" @on-change="dateHandle" type="datetimerange" format="yyyy-MM-dd HH:mm:ss" placement="right-start" placeholder="广告有效时间" ></Date-Picker>
+        <sm-field
+          v-model="formValidate.dateRange"
+          :field="{type: 'datetimerange', placeholder: '广告有效时间'}"
+          />
+        <!-- <Date-Picker :value="formValidate.dateRange" @on-change="dateHandle" type="datetimerange" format="yyyy-MM-dd HH:mm:ss" placement="right-start" placeholder="广告有效时间" ></Date-Picker> -->
         <span class="form-hints">广告的显示时间范围</span>
       </Form-item>
       <Form-item label="广告链接" prop="link">
         <Input v-model="formValidate.link" placeholder="广告链接"></Input>
         <span class="form-hints">网页跳转链接</span>
       </Form-item>
-      <Form-item label="app 链接" prop="link_app">
+      <!-- <Form-item label="app 链接" prop="link_app">
         <Input v-model="formValidate.link_app" placeholder="app 链接"></Input>
         <span class="form-hints">app 跳转链接标识</span>
       </Form-item>
       <Form-item label="小程序链接" prop="link_mini">
         <Input v-model="formValidate.link_mini" placeholder="小程序链接"></Input>
         <span class="form-hints">小程序跳转链接</span>
-      </Form-item>
+      </Form-item> -->
       <Form-Item label="状态" prop="status">
         <i-switch v-model="formValidate.status" :true-value="1" :false-value="0"></i-switch>
       </Form-Item>
@@ -85,10 +89,10 @@ export default {
     }
   },
   methods: {
-    dateHandle:function(range){
-      this.formValidate.dateRange[0] = range[0];
-      this.formValidate.dateRange[1] = range[1];
-    },
+    // dateHandle:function(range){
+    //   this.formValidate.dateRange[0] = range[0];
+    //   this.formValidate.dateRange[1] = range[1];
+    // },
     handleSubmit(name) {
       var _this = this
 
@@ -166,12 +170,15 @@ export default {
             var info = result.result
             for (var i in _this.formValidate) {
               if (i == 'dateRange') {
-                  _this.formValidate.dateRange[0] = info.start_at;
-                  _this.formValidate.dateRange[1] = info.end_at;
+                  // _this.formValidate.dateRange[0] = info.start_at;
+                  // _this.formValidate.dateRange[1] = info.end_at;
+                  _this.formValidate.dateRange.push(info.start_at);
+                  _this.formValidate.dateRange.push(info.end_at);
               } else {
                   _this.formValidate[i] = info[i]
               }
             }
+            console.log(_this.formValidate);
           } else {
             _this.$Notice.error({
               title: '提示',

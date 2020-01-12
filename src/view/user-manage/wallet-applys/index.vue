@@ -18,8 +18,8 @@
           <Select v-model="listConf.searchParams.status" placeholder="处理状态">
             <Option value="all" key="all">全部(处理状态)</Option>
             <Option :value="0" :key="0">未处理</Option>
-            <Option :value="1" :key="1">已通过</Option>
-            <Option :value="-1" :key="-1">已驳回</Option>
+            <Option :value="1" :key="1">已打款</Option>
+            <Option :value="-1" :key="-1">已拒绝</Option>
           </Select>
         </Form-item>
         <Form-Item prop="created_at">
@@ -36,7 +36,7 @@
 
     <Modal v-model="applyShow" :closable='false' :mask-closable=false :width="400">
       <h3 slot="header" style="color:#2D8CF0">处理</h3>
-      <h6>{{ applyInfo }}</h6>
+      <h3 style="color: #ffad33;margin-bottom: 10px;">{{ applyInfo }}</h3>
       <Form ref="applyForm" :model="applyForm" :label-width="100" label-position="right" :rules="applyValidate">
         <Form-item label="处理备注" prop="status_msg">
           <Input v-model="applyForm.status_msg" type="textarea" :autosize="{minRows: 3,maxRows: 5}" placeholder="请输入处理备注"></Input>
@@ -84,19 +84,19 @@ export default {
         },
         item: [],
         columns: [
-          {type: 'index', align: 'center', width: 100, fixed: 'left'},
-          {title: '提现 ID', align: 'center', key: 'id'},
-          {title: 'UID', align: 'center', key: 'user_id'},
-          {title: '用户名', align: 'center', key: 'user_name', render: (h, params) => {
+          {type: 'index', align: 'center', width: 80, fixed: 'left'},
+          {title: '提现 ID', align: 'center', width: 80, key: 'id'},
+          {title: 'UID', align: 'center', width: 80, key: 'user_id'},
+          {title: '用户名', align: 'center', width: 120, key: 'user_name', render: (h, params) => {
             return h('span', params.row.user != null ? params.row.user.name : '');
           }},
-          {title: '手机号', align: 'center', key: 'user_phone', render: (h, params) => {
+          {title: '手机号', align: 'center', width: 120, key: 'user_phone', render: (h, params) => {
             return h('span', params.row.user != null ? params.row.user.phone : '');
           }},
-          {title: '可提现金额', align: 'center', key: 'total_money', render: (h, params) => {
+          {title: '可提现金额', align: 'center', width: 100, key: 'total_money', render: (h, params) => {
             return h('span', params.row.user != null ? params.row.user.money : '');
           }},
-          {title: '提现金额', align: 'center', key: 'money'},
+          {title: '提现金额', align: 'center', width: 100, key: 'money'},
           // {title: '收款账号', align: 'center', key: 'get_type_name'},
           // {title: '真实姓名', align: 'center', key: 'real_name'},
           // {title: '收款账号信息', align: 'center', key: 'bank_info', render: (h, params) => {
@@ -129,8 +129,8 @@ export default {
 
           //   return h('div', btn);
           // }},
-          {title: '处理状态', align: 'center', key: 'status_name'},
-          {title: '备注信息', align: 'center', key: 'status_msg'},
+          {title: '处理状态', align: 'center', width: 100, key: 'status_name'},
+          {title: '备注信息', align: 'center', width: 180, key: 'status_msg'},
           {title: '提现时间', align: 'center', width: 180, key: 'created_at'},
         ]
       },
