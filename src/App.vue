@@ -38,4 +38,9 @@ form.form-edit .ivu-cascader, form.form-edit .ivu-input-wrapper, form.form-edit 
 .sm-form .ivu-row {
   padding: 0px;
 }
+
+.ivu-table-row.ivu-table-row-highlight td, ivu-table-row.ivu-table-row-highlight.ivu-table-row-hover td {
+  background-color: #2db7f5 !important;
+  color: #ffffff !important;
+}
 </style>
