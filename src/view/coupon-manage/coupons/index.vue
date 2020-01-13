@@ -79,6 +79,9 @@ export default {
                     size: 'small',
                     icon: 'md-close'
                   },
+                  domProps: {
+                    title: '删除',
+                  },
                   style: {
                     marginRight: '5px',
                     marginBottom: '5px'

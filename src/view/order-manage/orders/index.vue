@@ -169,6 +169,9 @@
                       size: 'small',
                       icon: 'md-eye'
                     },
+                    domProps: {
+                      title: '查看详情',
+                    },
                     style: {
                       marginRight: '5px',
                       marginBottom: '5px'

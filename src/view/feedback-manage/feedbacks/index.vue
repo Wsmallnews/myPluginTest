@@ -88,6 +88,9 @@
                       size: 'small',
                       icon: 'md-build'
                     },
+                    domProps: {
+                      title: '处理',
+                    },
                     style: {
                       marginRight: '5px',
                       marginBottom: '5px'

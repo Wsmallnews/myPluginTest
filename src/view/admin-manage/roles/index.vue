@@ -41,6 +41,9 @@ export default {
                     size: 'small',
                     icon: 'md-brush'
                   },
+                  domProps: {
+                    title: '编辑',
+                  },
                   style: {
                     marginRight: '5px'
                   },
@@ -57,6 +60,9 @@ export default {
                     size: 'small',
                     icon: 'ios-build'
                   },
+                  domProps: {
+                    title: '分配权限',
+                  },
                   style: {
                     marginRight: '5px'
                   },
@@ -72,6 +78,9 @@ export default {
                     type: 'error',
                     size: 'small',
                     icon: 'md-close'
+                  },
+                  domProps: {
+                    title: '删除',
                   },
                   style: {
                     marginRight: '5px'

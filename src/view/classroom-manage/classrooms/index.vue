@@ -277,6 +277,9 @@ export default {
                     size: 'small',
                     icon: 'md-contacts'
                   },
+                  domProps: {
+                    title: '查看报名用户',
+                  },
                   style: {
                     marginRight: '5px',
                     marginBottom: '5px'
@@ -293,6 +296,9 @@ export default {
                     type: 'primary',
                     size: 'small',
                     icon: 'md-list-box'
+                  },
+                  domProps: {
+                    title: '查看课堂内容列表',
                   },
                   style: {
                     marginRight: '5px',
@@ -311,6 +317,9 @@ export default {
                     size: 'small',
                     icon: 'md-chatboxes'
                   },
+                  domProps: {
+                    title: '查看课堂讲师评论',
+                  },
                   style: {
                     marginRight: '5px',
                     marginBottom: '5px'
@@ -327,6 +336,9 @@ export default {
                     type: 'primary',
                     size: 'small',
                     icon: 'md-eye'
+                  },
+                  domProps: {
+                    title: '查看详情',
                   },
                   style: {
                     marginRight: '5px',
@@ -345,6 +357,9 @@ export default {
                     size: 'small',
                     icon: 'md-brush'
                   },
+                  domProps: {
+                    title: '编辑',
+                  },
                   style: {
                     marginRight: '5px',
                     marginBottom: '5px'
@@ -361,6 +376,9 @@ export default {
                     type: 'error',
                     size: 'small',
                     icon: 'md-close'
+                  },
+                  domProps: {
+                    title: '删除',
                   },
                   style: {
                     marginRight: '5px',

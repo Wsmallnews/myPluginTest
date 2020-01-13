@@ -49,6 +49,9 @@ export default {
                     size: 'small',
                     icon: 'md-list-box'
                   },
+                  domProps: {
+                    title: '查看留言',
+                  },
                   style: {
                     marginRight: '5px',
                     marginBottom: '5px'
@@ -65,6 +68,9 @@ export default {
                     type: 'primary',
                     size: 'small',
                     icon: 'md-chatboxes'
+                  },
+                  domProps: {
+                    title: '查看讲师评论',
                   },
                   style: {
                     marginRight: '5px',
@@ -83,6 +89,9 @@ export default {
                     size: 'small',
                     icon: 'md-brush'
                   },
+                  domProps: {
+                    title: '编辑',
+                  },
                   style: {
                     marginRight: '5px',
                     marginBottom: '5px'
@@ -99,6 +108,9 @@ export default {
                     type: 'error',
                     size: 'small',
                     icon: 'md-close'
+                  },
+                  domProps: {
+                    title: '删除',
                   },
                   style: {
                     marginRight: '5px',

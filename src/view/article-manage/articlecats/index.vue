@@ -52,6 +52,9 @@ export default {
               size: 'small',
               icon: 'md-brush'
             },
+            domProps: {
+              title: '编辑',
+            },
             style: {
               marginRight: '5px',
               marginBottom: '5px'
@@ -70,6 +73,9 @@ export default {
               type: 'error',
               size: 'small',
               icon: 'md-close'
+            },
+            domProps: {
+              title: '删除',
             },
             style: {
               marginRight: '5px',

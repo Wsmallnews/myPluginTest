@@ -550,27 +550,27 @@ export default [{
       }
     ]
   },
-  {
-    path: '/feedbackManage',
-    name: 'feedbackmanage',
-    meta: {
-      access: ['feedback:view'],
-      icon: 'md-chatboxes',
-      title: '意见反馈'
-    },
-    component: Main,
-    children: [{
-        path: 'feedbacks/index',
-        name: 'feedbackmanage-feedbacks-index',
-        meta: {
-          access: ['feedback:view'],
-          icon: 'md-chatboxes',
-          title: '意见反馈'
-        },
-        component: () => import('@/view/feedback-manage/feedbacks/index.vue'),
-      }
-    ]
-  },
+  // {
+  //   path: '/feedbackManage',
+  //   name: 'feedbackmanage',
+  //   meta: {
+  //     access: ['feedback:view'],
+  //     icon: 'md-chatboxes',
+  //     title: '意见反馈'
+  //   },
+  //   component: Main,
+  //   children: [{
+  //       path: 'feedbacks/index',
+  //       name: 'feedbackmanage-feedbacks-index',
+  //       meta: {
+  //         access: ['feedback:view'],
+  //         icon: 'md-chatboxes',
+  //         title: '意见反馈'
+  //       },
+  //       component: () => import('@/view/feedback-manage/feedbacks/index.vue'),
+  //     }
+  //   ]
+  // },
   {
     path: '/articleManage',
     name: 'articlemanage',

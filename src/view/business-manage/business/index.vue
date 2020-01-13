@@ -271,6 +271,9 @@ export default {
                     size: 'small',
                     icon: 'md-contacts'
                   },
+                  domProps: {
+                    title: '查看报名用户',
+                  },
                   style: {
                     marginRight: '5px',
                     marginBottom: '5px'
@@ -287,6 +290,9 @@ export default {
                     type: 'primary',
                     size: 'small',
                     icon: 'md-eye'
+                  },
+                  domProps: {
+                    title: '查看详情',
                   },
                   style: {
                     marginRight: '5px',
@@ -305,6 +311,9 @@ export default {
                     size: 'small',
                     icon: 'md-brush'
                   },
+                  domProps: {
+                    title: '编辑',
+                  },
                   style: {
                     marginRight: '5px',
                     marginBottom: '5px'
@@ -321,6 +330,9 @@ export default {
                     type: 'error',
                     size: 'small',
                     icon: 'md-close'
+                  },
+                  domProps: {
+                    title: '删除',
                   },
                   style: {
                     marginRight: '5px',

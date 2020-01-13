@@ -275,6 +275,9 @@ export default {
                     size: 'small',
                     icon: 'md-eye'
                   },
+                  domProps: {
+                    title: '查看详情',
+                  },
                   style: {
                     marginRight: '5px',
                     marginBottom: '5px'
@@ -291,6 +294,9 @@ export default {
                     type: 'primary',
                     size: 'small',
                     icon: 'md-cash'
+                  },
+                  domProps: {
+                    title: '查看钱包记录',
                   },
                   style: {
                     marginRight: '5px',
