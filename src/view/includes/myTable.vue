@@ -169,6 +169,11 @@
             _this.onePage = _this.total <= _this.cListConf.pageSize;
 
             _this.item = data.data;
+          } else {
+            _this.$Notice.error({
+              title: '提示',
+              desc: result.info
+            })
           }
         })
       },

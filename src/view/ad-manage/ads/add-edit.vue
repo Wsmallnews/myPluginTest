@@ -178,7 +178,6 @@ export default {
                   _this.formValidate[i] = info[i]
               }
             }
-            console.log(_this.formValidate);
           } else {
             _this.$Notice.error({
               title: '提示',

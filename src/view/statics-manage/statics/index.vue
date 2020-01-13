@@ -46,18 +46,18 @@
           item: [],
           columns: [
             {type: 'index', align: 'center', width:100, fixed: 'left'},
-            {title: '类型', align: 'center', width: 100, key: 'type_name'},
-            {title: '名称', align: 'center', width: 170, key: 'name'},
-            {title: '讲师姓名', align: 'center', width: 100, key: 'teach_name'},
-            {title: '讲师 ID', align: 'center', width: 80, key: 'teach_id'},
-            {title: 'VIP 线下报名收入', align: 'center', width: 135, key: 'offline_vip_money_total_format', render:(h, params)=>{
+            {title: '类型', align: 'center', width: 120, key: 'type_name'},
+            {title: '名称', align: 'center', minWidth: 170, key: 'name'},
+            {title: '讲师姓名', align: 'center', width: 130, key: 'teach_name'},
+            {title: '讲师 ID', align: 'center', width: 120, key: 'teach_id'},
+            {title: 'VIP 线下报名收入', align: 'center', width: 140, key: 'offline_vip_money_total_format', render:(h, params)=>{
               return (params.row.type == 'activity' || params.row.type == 'total') ? h('span', params.row.offline_vip_money_total) : h('span', '--');
             }},
-            {title: 'VIP 订阅直播收入', align: 'center', width: 135, key: 'vip_money_total'},
-            {title: '普通会员线下收入', align: 'center', width: 135, key: 'offline_general_money_total_format', render:(h, params)=>{
+            {title: 'VIP 订阅直播收入', align: 'center', width: 140, key: 'vip_money_total'},
+            {title: '普通会员线下收入', align: 'center', width: 140, key: 'offline_general_money_total_format', render:(h, params)=>{
               return (params.row.type == 'activity' || params.row.type == 'total') ? h('span', params.row.offline_general_money_total) : h('span', '--');
             }},
-            {title: '普通会员订阅直播收入', align: 'center', width: 140, key: 'general_money_total'},
+            {title: '普通会员订阅直播收入', align: 'center', width: 175, key: 'general_money_total'},
             {title: '优惠券减免金额', align: 'center', width: 120, key: 'coupon_money_total'},
             {title: '合计收入', align: 'center', width: 120, key: 'total'},
             {title: '讲师分成', align: 'center', width: 120, key: 'teach_money_total'},
