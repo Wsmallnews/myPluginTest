@@ -12,6 +12,14 @@
             <Option v-for="(classroomContent, index) in classroomContents" :key="index" :label="classroomContent.name" :value="classroomContent.id" ></Option>
           </Select>
         </Form-item>
+        <Form-item prop="status">
+          <Select style="width:200px" v-model="listConf.searchParams.status" clearable placeholder="留言审核状态">
+            <Option label="全部(留言)" value="all" ></Option>
+            <Option label="未审核" :value="0" ></Option>
+            <Option label="审核通过" :value="1" ></Option>
+            <Option label="未过审" :value="-1" ></Option>
+          </Select>
+        </Form-item>
       </template>
 
       <template slot="list" slot-scope="{ item, loading}">
@@ -25,6 +33,13 @@
             <div v-if="it.reply" style="margin: 20px 0 0 30px;padding: 10px;background: #f5f5f5;border-radius: 10px;">
               讲师回复：{{ it.reply.content }}
             </div>
+
+            <template slot="extra"> 
+              <span v-if="it.status == 1" style="color: #333333;">{{ it.status_msg ? '处理原因：' + it.status_msg + ' - ' : '' }}{{ it.status_name }}</span>
+              <span v-if="it.status == -1" style="color: #ff0000;">{{ it.status_msg ? '处理原因：' + it.status_msg + ' - ' : '' }}{{ it.status_name }}</span>
+              <Button type="primary" size="small" v-if="it.status == 0" @click="showStatus(it)">审核</Button>
+            </template>
+
             <template slot="action">
               <li>
                 喜欢 {{ it.love_num }}
@@ -60,6 +75,21 @@
         <Button type="primary" :loading="saveLoading" @click="ok">回复</Button>
       </div>
     </Modal>
+
+    <Modal v-model="statusShow" :closable='false' :mask-closable=false :width="400">
+      <h3 slot="header" style="color:#2D8CF0">处理留言</h3>
+      <!-- <h3 style="color: #ffad33;margin-bottom: 10px;">{{ statusInfo }}</h3> -->
+      <Form ref="statusForm" :model="statusForm" :label-width="100" label-position="right" :rules="statusValidate">
+        <Form-item label="处理备注" prop="status_msg">
+          <Input v-model="statusForm.status_msg" type="textarea" :autosize="{minRows: 3,maxRows: 5}" placeholder="请输入处理备注"></Input>
+        </Form-item>
+      </Form>
+      <div slot="footer">
+        <Button type="text" @click="statusCancel">取消</Button>
+        <Button type="warning" :loading="statusSaveLoading" @click="statusError">审核驳回</Button>
+        <Button type="primary" :loading="statusSaveLoading" @click="statusOk">审核通过</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -88,6 +118,17 @@ export default {
         ],
       },
 
+      statusShow: false,
+      statusSaveLoading: false,
+      statusInfo: '',
+      statusForm: {
+        id: 0,
+        status: 1,
+        status_msg: ''
+      },
+      statusValidate: {
+      },
+
       classrooms: [],
       classroomContents: [],
       noSearch: true,
@@ -98,7 +139,8 @@ export default {
         url: '/adminapi/classroomComments',
         searchParams: {
           classroom_id: this.$route.params.classroom_id ? this.$route.params.classroom_id : 0,
-          classroom_content_id: this.$route.params.classroom_content_id ? this.$route.params.classroom_content_id : 0
+          classroom_content_id: this.$route.params.classroom_content_id ? this.$route.params.classroom_content_id : 0,
+          status: ''
         },
         item: []
       },
@@ -263,6 +305,61 @@ export default {
                   desc: "回复成功"
                 });
                 _this.cancel();
+                _this.$refs.listTable.listLoad();
+              } else {
+                _this.$Notice.error({
+                  title: '提示',
+                  desc: result.info
+                });
+              }
+            }
+          })
+        }
+      });
+    },
+    showStatus (item) {
+      if (item.status != 0) {
+        this.$Notice.error({
+          title: '提示',
+          desc: "当前留言已处理，请不要重复处理"
+        });
+        return false;
+      }
+      this.statusForm.id = item.id;
+      this.statusInfo = "正在处理";
+      this.statusShow = true;
+    },
+    statusCancel: function () {
+      this.statusShow = false;
+      this.statusForm.status = 0;
+      this.statusForm.status_msg = "";
+      this.statusInfo = "";
+    },
+    statusOk () {
+      this.statusForm.status = 1;
+      this.statusOper();
+    },
+    statusError () {
+      this.statusForm.status = -1;
+      this.statusOper();
+    },
+    statusOper: function () {
+      var _this = this;
+      _this.$refs['statusForm'].validate((valid) => {
+        if (valid) {
+          _this.statusSaveLoading = true;
+          Util.ajax({
+            url: '/adminapi/classroomComments/'+ _this.statusForm.id +'/statusOper',
+            method: 'patch',
+            data: {status: this.statusForm.status, status_msg: this.statusForm.status_msg},
+            success: function(result) {
+              _this.statusSaveLoading = false;
+              if (result.error == 0) {
+                _this.$Notice.success({
+                  title: '提示',
+                  desc: "处理成功"
+                });
+                _this.statusCancel();
                 _this.$refs.listTable.listLoad();
               } else {
                 _this.$Notice.error({
