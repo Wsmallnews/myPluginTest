@@ -78,6 +78,8 @@
     <template v-if="currentField.type == 'number'">
       <InputNumber
         v-model="currentValue"
+        :min="currentField.min ? currentField.min : 0"
+        :max="currentField.max ? currentField.max : 99999999"
         :readonly="currentField.readonly"
         :disabled="currentField.disabled"
         :autofocus="currentField.autofocus"
@@ -475,7 +477,7 @@
 <script>
   import Util from '../../libs/util';
 
-  import Emitter from 'iview/src/mixins/emitter';
+  import Emitter from 'view-design/src/mixins/emitter';
 
   export default {
     name: 'SmField',

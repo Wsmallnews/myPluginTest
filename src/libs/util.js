@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 import $ from 'jquery';
-import iView from 'iview';
+import ViewUI from 'view-design';
 // cookie保存的天数
 import config from '@/config'
 import { forEach, hasOneOf, objEqual } from '@/libs/tools'
@@ -50,7 +50,7 @@ export const ajax = function (options){
                 //     if (error == 10002) {
                 //         Store.dispatch('logout') // 退出登录
                 //         if (path_name != 'login') {  // 必须要登录的路由
-                //             iView.Notice.error({title: '提示', desc: "登录已过期，请重新登录"});
+                //             ViewUI.Notice.error({title: '提示', desc: "登录已过期，请重新登录"});
                 //             router.push({name: 'login'});
                 //             return;
                 //         }
@@ -59,18 +59,18 @@ export const ajax = function (options){
 
                 defaults_options.success(response.data, response);
             }else {
-                iView.Notice.success({ title: '提示', desc: '操作成功' });
+              ViewUI.Notice.success({ title: '提示', desc: '操作成功' });
             }
         })
         .catch(function (error) {
             if (error.response) {
                 if (defaults_options.error) {
-                    defaults_options.error(error.response);
+                  defaults_options.error(error.response);
                 }else {
-                    iView.Notice.error({ title: '提示', desc: '操作失败' });
+                  ViewUI.Notice.error({ title: '提示', desc: '操作失败' });
                 }
             } else {
-                iView.Notice.error({ title: '提示', desc: error.message });
+              ViewUI.Notice.error({ title: '提示', desc: error.message });
             }
         });
 }

@@ -318,12 +318,12 @@
             this.$emit('submit', this.formVal)
             // this.$Message.success('Success!');
           } else {
-            this.$Message.error('Fail!');
+            this.$Message.error('信息填写不完整!');
           }
         })
       },
       handleReset(name) {
-        // this.$refs[name].resetFields();
+        this.$refs[name].resetFields();
       }
     },
     created () {

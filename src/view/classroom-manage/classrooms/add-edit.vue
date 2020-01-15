@@ -28,6 +28,7 @@ export default {
         charge_money: 0,
         is_vip_charge: 0,
         vip_charge_money: 0,
+        expire_day: 0,
         is_recommend: 0,
         sort_order: 50,
       },
@@ -65,6 +66,8 @@ export default {
           name: 'join_num',
           label: "可报名人数",
           placeholder: "请输入可报名人数",
+          min: 1,
+          max: 1000,
           rule: {
             required: true,
             message: '请输入可报名人数',
@@ -162,6 +165,16 @@ export default {
               showIf: 'is_vip_charge',
             },
           ]
+        },
+        {
+          type: 'number',
+          name: 'expire_day',
+          label: "购买后有效天数",
+          placeholder: "请填写有效天数",
+          placement: "bottom-start",
+          required: {
+            message: '请填写有效天数',
+          }
         },
         {
           type: "switch",

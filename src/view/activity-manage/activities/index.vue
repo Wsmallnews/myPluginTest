@@ -181,7 +181,7 @@ export default {
           {title: '结束时间', align: 'center', width: 150, key: 'end_at'},
           {title: '线下可报名人数', align: 'center', width: 120, key: 'offline_join_num'},
           {title: '线下已报名人数', align: 'center', width: 120, key: 'offline_joined_num'},
-          {title: '线上可报名人数', align: 'center', width: 100, key: 'online_join_num'},
+          // {title: '线上可报名人数', align: 'center', width: 100, key: 'online_join_num'},
           {title: '线上已报名人数', align: 'center', width: 100, key: 'online_joined_num'},
           {title: '线下报名截止时间', align: 'center', width: 120, key: 'offline_join_end_at'},
           {title: '线上报名截止时间', align: 'center', width: 120, key: 'online_join_end_at'},

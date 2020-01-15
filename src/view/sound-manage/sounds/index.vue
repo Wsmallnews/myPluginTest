@@ -48,7 +48,7 @@
                 阅读 {{ it.view_num }}
               </li>
               <li>
-                喜欢 {{ it.love_num }}
+                点赞 {{ it.love_num }}
               </li>
               <li>
                 <a type="text" style="color: #57a3f;" @click="jumpPage({ path: '/soundManage/soundComments/' + it.id })">查看留言</a>
@@ -117,7 +117,7 @@
           <Col span="18" class="row-content">{{ detail.view_num }}</Col>
         </Row>
         <Row>
-          <Col span="6" class="row-label">喜欢量：</Col>
+          <Col span="6" class="row-label">点赞量：</Col>
           <Col span="18" class="row-content">{{ detail.love_num }}</Col>
         </Row>
 

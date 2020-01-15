@@ -211,7 +211,7 @@ export default {
           }},
           {title: '开始时间', align: 'center', width: 100, key: 'start_at'},
           {title: '结束时间', align: 'center', width: 100, key: 'end_at'},
-          {title: '报名人数', align: 'center', width: 120, key: 'join_num'},
+          // {title: '报名人数', align: 'center', width: 120, key: 'join_num'},
           {title: '已报名人数', align: 'center', width: 120, key: 'joined_num'},
           {title: '报名截止时间', align: 'center', width: 120, key: 'join_end_at'},
           {title: '费用', align: 'center', minWidth: 150, key: 'charge', render: (h, params) => {

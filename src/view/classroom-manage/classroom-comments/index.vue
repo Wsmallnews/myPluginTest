@@ -42,7 +42,7 @@
 
             <template slot="action">
               <li>
-                喜欢 {{ it.love_num }}
+                点赞 {{ it.love_num }}
               </li>
               <li v-if="it.reply == null">
                 <a type="text" style="color: #57a3f;" @click="showReply(it)"> 回复 </a>

@@ -95,20 +95,20 @@ export default {
             message: '请选择结束时间',
           }
         },
-        {
-          type: 'number',
-          name: 'join_num',
-          label: "可报名人数",
-          placeholder: "请输入可报名人数",
-          rule: {
-            required: true,
-            message: '请输入可报名人数',
-            min: 1,
-            max: 1000,
-            trigger: 'blur',
-            type: 'number'
-          }
-        },
+        // {
+        //   type: 'number',
+        //   name: 'join_num',
+        //   label: "可报名人数",
+        //   placeholder: "请输入可报名人数",
+        //   rule: {
+        //     required: true,
+        //     message: '请输入可报名人数',
+        //     min: 1,
+        //     max: 1000,
+        //     trigger: 'blur',
+        //     type: 'number'
+        //   }
+        // },
         {
           type: 'datetime',
           name: 'join_end_at',

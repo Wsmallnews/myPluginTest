@@ -44,6 +44,7 @@ export default {
         vip_offline_money: 0,
         is_vip_online_charge: 0,
         vip_online_money: 0,
+        expire_day: 0,
         is_recommend: 0,
         sort_order: 50,
       },
@@ -102,6 +103,8 @@ export default {
           name: 'offline_join_num',
           label: "线下可报名人数",
           placeholder: "请输入线下可报名人数",
+          min: 1,
+          max: 1000,
           rule: {
             required: true,
             message: '请输入线下可报名人数',
@@ -121,20 +124,20 @@ export default {
             message: '请选择线下报名截止时间',
           }
         },
-        {
-          type: 'number',
-          name: 'online_join_num',
-          label: "线上可报名人数",
-          placeholder: "请输入线上可报名人数",
-          rule: {
-            required: true,
-            message: '请输入线上可报名人数',
-            min: 1,
-            max: 1000,
-            trigger: 'blur',
-            type: 'number'
-          }
-        },
+        // {    // 线上报名不限制,服务端已经不验证这个字段
+        //   type: 'number',
+        //   name: 'online_join_num',
+        //   label: "线上可报名人数",
+        //   placeholder: "请输入线上可报名人数",
+        //   rule: {
+        //     required: true,
+        //     message: '请输入线上可报名人数',
+        //     min: 1,
+        //     max: 1000,
+        //     trigger: 'blur',
+        //     type: 'number'
+        //   }
+        // },
         {
           type: 'datetime',
           name: 'online_join_end_at',
@@ -243,6 +246,16 @@ export default {
               showIf: 'is_vip_online_charge',
             },
           ]
+        },
+        {
+          type: 'number',
+          name: 'expire_day',
+          label: "购买后有效天数",
+          placeholder: "请填写有效天数",
+          placement: "bottom-start",
+          required: {
+            message: '请填写有效天数',
+          }
         },
         {
           type: "switch",

@@ -364,7 +364,7 @@ export const defRules = {
     required: true,
     message: '请输入正确的数字',
     min: 0.01,
-    max: 999999,
+    max: 999999999,
     trigger: 'blur',
     type: 'number'
   },
@@ -557,7 +557,7 @@ export const defRules = {
       trigger: 'change'
     },{
       type: 'array',
-      max: 5,
+      max: 10,
       message: '标签最多选择 5 个',
       trigger: 'change'
     }
