@@ -27,9 +27,12 @@
             <template slot="extra"> 
               <span v-if="it.status == 1" style="color: #333333;">{{ it.status_msg ? '处理原因：' + it.status_msg + ' - ' : '' }}{{ it.status_name }}</span>
               <span v-if="it.status == -1" style="color: #ff0000;">{{ it.status_msg ? '处理原因：' + it.status_msg + ' - ' : '' }}{{ it.status_name }}</span>
-              <Button type="primary" size="small" v-if="it.status == 0" @click="showStatus(it)">审核</Button>
+              
             </template>
             <template slot="action">
+              <li v-if="it.status == 0">
+                <Button type="primary" size="small" @click="showStatus(it)">审核</Button>
+              </li>
               <li>
                 点赞 {{ it.love_num }}
               </li>
