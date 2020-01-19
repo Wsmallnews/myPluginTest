@@ -109,16 +109,16 @@ export default {
         //     type: 'number'
         //   }
         // },
-        {
-          type: 'datetime',
-          name: 'join_end_at',
-          label: "报名截止时间",
-          placeholder: "请选择报名截止时间",
-          placement: "bottom-start",
-          required: {
-            message: '请选择报名截止时间',
-          }
-        },
+        // {
+        //   type: 'datetime',
+        //   name: 'join_end_at',
+        //   label: "报名截止时间",
+        //   placeholder: "请选择报名截止时间",
+        //   placement: "bottom-start",
+        //   required: {
+        //     message: '请选择报名截止时间',
+        //   }
+        // },
         {
           type: 'select',
           name: 'teach_id',
