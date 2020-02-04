@@ -117,10 +117,6 @@
             </span>
           </Col>
         </Row>
-        <Row>
-          <Col span="6" class="row-label">浏览量：</Col>
-          <Col span="18" class="row-content">{{ detail.view_num }}</Col>
-        </Row>
 
         <Row>
           <Col span="6" class="row-label">推荐状态：</Col>
@@ -143,6 +139,76 @@
           <Col span="18" class="row-content" v-html="detail.content"></Col>
         </Row>
       </div>
+
+      <hr v-if="!getMoreIng && moreDetail.id" style="color: #e8eaec" />
+      <div v-if="!getMoreIng && moreDetail.id">
+        <h3 slot="header" style="color:#2D8CF0">报名统计</h3>
+        <Row>
+          <Col span="6" class="row-label">浏览人数：</Col>
+          <Col span="18" class="row-content">{{ detail.view_num }}人</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">线下报名人数：</Col>
+          <Col span="18" class="row-content">{{ detail.offline_joined_num }}人</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">线下报名转化率：</Col>
+          <Col v-if="detail.offline_joined_num > 0" span="18" class="row-content">{{ ((detail.offline_joined_num / detail.view_num) * 100).toFixed(2) }}%</Col>
+          <Col v-else span="18" class="row-content">0%</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">普通会员线下报名人数：</Col>
+          <Col span="18" class="row-content">{{ detail.offline_joined_num - detail.offline_vip_joined_num }}人</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">VIP线下报名人数：</Col>
+          <Col span="18" class="row-content">{{ detail.offline_vip_joined_num }}人</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">普通会员线下报名费收入：</Col>
+          <Col span="18" class="row-content">￥{{ moreDetail.offline_money_total - moreDetail.offline_vip_money_total }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">VIP会员线下报名费收入：</Col>
+          <Col span="18" class="row-content">￥{{ moreDetail.offline_vip_money_total }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">合计线下报名费收入：</Col>
+          <Col span="18" class="row-content">￥{{ moreDetail.offline_money_total }}</Col>
+        </Row>
+      </div>
+      <br><br>
+      <div v-if="!getMoreIng && moreDetail.id">
+        <Row>
+          <Col span="6" class="row-label">线上直播报名人数：</Col>
+          <Col span="18" class="row-content">{{ detail.online_joined_num }}人</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">线上直播报名转化率：</Col>
+          <Col v-if="detail.online_joined_num > 0" span="18" class="row-content">{{ ((detail.online_joined_num / detail.view_num) * 100).toFixed(2) }}%</Col>
+          <Col v-else span="18" class="row-content">0%</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">普通会员直播报名人数：</Col>
+          <Col span="18" class="row-content">{{ detail.online_joined_num - detail.online_vip_joined_num }}人</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">VIP直播报名人数：</Col>
+          <Col span="18" class="row-content">{{ detail.online_vip_joined_num }}人</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">普通会员直播报名费收入：</Col>
+          <Col span="18" class="row-content">￥{{ moreDetail.online_money_total - moreDetail.online_vip_money_total }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">VIP会员直播报名费收入：</Col>
+          <Col span="18" class="row-content">￥{{ moreDetail.online_vip_money_total }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">合计直播报名费收入：</Col>
+          <Col span="18" class="row-content">￥{{ moreDetail.online_money_total }}</Col>
+        </Row>
+      </div>
     </Modal>
 
     <Modal v-model="bigImgShow" :closable="true" :mask-closable="true" :footer-hide="true" width="700">
@@ -162,6 +228,8 @@ export default {
   data () {
     return {
       detail: {},
+      moreDetail: {},
+      getMoreIng: false,
       showDetail: false,
       bigImgShow: false,
       bigImg: '',
@@ -291,6 +359,8 @@ export default {
                     click: () => {
                       this.detail = params.row;
                       this.showDetail = true;
+
+                      this.getMoreDetail(this.detail.id);
                     }
                   }
                 }),
@@ -417,6 +487,22 @@ export default {
     showBigImg (src) {
       this.bigImg = src;
       this.bigImgShow = true;
+    },
+    getMoreDetail (id) {
+      var _this = this;
+      _this.getMoreIng = true;
+      Util.ajax({
+        url: '/adminapi/activities/more/' + id,
+        method: 'get',
+        success: function (result) {
+          _this.getMoreIng = false;
+          if (result.error == 0) {
+            _this.moreDetail = result.result;
+          } else {
+            _this.$Notice.error({title: '提示', desc: result.info})
+          }
+        }
+      })
     }
   },
   created: function () {

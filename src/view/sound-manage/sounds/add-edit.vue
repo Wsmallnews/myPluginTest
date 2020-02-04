@@ -18,6 +18,7 @@ export default {
         image: '',
         tags: [],
         author_id: 0,
+        desc: '',
         content: '',
         is_recommend: 0,
         sort_order: 50,
@@ -73,6 +74,12 @@ export default {
           type: "number",
           name: 'sort_order',
           label: '排序',
+        },
+        {
+          type: "textarea",
+          name: 'desc',
+          label: '摘要',
+          placeholder: '摘要，分享时使用'
         },
         {
           type: 'editor',

@@ -166,16 +166,16 @@ export default {
             },
           ]
         },
-        {
-          type: 'number',
-          name: 'expire_day',
-          label: "购买后有效天数",
-          placeholder: "请填写有效天数",
-          placement: "bottom-start",
-          required: {
-            message: '请填写有效天数',
-          }
-        },
+        // {
+        //   type: 'number',
+        //   name: 'expire_day',
+        //   label: "购买后有效天数",
+        //   placeholder: "请填写有效天数",
+        //   placement: "bottom-start",
+        //   required: {
+        //     message: '请填写有效天数',
+        //   }
+        // },
         {
           type: "switch",
           name: 'is_recommend',

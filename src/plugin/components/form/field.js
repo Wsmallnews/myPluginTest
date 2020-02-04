@@ -63,7 +63,6 @@ export const defFields = {
     name: 'text',
     value: "",
     label: "内容",
-    maxlength: 30,
     placeholder: "请输入内容",
     // readonly: false,
     // disabled: false,

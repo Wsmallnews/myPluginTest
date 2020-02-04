@@ -550,6 +550,27 @@ export default [{
       }
     ]
   },
+  {
+    path: '/invoiceManage',
+    name: 'invoices',
+    meta: {
+      access: ['invoice:view'],
+      icon: 'md-cash',
+      title: '开票管理'
+    },
+    component: Main,
+    children: [{
+        path: 'invoices/index',
+        name: 'invoices-index',
+        meta: {
+          access: ['invoice:view'],
+          icon: 'md-cash',
+          title: '开票管理'
+        },
+        component: () => import('@/view/invoice-manage/invoices/index.vue')
+      }
+    ]
+  },
   // {
   //   path: '/feedbackManage',
   //   name: 'feedbackmanage',

@@ -32,7 +32,7 @@ export default {
         offline_join_num: 0,
         online_join_num: 0,
         offline_join_end_at: '',
-        online_join_end_at: '',
+        // online_join_end_at: '',
         address: '',
         content: '',
         // flow_path: '',
@@ -138,16 +138,16 @@ export default {
         //     type: 'number'
         //   }
         // },
-        {
-          type: 'datetime',
-          name: 'online_join_end_at',
-          label: "线上报名截止时间",
-          placeholder: "请选择线上报名截止时间",
-          placement: "bottom-start",
-          required: {
-            message: '请选择线上报名截止时间',
-          }
-        },
+        // {
+        //   type: 'datetime',
+        //   name: 'online_join_end_at',
+        //   label: "线上报名截止时间",
+        //   placeholder: "请选择线上报名截止时间",
+        //   placement: "bottom-start",
+        //   required: {
+        //     message: '请选择线上报名截止时间',
+        //   }
+        // },
         {
           type: 'textarea',
           name: 'address',

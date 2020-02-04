@@ -30,7 +30,7 @@ export default {
         start_at: '',
         end_at: '',
         join_num: 0,
-        join_end_at: '',
+        // join_end_at: '',
         teach_id: 0,
         coach_id: 0,
         wechat_qrcode: '',
@@ -109,16 +109,16 @@ export default {
         //     type: 'number'
         //   }
         // },
-        {
-          type: 'datetime',
-          name: 'join_end_at',
-          label: "报名截止时间",
-          placeholder: "请选择报名截止时间",
-          placement: "bottom-start",
-          required: {
-            message: '请选择报名截止时间',
-          }
-        },
+        // {
+        //   type: 'datetime',
+        //   name: 'join_end_at',
+        //   label: "报名截止时间",
+        //   placeholder: "请选择报名截止时间",
+        //   placement: "bottom-start",
+        //   required: {
+        //     message: '请选择报名截止时间',
+        //   }
+        // },
         {
           type: 'select',
           name: 'teach_id',
@@ -217,16 +217,16 @@ export default {
             },
           ]
         },
-        {
-          type: 'number',
-          name: 'expire_day',
-          label: "购买后有效天数",
-          placeholder: "请填写有效天数",
-          placement: "bottom-start",
-          required: {
-            message: '请填写有效天数',
-          }
-        },
+        // {
+        //   type: 'number',
+        //   name: 'expire_day',
+        //   label: "购买后有效天数",
+        //   placeholder: "请填写有效天数",
+        //   placement: "bottom-start",
+        //   required: {
+        //     message: '请填写有效天数',
+        //   }
+        // },
         {
           type: "switch",
           name: 'is_recommend',

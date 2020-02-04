@@ -29,6 +29,11 @@ const turnTo = (to, access, next, is_super) => {
 
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start()
+
+  if (process.env.NODE_ENV === 'development' && config.mock) {
+    setToken(config.mockToken);
+  }
+  
   const token = getToken()
   if (!token && to.name !== LOGIN_PAGE_NAME) {
     // 未登录且要跳转的页面不是登录页

@@ -46,7 +46,7 @@
       </template>
     </myTable>
 
-    <Modal v-model="showDetail" :closable="true" :mask-closable=false :width="700">
+    <Modal v-model="showDetail" :closable="true" :mask-closable=false :width="1000">
       <h3 slot="header" style="color:#2D8CF0">用户详情</h3>
       <div v-if="detail.id">
         <h3 slot="header" style="color:#2D8CF0">系统信息</h3>
@@ -83,7 +83,6 @@
           <Col span="18" class="row-content">{{ detail.last_login_at }}</Col>
         </Row>
       </div>
-
 
       <div v-if="detail.id">
         <h3 slot="header" style="color:#2D8CF0">个人信息</h3>
@@ -122,6 +121,80 @@
           <Col span="18" class="row-content">{{ detail.skill }}</Col>
         </Row>
       </div>
+
+      <div v-if="!getMoreIng && moreDetail.id">
+        <h3 slot="header" style="color:#2D8CF0">互动信息</h3>
+        <Row>
+          <Col span="6" class="row-label">分享次数：</Col>
+          <Col span="18" class="row-content">{{ moreDetail.share_num }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">留言次数：</Col>
+          <Col span="18" class="row-content">{{ moreDetail.comment_num }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">留言精选次数：</Col>
+          <Col span="18" class="row-content">{{ moreDetail.comment_quality_num }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">留言删除次数：</Col>
+          <Col span="18" class="row-content">{{ moreDetail.comment_delete_num }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">登录次数：</Col>
+          <Col span="18" class="row-content">{{ moreDetail.login_num }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">累计登录时长：</Col>
+          <Col span="18" class="row-content">{{ moreDetail.login_time_for }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">累计学习时长：</Col>
+          <Col span="18" class="row-content">{{ moreDetail.study_time_for }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">获得优惠券金额：</Col>
+          <Col span="18" class="row-content">{{ moreDetail.coupon_money }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">已使用优惠券金额：</Col>
+          <Col span="18" class="row-content">{{ moreDetail.use_coupon_money }}</Col>
+        </Row>
+      </div>
+
+      <div v-if="!getMoreIng && moreDetail.id">
+        <h3 slot="header" style="color:#2D8CF0">付费信息</h3>
+        <Row>
+          <Col span="6" class="row-label">付费总金额：</Col>
+          <Col span="18" class="row-content">{{ moreDetail.total_money }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">付费次数：</Col>
+          <Col span="18" class="row-content">{{ moreDetail.pay_num }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">首次付费时间：</Col>
+          <Col span="18" class="row-content">{{ moreDetail.first_payed_at }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">最近一次付费时间：</Col>
+          <Col span="18" class="row-content">{{ moreDetail.last_payed_at }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">付费明细：</Col>
+        </Row>
+        <Row v-if="moreDetail.orders">
+          <Col span="24" class="row-content">
+            <Table
+              :highlight-row="true"
+              :stripe="true"
+              :columns="orderColumns"
+              :data="moreDetail.orders"
+              >
+            </Table>
+          </Col>
+        </Row>
+      </div>
     </Modal>
 
     <Modal v-model="bigImgShow" :closable="true" :mask-closable="true" :footer-hide="true" width="700">
@@ -140,7 +213,18 @@ export default {
   },
   data () {
     return {
+      orderColumns: [
+        {title: '订单号', align: 'center', width: 120, key: 'order_sn'},
+        {title: '流水号', align: 'center', width: 150, key: 'transaction_id'},
+        {title: '类型', align: 'center', width: 150, key: 'type_name'},
+        {title: '名称', align: 'center', width: 150, key: 'subject'},
+        {title: '订单总金额', align: 'center', width: 80, key: 'total_money'},
+        {title: '支付金额', align: 'center', width: 80, key: 'wechat_fee'},
+        {title: '支付时间', align: 'center', width: 150, key: 'payed_at'},
+      ],
       detail: {},
+      moreDetail: {},
+      getMoreIng: false,
       showDetail: false,
       bigImgShow: false,
       bigImg: '',
@@ -286,6 +370,8 @@ export default {
                     click: () => {
                       this.detail = params.row;
                       this.showDetail = true;
+
+                      this.getMoreDetail(this.detail.id);
                     }
                   }
                 }),
@@ -364,6 +450,22 @@ export default {
     showBigImg (src) {
       this.bigImg = src;
       this.bigImgShow = true;
+    },
+    getMoreDetail (user_id) {
+      var _this = this;
+      _this.getMoreIng = true;
+      Util.ajax({
+        url: '/adminapi/userStatics/' + user_id,
+        method: 'get',
+        success: function (result) {
+          _this.getMoreIng = false;
+          if (result.error == 0) {
+            _this.moreDetail = result.result;
+          } else {
+            _this.$Notice.error({title: '提示', desc: result.info})
+          }
+        }
+      })
     }
   },
   created: function () {
