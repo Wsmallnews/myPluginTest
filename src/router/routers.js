@@ -75,6 +75,48 @@ export default [{
     ]
   },
   {
+    path: '/partnerManage',
+    name: 'partnermanage',
+    meta: {
+      access: ['partner:view', 'partner_wallet_apply:view'],
+      icon: 'md-person',
+      title: '合伙人管理'
+    },
+    component: Main,
+    children: [{
+        path: 'index',
+        name: 'partnermanage-partners-index',
+        meta: {
+          access: ['partner:view'],
+          icon: 'md-person',
+          title: '合伙人管理'
+        },
+        component: () => import('@/view/partner-manage/partners/index.vue')
+      },
+      {
+        path: 'walletLogs/:user_id',
+        name: 'partnermanage-walletLogs',
+        meta: {
+          access: ['partner:wallet_logs'],
+          hideInMenu: true,
+          icon: 'md-cash',
+          title: '钱包日志'
+        },
+        component: () => import('@/view/partner-manage/wallet-logs/index.vue'),
+      },
+      {
+        path: 'walletApplys',
+        name: 'partnermanage-walletapplys-index',
+        meta: {
+          access: ['partner_wallet_apply:view'],
+          icon: 'md-cash',
+          title: '合伙人提现管理'
+        },
+        component: () => import('@/view/partner-manage/wallet-applys/index.vue')
+      }
+    ]
+  },
+  {
     path: '/activityManage',
     name: 'activitymanage',
     meta: {
