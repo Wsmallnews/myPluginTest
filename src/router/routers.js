@@ -43,6 +43,47 @@ export default [{
     }]
   },
   {
+    path: '/manageStaticsManage',
+    name: 'managestaticsmanage',
+    meta: {
+      access: ['manage_statics:user_manage', 'manage_statics:pay_manage', 'manage_statics:coupon_manage'],
+      icon: 'md-stats',
+      title: '运营统计'
+    },
+    component: Main,
+    children: [{
+        path: 'userManage',
+        name: 'managestaticsmanage-usermanage',
+        meta: {
+          access: ['statics:view'],
+          icon: 'md-stats',
+          title: '运营统计'
+        },
+        component: () => import('@/view/manage-statics-manage/usermanage.vue'),
+      },
+      {
+        path: 'payManage',
+        name: 'managestaticsmanage-paymanage',
+        meta: {
+          access: ['statics:view'],
+          icon: 'md-stats',
+          title: '付费统计'
+        },
+        component: () => import('@/view/manage-statics-manage/paymanage.vue'),
+      },
+      {
+        path: 'couponManage',
+        name: 'managestaticsmanage-couponmanage',
+        meta: {
+          access: ['statics:view'],
+          icon: 'md-stats',
+          title: '优惠券统计'
+        },
+        component: () => import('@/view/manage-statics-manage/couponmanage.vue'),
+      },
+    ]
+  },
+  {
     path: '/userManage',
     name: 'usermanage',
     meta: {
@@ -103,6 +144,16 @@ export default [{
           title: '钱包日志'
         },
         component: () => import('@/view/partner-manage/wallet-logs/index.vue'),
+      },
+      {
+        path: 'walletApplys',
+        name: 'partnermanage-statics',
+        meta: {
+          access: ['partner:statics'],
+          icon: 'md-cash',
+          title: '合伙人统计'
+        },
+        component: () => import('@/view/partner-manage/partners/statics.vue')
       },
       {
         path: 'walletApplys',

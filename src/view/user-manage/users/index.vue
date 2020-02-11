@@ -75,6 +75,11 @@
           </Col>
         </Row>
         <Row>
+          <Col span="6" class="row-label">是否合伙人：</Col>
+          <Col v-if="detail.is_partner" span="18" class="row-content">{{ detail.partner_type_name }}</Col>
+          <Col v-else span="18" class="row-content">否</Col>
+        </Row>
+        <Row>
           <Col span="6" class="row-label">注册时间：</Col>
           <Col span="18" class="row-content">{{ detail.created_at }}</Col>
         </Row>
@@ -308,6 +313,41 @@ export default {
               })
             ])
           }},
+          {title: '是否合伙人', align: 'center', width: 100, key: 'is_partner', render: (h, params) => {
+            return h('div', [
+              h('i-switch', {
+                props: {
+                  value: params.row.is_partner,
+                  size: 'large',
+                  'true-value': 1,
+                  'false-value': 0,
+                  'before-change': () => {
+                    return new Promise((resolve) => {
+                      var _this = this
+                      var msg = params.row.is_partner ? '确定取消该用户合伙人身份吗？' : '确定将该用户设置为合伙人吗？默认为初级合伙人'
+                      _this.$Modal.confirm({
+                        title: '提示',
+                        content: msg,
+                        onOk: function () {
+                          resolve();
+                        },
+                        onCancel: function () {
+                          _this.$Notice.error({ title: '提示', desc: '操作取消' })
+                        }
+                      })
+                    })
+                  },
+                },
+                on: {
+                  'on-change': (status) => {
+                    var _this = this
+                    var id = params.row.id
+                    _this.setPartner(id, status)
+                  },
+                }
+              })
+            ])
+          }},
           {title: '禁用状态', align: 'center', width: 100, key: 'is_invalid', render: (h, params) => {
             return h('div', [
               h('i-switch', {
@@ -420,6 +460,23 @@ export default {
         url: '/adminapi/users/' + id + '/setTeach',
         method: 'patch',
         data: {is_teach: status},
+        success: function (result) {
+          if (result.error == 0) {
+            _this.$Notice.success({title: '提示', desc: '操作成功'})
+            _this.$refs.listTable.listLoad()
+          } else {
+            _this.$Notice.error({title: '提示', desc: result.info})
+          }
+        }
+      })
+    },
+    setPartner (id, status) {
+      var _this = this
+
+      Util.ajax({
+        url: '/adminapi/users/' + id + '/setPartner',
+        method: 'patch',
+        data: {is_partner: status},
         success: function (result) {
           if (result.error == 0) {
             _this.$Notice.success({title: '提示', desc: '操作成功'})
