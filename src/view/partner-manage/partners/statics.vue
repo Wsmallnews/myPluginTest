@@ -13,19 +13,19 @@
       <Col span="6">
         <div class="col-div" style="background-color: #ff9900">
           <div class="title">合伙人粉丝数</div>
-          <div class="first">{{ statics.partner_fans_money.partner_fans_money }}</div>
-          <div class="second">昨日新增：{{ statics.partner_fans_money.partner_yestoday_fans_money }}</div>
-          <div class="second">7日新增：{{ statics.partner_fans_money.partner_seven_fans_money }}</div>
-          <div class="second">30日新增：{{ statics.partner_fans_money.partner_month_fans_money }}</div>
+          <div class="first">{{ statics.partner_fans_num.partner_fans_num }}</div>
+          <div class="second">昨日新增：{{ statics.partner_fans_num.partner_yestoday_fans_num }}</div>
+          <div class="second">7日新增：{{ statics.partner_fans_num.partner_seven_fans_num }}</div>
+          <div class="second">30日新增：{{ statics.partner_fans_num.partner_month_fans_num }}</div>
         </div>
       </Col>
       <Col span="6">
         <div class="col-div" style="background-color: #2d8cf0">
           <div class="title">粉丝总收益(元)</div>
-          <div class="first">{{ statics.partner_fans_num.partner_fans_num }}</div>
-          <div class="second">昨日新增：{{ statics.partner_fans_num.partner_yestoday_fans_num }}</div>
-          <div class="second">7日新增：{{ statics.partner_fans_num.partner_seven_fans_num }}</div>
-          <div class="second">30日新增：{{ statics.partner_fans_num.partner_month_fans_num }}</div>
+          <div class="first">{{ statics.partner_fans_money.partner_fans_money }}</div>
+          <div class="second">昨日新增：{{ statics.partner_fans_money.partner_yestoday_fans_money }}</div>
+          <div class="second">7日新增：{{ statics.partner_fans_money.partner_seven_fans_money }}</div>
+          <div class="second">30日新增：{{ statics.partner_fans_money.partner_month_fans_money }}</div>
         </div>
       </Col>
       <Col span="6">

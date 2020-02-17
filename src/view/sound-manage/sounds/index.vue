@@ -51,7 +51,7 @@
                 点赞 {{ it.love_num }}
               </li>
               <li>
-                <a type="text" style="color: #57a3f;" @click="jumpPage({ path: '/soundManage/soundComments/' + it.id })">查看留言</a>
+                <a type="text" style="color: #57a3f;" @click="jumpPage({ path: '/soundManage/soundComments/' + it.id })">查看留言({{it.comment_num}})</a>
               </li>
               <li>
                 <Icon type="md-star" style="font-size: 18px" :style="recommendStyle(it.is_recommend)" />
@@ -60,6 +60,9 @@
               </li>
               <li>
                 <a type="text" style="color: #57a3f;" @click="() => {detail = it; showDetail = true;}">详情</a>
+              </li>
+              <li>
+                <a type="text" style="color: #57a3f;" @click="doCopy(it.web_url)">复制链接</a>
               </li>
               <li>
                 <a type="text" style="color: #57a3f;" @click="jumpPage({ path: '/soundManage/edit/' + it.id })">编辑</a>
@@ -296,6 +299,14 @@ export default {
     showBigImg (src) {
       this.bigImg = src;
       this.bigImgShow = true;
+    },
+    doCopy: function (text) {
+      var _this = this;
+      this.$copyText(text).then(function (e) {
+        _this.$Notice.success({title: '提示', desc: '复制成功'})
+      }, function (e) {
+        _this.$Notice.success({title: '提示', desc: '复制失败'})
+      })
     }
   },
   created: function () {

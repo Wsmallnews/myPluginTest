@@ -34,6 +34,9 @@
         :data="item"
         @on-row-click="listSelect"
         @on-sort-change="listChangeSort"
+        @on-select="onSelect" 
+        @on-select-all="onSelectAll"
+        @on-selection-change="onSelectionChange"
         >
       </Table>
     </slot>
@@ -228,6 +231,15 @@
       },
       listSelect: function(index){
         this.$emit('select', index);
+      },
+      onSelect: function(selection, row){
+        this.$emit('on-select', selection, row);
+      },
+      onSelectAll: function(selection){
+        this.$emit('on-select-all', selection);
+      },
+      onSelectionChange: function(selection){
+        this.$emit('on-selection-change', selection);
       },
       rowClassName (row, index) {
         for (let item of this.rowClass) {

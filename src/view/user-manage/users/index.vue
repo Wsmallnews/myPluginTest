@@ -1,7 +1,11 @@
 <template lang="html">
   <div class="users-index">
-    <myTable ref="listTable" :listConf="listConf" @select="selectRow" @searchReset="searchReset" >
+    <myTable ref="listTable" :listConf="listConf" @select="selectRow" 
+      @searchReset="searchReset" @on-selection-change="onSelectChange">
       <template slot="formItem" >
+        <Button v-if="!searchShowMore" @click="searchShowMore = !searchShowMore" icon="md-apps" type="default" title="展开高级搜索" style="margin-right: 5px;">展开</Button>
+        <Button v-else @click="searchShowMore = !searchShowMore" icon="md-apps" type="primary" title="隐藏高级搜索" style="margin-right: 5px;">隐藏</Button>
+
         <Form-item prop="name">
           <Input type="text" v-model="listConf.searchParams.name" placeholder="搜索用户名" ></Input>
         </Form-item>
@@ -43,8 +47,135 @@
             >
           </sm-field>
         </Form-item>
+
+        <br v-if="searchShowMore" />
+        <div v-if="searchShowMore">
+          <!-- 性别 -->
+            <Row>
+              <Col span="3">性别</Col>
+              <Col span="21">
+                <sm-field
+                  v-model="listConf.searchParams.sex"
+                  :field="{type: 'radio', placeholder: '请选择性别', radios: [
+                    {label: '全部', value: 'all'},
+                    {label: '男', value: 1},
+                    {label: '女', value: 2},
+                    {label: '未知', value: 0},
+                  ]}"
+                  >
+                </sm-field>
+              </Col>
+            </Row>
+              
+            <Row>
+              <Col span="3" style="line-height: 32px;">地区</Col>
+              <Col span="21">
+                <Cascader style="width: 300px" :data="regionData" v-model="regionValue" change-on-select @on-change="regionChange"></Cascader>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col span="3" style="line-height: 32px;">行业</Col>
+              <Col span="21">
+                <Input type="text" style="width: 300px" v-model="listConf.searchParams.industry" placeholder="请输入行业" ></Input>
+              </Col>
+            </Row>
+            <Row>
+              <Col span="3" style="line-height: 32px;">登录次数</Col>
+              <Col span="21">
+                <sm-field
+                  v-model="listConf.searchParams.login_num"
+                  :field="{type: 'radio', placeholder: '请选择登录次数', radios: [
+                    {label: '全部', value: 'all'},
+                    {label: '首次登录', value: '1'},
+                    {label: '2-5次登录', value: '2-5'},
+                    {label: '6-10次登录', value: '6-10'},
+                    {label: '11-30次登录', value: '11-30'},
+                    {label: '30次以上登录', value: '31-all'},
+                  ]}"
+                  >
+                </sm-field>
+              </Col>
+            </Row>
+            <Row>
+              <Col span="3" style="line-height: 32px;">分享次数</Col>
+              <Col span="21">
+                <sm-field
+                  v-model="listConf.searchParams.share_num"
+                  :field="{type: 'radio', placeholder: '请选择分享次数', radios: [
+                    {label: '全部', value: 'all'},
+                    {label: '未分享', value: '0'},
+                    {label: '首次分享', value: '1'},
+                    {label: '2-5次分享', value: '2-5'},
+                    {label: '6-10次分享', value: '6-10'},
+                    {label: '11-30次分享', value: '11-30'},
+                    {label: '30次以上分享', value: '31-all'},
+                  ]}"
+                  >
+                </sm-field>
+              </Col>
+            </Row>
+            <Row>
+              <Col span="3" style="line-height: 32px;">留言次数</Col>
+              <Col span="21">
+                <sm-field
+                  v-model="listConf.searchParams.comment_num"
+                  :field="{type: 'radio', placeholder: '请选择留言次数', radios: [
+                    {label: '全部', value: 'all'},
+                    {label: '未留言', value: '0'},
+                    {label: '首次留言', value: '1'},
+                    {label: '2-5次留言', value: '2-5'},
+                    {label: '6-10次留言', value: '6-10'},
+                    {label: '11-30次留言', value: '11-30'},
+                    {label: '30次以上留言', value: '31-all'},
+                  ]}"
+                  >
+                </sm-field>
+              </Col>
+            </Row>
+            <Row>
+              <Col span="3" style="line-height: 32px;">付费次数</Col>
+              <Col span="21">
+                <sm-field
+                  v-model="listConf.searchParams.pay_num"
+                  :field="{type: 'radio', placeholder: '请选择付费次数', radios: [
+                    {label: '全部', value: 'all'},
+                    {label: '未付费', value: '0'},
+                    {label: '首次付费', value: '1'},
+                    {label: '2-5次付费', value: '2-5'},
+                    {label: '6-10次付费', value: '6-10'},
+                    {label: '11-30次付费', value: '11-30'},
+                    {label: '30次以上付费', value: '31-all'},
+                  ]}"
+                  >
+                </sm-field>
+              </Col>
+            </Row>
+        </div>
+      </template>
+
+      <template slot="formBtn">
+        <Button type="primary" @click="sendSms()"><Icon type="md-paper-plane" />发送短信</Button>
       </template>
     </myTable>
+
+    <Modal v-model="sendShow" :closable='false' :mask-closable=false :width="400">
+      <h3 slot="header" style="color:#2D8CF0">处理</h3>
+      <h3 style="color: #ffad33;margin-bottom: 10px;">{{ currentSendInfo }}</h3>
+      <Form ref="sendForm" :model="sendForm" :label-width="100" label-position="right" :rules="sendValidate">
+        <Form-item label="阿里云模板 ID" prop="template_id">
+          <Input v-model="sendForm.template_id" type="text" placeholder="阿里云模板 ID"></Input>
+        </Form-item>
+        <Form-item label="请输入模板内容" prop="content">
+          <Input v-model="sendForm.content" type="textarea" :autosize="{minRows: 3,maxRows: 5}" placeholder="阿里云模板变量格式：{title:标题}"></Input>
+        </Form-item>
+      </Form>
+      <div slot="footer">
+        <Button type="text" @click="cancel">取消</Button>
+        <Button type="primary" :loading="saveLoading" @click="ok">发送</Button>
+      </div>
+    </Modal>
+
 
     <Modal v-model="showDetail" :closable="true" :mask-closable=false :width="1000">
       <h3 slot="header" style="color:#2D8CF0">用户详情</h3>
@@ -154,8 +285,8 @@
           <Col span="18" class="row-content">{{ moreDetail.login_time_for }}</Col>
         </Row>
         <Row>
-          <Col span="6" class="row-label">累计学习时长：</Col>
-          <Col span="18" class="row-content">{{ moreDetail.study_time_for }}</Col>
+          <Col span="6" class="row-label">学习次数：</Col>
+          <Col span="18" class="row-content">{{ moreDetail.study_num }}</Col>
         </Row>
         <Row>
           <Col span="6" class="row-label">获得优惠券金额：</Col>
@@ -218,6 +349,26 @@ export default {
   },
   data () {
     return {
+      currentSendInfo: '',
+      currentSelect: [],
+      currentSelectUserName: [],
+      sendShow: false,
+      saveLoading: false,
+      sendInfo: '',
+      sendForm: {
+        template_id: '',
+        content: ''
+      },
+      sendValidate: {
+        template_id: [
+          { required: true, message: '请输入阿里云模板 ID', trigger: 'blur' }
+        ],
+        content: [
+          { required: true, message: '请输入模板内容', trigger: 'blur' }
+        ],
+      },
+      regionValue: [],
+      regionData: [],
       orderColumns: [
         {title: '订单号', align: 'center', width: 120, key: 'order_sn'},
         {title: '流水号', align: 'center', width: 150, key: 'transaction_id'},
@@ -227,6 +378,7 @@ export default {
         {title: '支付金额', align: 'center', width: 80, key: 'wechat_fee'},
         {title: '支付时间', align: 'center', width: 150, key: 'payed_at'},
       ],
+      searchShowMore: false,
       detail: {},
       moreDetail: {},
       getMoreIng: false,
@@ -244,11 +396,19 @@ export default {
           is_teach: 'all',
           is_invalid: 'all',
           created_start: '',
-          created_end: ''
+          created_end: '',
+          sex: 'all',
+          region: [],
+          industry: '',
+          login_num: 'all',
+          share_num: 'all',
+          comment_num: 'all',
+          pay_num: 'all'
         },
         item: [],
         columns: [
-          {type: 'index', align: 'center', width: 100, fixed: 'left'},
+          {type: 'selection', align: 'center', width: 50, fixed: 'left'},
+          {type: 'index', align: 'center', width: 50, fixed: 'left'},
           {title: 'UID', align: 'center', width: 120, key: 'id'},
           {title: '用户名', align: 'center', width: 150, key: 'name'},
           {title: '头像', align: 'center', key: 'cat_name',
@@ -523,10 +683,103 @@ export default {
           }
         }
       })
-    }
+    },
+    getCascader () {
+      var _this = this;
+      Util.ajax({
+        url: "/adminapi/getCascader",
+        method: "get",
+        success: function(result){
+          if (result.error == 0) {
+            _this.regionData = result.result;
+          }else{
+            _this.$Notice.error({title: '提示', desc: result.info})
+          }
+        }
+      });
+    },
+    regionChange (value, selectedData) {
+      var region = [];
+
+      for (let data of selectedData) {
+        region.push(data.short_name);
+      }
+      this.regionValue = value;
+      this.listConf.searchParams.region = region;
+    },
+    onSelectChange (selection) {
+      this.setSelect(selection);
+    },
+    setSelect(selection) {
+      let currentSelect = [];
+      let currentSelectUserName = [];
+      for (let select of selection) {
+        currentSelect.push(select.id);
+        currentSelectUserName.push(select.name);
+      }
+
+      this.currentSelect = currentSelect;
+      this.currentSelectUserName = currentSelectUserName;
+    },
+    sendSms () {
+      var _this = this;
+      if (!this.currentSelect.length) {
+        _this.$Notice.error({title: '提示', desc: '请选择要发送的用户'})
+        return false;
+      }
+      var names = this.currentSelectUserName.join(", ");
+      this.currentSendInfo = '当前已选择:' + names + "；共 (" + this.currentSelect.length + ") 人";
+
+      this.sendShow = true;
+    },
+    cancel: function () {
+      this.sendShow = false;
+      this.saveLoading = false;
+    },
+    ok () {
+      var _this = this;
+
+      _this.sendForm.id = this.currentSelect;
+
+      _this.$Modal.confirm({
+        title: '提示',
+        content: '确定要处理吗？',
+        onOk: function () {
+          _this.$refs['sendForm'].validate((valid) => {
+            if (valid) {
+              _this.saveLoading = true;
+              Util.ajax({
+                url: '/adminapi/users/sendSms',
+                method: 'post',
+                data: _this.sendForm,
+                success: function (result) {
+                  if (result.error == 0) {
+                    _this.cancel();
+                    _this.$Notice.success({title: '提示', desc: result.info})
+                  } else {
+                    _this.saveLoading = false;
+                    _this.$Notice.error({title: '提示', desc: result.info})
+                  }
+                }
+              })
+            } else {
+              _this.$Notice.error({title: '提示', desc: "信息填写不完整"})
+            }
+          })
+        },
+        onCancel: function () {
+          _this.$Notice.error({ title: '提示', desc: '操作取消' })
+        }
+      })
+    },
+    applyOper: function () {
+      
+    },
   },
   created: function () {
     var _this = this
+
+    this.getCascader();
   },
   mounted: function () {
   }

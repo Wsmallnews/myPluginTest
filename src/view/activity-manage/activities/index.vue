@@ -318,7 +318,7 @@ export default {
           {title: '操作',
             key: 'action',
             align: 'center',
-            width: 180,
+            width: 200,
             fixed: 'right',
             render: (h, params) => {
               return h('div', [
@@ -368,6 +368,25 @@ export default {
                   props: {
                     type: 'primary',
                     size: 'small',
+                    icon: 'md-copy'
+                  },
+                  domProps: {
+                    title: '复制链接到剪贴板',
+                  },
+                  style: {
+                    marginRight: '5px',
+                    marginBottom: '5px'
+                  },
+                  on: {
+                    click : () => {
+                      this.doCopy(params.row.web_url);
+                    }
+                  }
+                }),
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small',
                     icon: 'md-brush'
                   },
                   domProps: {
@@ -384,6 +403,7 @@ export default {
                     }
                   }
                 }),
+                
                 h('Button', {
                   props: {
                     type: 'error',
@@ -503,13 +523,22 @@ export default {
           }
         }
       })
+    },
+    doCopy: function (text) {
+      var _this = this;
+      this.$copyText(text).then(function (e) {
+        _this.$Notice.success({title: '提示', desc: '复制成功'})
+      }, function (e) {
+        _this.$Notice.success({title: '提示', desc: '复制失败'})
+      })
     }
   },
   created: function () {
     var _this = this
   },
   mounted: function () {
-  }
+
+  },
 }
 </script>
 

@@ -12,6 +12,10 @@ import 'view-design/dist/styles/iview.css';
 import './index.less'
 import '@/assets/icons/iconfont.css'
 import Sm from './plugin'
+import VueClipboards from 'vue-clipboard2'
+
+// 复制剪贴板
+Vue.use(VueClipboards);
 
 Vue.use(Sm);
 

@@ -364,6 +364,7 @@
         :show-week-numbers="currentField['show-week-numbers']"
         :start-date="currentField['start-date']"
         :confirm="currentField['confirm']"
+        :split-panels="currentField['split-panels']"
         style="width: 300px"
         @on-change="(val, type) => {onDateChange(val, type, currentField)}"
         >

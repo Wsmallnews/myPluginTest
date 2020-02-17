@@ -90,6 +90,10 @@
           <Col span="6" class="row-label">应扣税额：</Col>
           <Col span="18" class="row-content">{{ detail.charge_money }}</Col>
         </Row>
+        <Row>
+          <Col span="6" class="row-label">实际打款：</Col>
+          <Col span="18" class="row-content">{{ detail.real_money }}</Col>
+        </Row>
       </div>
 
       <br><br>
@@ -161,7 +165,9 @@ export default {
             return h('span', params.row.user != null ? params.row.user.money : '');
           }},
           {title: '提现金额', align: 'center', width: 100, key: 'money'},
-          // {title: '收款账号', align: 'center', key: 'get_type_name'},
+          {title: '应扣税额', align: 'center', width: 100, key: 'charge_money'},
+          {title: '实际打款', align: 'center', width: 100, key: 'real_money'},
+          {title: '提现到账', align: 'center', width: 100, key: 'get_type_name'},
           // {title: '真实姓名', align: 'center', key: 'real_name'},
           // {title: '收款账号信息', align: 'center', key: 'bank_info', render: (h, params) => {
           //   var btn = [h('span', params.row.bank_info + "  ")];

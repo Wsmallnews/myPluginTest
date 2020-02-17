@@ -46,7 +46,11 @@ export default [{
     path: '/manageStaticsManage',
     name: 'managestaticsmanage',
     meta: {
-      access: ['manage_statics:user_manage', 'manage_statics:pay_manage', 'manage_statics:coupon_manage'],
+      access: ['manage_statics:user_manage', 
+                'manage_statics:pay_manage', 
+                'manage_statics:coupon_manage',
+                'manage_statics:income_manage'
+              ],
       icon: 'md-stats',
       title: '运营统计'
     },
@@ -55,7 +59,7 @@ export default [{
         path: 'userManage',
         name: 'managestaticsmanage-usermanage',
         meta: {
-          access: ['statics:view'],
+          access: ['manage_statics:user_manage'],
           icon: 'md-stats',
           title: '运营统计'
         },
@@ -65,7 +69,7 @@ export default [{
         path: 'payManage',
         name: 'managestaticsmanage-paymanage',
         meta: {
-          access: ['statics:view'],
+          access: ['manage_statics:pay_manage'],
           icon: 'md-stats',
           title: '付费统计'
         },
@@ -75,11 +79,21 @@ export default [{
         path: 'couponManage',
         name: 'managestaticsmanage-couponmanage',
         meta: {
-          access: ['statics:view'],
+          access: ['manage_statics:coupon_manage'],
           icon: 'md-stats',
           title: '优惠券统计'
         },
         component: () => import('@/view/manage-statics-manage/couponmanage.vue'),
+      },
+      {
+        path: 'statics/index',
+        name: 'managestaticsmanage-statics-index',
+        meta: {
+          access: ['manage_statics:income_manage'],
+          icon: 'md-stats',
+          title: '收入统计'
+        },
+        component: () => import('@/view/statics-manage/statics/index.vue'),
       },
     ]
   },
@@ -146,7 +160,7 @@ export default [{
         component: () => import('@/view/partner-manage/wallet-logs/index.vue'),
       },
       {
-        path: 'walletApplys',
+        path: 'statics',
         name: 'partnermanage-statics',
         meta: {
           access: ['partner:statics'],
@@ -599,27 +613,6 @@ export default [{
       //   },
       //   component: () => import('@/view/order-manage/orders/show.vue')
       // }
-    ]
-  },
-  {
-    path: '/staticsManage',
-    name: 'staticsmanage',
-    meta: {
-      access: ['statics:view'],
-      icon: 'md-stats',
-      title: '收入统计'
-    },
-    component: Main,
-    children: [{
-        path: 'statics/index',
-        name: 'staticsmanage-statics-index',
-        meta: {
-          access: ['statics:view'],
-          icon: 'md-stats',
-          title: '收入统计'
-        },
-        component: () => import('@/view/statics-manage/statics/index.vue'),
-      },
     ]
   },
   {
