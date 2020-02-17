@@ -101,7 +101,7 @@ export default [{
     path: '/userManage',
     name: 'usermanage',
     meta: {
-      access: ['user:view', 'user:wallet_logs'],
+      access: ['user:view'],
       icon: 'md-person',
       title: '用户管理'
     },
@@ -133,7 +133,7 @@ export default [{
     path: '/partnerManage',
     name: 'partnermanage',
     meta: {
-      access: ['partner:view', 'partner_wallet_apply:view'],
+      access: ['partner:view', 'partner:statics', 'partner_wallet_apply:view'],
       icon: 'md-person',
       title: '合伙人管理'
     },
