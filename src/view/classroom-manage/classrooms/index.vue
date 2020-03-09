@@ -139,12 +139,12 @@
 
         <Row>
           <Col span="6" class="row-label">详情：</Col>
-          <Col span="18" class="row-content" style="max-height: 300px;overflow-y:auto;" v-html="detail.content"></Col>
+          <Col span="18" class="row-content content-detail" v-html="detail.content"></Col>
         </Row>
 
         <Row>
           <Col span="6" class="row-label">温馨提醒：</Col>
-          <Col span="18" class="row-content" style="max-height: 300px;overflow-y:auto;" v-html="detail.reminder"></Col>
+          <Col span="18" class="row-content content-detail" v-html="detail.reminder"></Col>
         </Row>
 
         <hr v-if="detail.contents.length" style="color: #e8eaec" />

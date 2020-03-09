@@ -51,7 +51,7 @@
                 点赞 {{ it.love_num }}
               </li>
               <li>
-                <a type="text" style="color: #57a3f;" @click="jumpPage({ path: '/soundManage/soundComments/' + it.id })">查看留言({{it.comment_num}})</a>
+                <a type="text" style="color: #57a3f;" @click="jumpPage({ path: '/soundManage/soundComments/' + it.id })">查看留言({{it.comment_num ? it.comment_num : 0}})</a>
               </li>
               <li>
                 <Icon type="md-star" style="font-size: 18px" :style="recommendStyle(it.is_recommend)" />
@@ -142,7 +142,7 @@
 
         <Row>
           <Col span="6" class="row-label">详情：</Col>
-          <Col span="18" class="row-content" style="max-height: 300px;overflow-y:auto;" v-html="detail.content"></Col>
+          <Col span="18" class="row-content content-detail" v-html="detail.content"></Col>
         </Row>
       </div>
     </Modal>

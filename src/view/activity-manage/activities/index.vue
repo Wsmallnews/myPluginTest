@@ -130,13 +130,24 @@
           </Col>
         </Row>
         <Row>
+          <Col span="6" class="row-label">是否培训：</Col>
+          <Col span="18" class="row-content">
+            <span v-if="detail.is_train == 1">
+              培训
+            </span>
+            <span v-else>
+              普通活动
+            </span>
+          </Col>
+        </Row>
+        <Row>
           <Col span="6" class="row-label">创建时间：</Col>
           <Col span="18" class="row-content">{{ detail.created_at }}</Col>
         </Row>
 
         <Row>
           <Col span="6" class="row-label">详情：</Col>
-          <Col span="18" class="row-content" v-html="detail.content"></Col>
+          <Col span="18" class="row-content content-detail" v-html="detail.content"></Col>
         </Row>
       </div>
 

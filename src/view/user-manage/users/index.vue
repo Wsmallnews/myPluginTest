@@ -151,6 +151,22 @@
                 </sm-field>
               </Col>
             </Row>
+            <Row>
+              <Col span="3" style="line-height: 32px;">VIP</Col>
+              <Col span="21">
+                <sm-field
+                  v-model="listConf.searchParams.vip"
+                  :field="{type: 'radio', placeholder: '请选择 VIP 类型', radios: [
+                    {label: '全部', value: 'all'},
+                    {label: '月 VIP', value: 'month'},
+                    {label: '年 VIP', value: 'year'},
+                    {label: '7 天内到期', value: 'seven'},
+                    {label: '已到期', value: 'old'},
+                  ]}"
+                  >
+                </sm-field>
+              </Col>
+            </Row>
         </div>
       </template>
 
@@ -252,9 +268,13 @@
           <Col span="6" class="row-label">职务：</Col>
           <Col span="18" class="row-content">{{ detail.job }}</Col>
         </Row>
-        <Row>
+        <!-- <Row>
           <Col span="6" class="row-label">提升技能：</Col>
           <Col span="18" class="row-content">{{ detail.skill }}</Col>
+        </Row> -->
+        <Row>
+          <Col span="6" class="row-label">自我介绍：</Col>
+          <Col span="18" class="row-content">{{ detail.intro }}</Col>
         </Row>
       </div>
 
@@ -403,7 +423,8 @@ export default {
           login_num: 'all',
           share_num: 'all',
           comment_num: 'all',
-          pay_num: 'all'
+          pay_num: 'all',
+          vip: 'all'
         },
         item: [],
         columns: [
@@ -438,6 +459,7 @@ export default {
               return h('span', '非 VIP');
             }
           }},
+          {title: 'VIP类型', align: 'center', width: 80, key: 'vip_type_name'},
           {title: '是否讲师', align: 'center', width: 100, key: 'is_teach', render: (h, params) => {
             return h('div', [
               h('i-switch', {

@@ -46,6 +46,7 @@ export default {
         vip_online_money: 0,
         expire_day: 0,
         is_recommend: 0,
+        is_train: 0,
         sort_order: 50,
       },
       formFields: [
@@ -261,6 +262,11 @@ export default {
           type: "switch",
           name: 'is_recommend',
           label: '是否推荐',
+        },
+        {
+          type: "switch",
+          name: 'is_train',
+          label: '是否培训',
         },
         {
           type: "number",

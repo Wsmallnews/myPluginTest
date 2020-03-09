@@ -32,6 +32,8 @@
         <div class="col-div" style="background-color: #ed4014">
           <div class="title">VIP 付费</div>
           <div class="first">￥{{ statics.vip_total }}</div>
+          <div class="second">月 VIP 付费: ￥{{ statics.vip_year_total }}</div>
+          <div class="second">年 VIP 付费: ￥{{ statics.vip_month_total }}</div>
         </div>
       </Col>
     </Row>
@@ -101,7 +103,9 @@ export default {
           {title: '薪活动付费', align: 'center', minWidth: 100, key: 'activity_money'},
           {title: '薪商学付费', align: 'center', minWidth: 100, key: 'business_money'},
           {title: '薪课堂付费', align: 'center', minWidth: 100, key: 'classroom_money'},
-          {title: 'VIP 付费', align: 'center', minWidth: 100, key: 'vip_money'},
+          {title: '月VIP付费', align: 'center', minWidth: 100, key: 'vip_month_money'},
+          {title: '年VIP付费', align: 'center', minWidth: 100, key: 'vip_year_money'},
+          {title: 'VIP合计付费', align: 'center', minWidth: 110, key: 'vip_money'},
           {title: '合计付费', align: 'center', minWidth: 100, key: 'total_money'},
           {title: '累计付费', align: 'center', minWidth: 100, key: 'all_total_money'},
         ]
@@ -268,5 +272,11 @@ export default {
 
 .charts {
   height: 300px;
+}
+
+.second {
+  font-size: 14px;
+  text-align: left;
+  margin-left: 30px;
 }
 </style>

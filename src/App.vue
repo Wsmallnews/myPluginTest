@@ -43,4 +43,13 @@ form.form-edit .ivu-cascader, form.form-edit .ivu-input-wrapper, form.form-edit 
   background-color: #2db7f5 !important;
   color: #ffffff !important;
 }
+
+.content-detail {
+  max-height: 300px;
+  overflow-y:auto;
+}
+
+.content-detail img {
+  max-width: 100%;
+}
 </style>

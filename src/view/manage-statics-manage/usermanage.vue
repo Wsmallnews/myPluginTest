@@ -15,8 +15,10 @@
       </Col>
       <Col span="8">
         <div class="col-div" style="background-color: #2d8cf0">
-          <div class="title">vip 用户数</div>
+          <div class="title">VIP 用户数</div>
           <div class="first">{{ statics.vip_total }}</div>
+          <div class="second">月 VIP 用户数:{{ statics.vip_year_total }}</div>
+          <div class="second">年 VIP 用户数:{{ statics.vip_month_total }}</div>
         </div>
       </Col>
     </Row>
@@ -85,6 +87,9 @@ export default {
           {title: '日期', align: 'center', minWidth: 100, key: 'date'},
           {title: '新增人数', align: 'center', minWidth: 100, key: 'new_user_num'},
           {title: '累计人数', align: 'center', minWidth: 100, key: 'all_total_user'},
+          {title: '新增月 VIP 数', align: 'center', minWidth: 100, key: 'new_vip_month_user_num'},
+          {title: '新增年 VIP 数', align: 'center', minWidth: 100, key: 'new_vip_year_user_num'},
+          {title: '累计 VIP 数', align: 'center', minWidth: 100, key: 'all_vip_total_user'},
         ]
       }
     }
@@ -249,5 +254,11 @@ export default {
 
 .charts {
   height: 300px;
+}
+
+.second {
+  font-size: 14px;
+  text-align: left;
+  margin-left: 30px;
 }
 </style>
