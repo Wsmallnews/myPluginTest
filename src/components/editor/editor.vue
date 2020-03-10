@@ -1,7 +1,7 @@
 <template>
   <div class="editor-wrapper">
     <!-- <div :id="editorId"></div> -->
-    <vue-neditor-wrap v-model="value" :config="myConfig" :destroy="false"></vue-neditor-wrap>
+    <vue-neditor-wrap v-model="content" :config="myConfig" :destroy="false"></vue-neditor-wrap>
   </div>
 </template>
 
@@ -28,7 +28,8 @@ export default {
         serverUrl: '/adminapi/myUpload',
         // UEditor 资源文件的存放路径，如果你使用的是 vue-cli 生成的项目，通常不需要设置该选项，vue-ueditor-wrap 会自动处理常见的情况，如果需要特殊配置，参考下方的常见问题2
         UEDITOR_HOME_URL: process.env.NODE_ENV === 'production' ? '/admin_dist/NEditor/' : '/NEditor/'
-      }
+      },
+      content:''
     }
   },
   props: {
@@ -71,6 +72,10 @@ export default {
   },
   watch: {
     value (val) {
+      this.content = val
+      this.setHtml(val)
+    },
+    content(val){
       this.setHtml(val)
     }
   },
