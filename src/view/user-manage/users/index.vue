@@ -172,6 +172,7 @@
 
       <template slot="formBtn">
         <Button type="primary" @click="sendSms()"><Icon type="md-paper-plane" />发送短信</Button>
+        <Button type="primary" @click="sendVIP()">赠送VIP</Button>
       </template>
     </myTable>
 
@@ -189,6 +190,22 @@
       <div slot="footer">
         <Button type="text" @click="cancel">取消</Button>
         <Button type="primary" :loading="saveLoading" @click="ok">发送</Button>
+      </div>
+    </Modal>
+
+    <Modal v-model="sendVIPShow" :closable='false' :mask-closable=false :width="400">
+      <h3 slot="header" style="color:#2D8CF0">处理</h3>
+      <h3 style="color: #ffad33;margin-bottom: 10px;">{{ currentSendInfo }}</h3>
+      <Form ref="sendForm" :model="sendForm" :label-width="100" label-position="right" :rules="sendValidate">
+        <Form-item label="选择赠送时长" prop="user_id">
+          <Select style="width:200px" v-model="sendForm.years" filterable clearable placeholder="VIP时长">
+            <Option v-for="(item, index) in vipOptions" :key="index" :label="item.name" :value="item.id" ></Option>
+          </Select>
+        </Form-item>
+      </Form>
+      <div slot="footer">
+        <Button type="text" @click="cancelVIPSending">取消</Button>
+        <Button type="primary" :loading="saveLoading" @click="processSendVIP">确定</Button>
       </div>
     </Modal>
 
@@ -373,11 +390,33 @@ export default {
       currentSelect: [],
       currentSelectUserName: [],
       sendShow: false,
+      sendVIPShow:false,
+      vipOptions:[{
+        id:1,
+        name:'1年'
+      },
+      {
+        id:2,
+        name:'2年'
+      },
+      {
+        id:3,
+        name:'3年'
+      },
+      {
+        id:4,
+        name:'4年'
+      },
+      {
+        id:5,
+        name:'5年'
+      }],
       saveLoading: false,
       sendInfo: '',
       sendForm: {
         template_id: '',
-        content: ''
+        content: '',
+        years:1
       },
       sendValidate: {
         template_id: [
@@ -754,8 +793,58 @@ export default {
 
       this.sendShow = true;
     },
+    sendVIP () {
+      var _this = this;
+      if (!this.currentSelect.length) {
+        _this.$Notice.error({title: '提示', desc: '请选择要赠送VIP的用户'})
+        return false;
+      }
+      var names = this.currentSelectUserName.join(", ");
+      this.currentSendInfo = '当前已选择:' + names + "；共 (" + this.currentSelect.length + ") 人";
+
+      this.sendVIPShow = true;
+    },
+    processSendVIP(){
+       var _this = this;
+      _this.sendForm.id = this.currentSelect;
+
+      _this.$Modal.confirm({
+        title: '提示',
+        content: '确定要处理吗？',
+        onOk: function () {
+          _this.$refs['sendForm'].validate((valid) => {
+            if (valid) {
+              _this.saveLoading = true;
+              Util.ajax({
+                url: '/adminapi/users/sendVIP',
+                method: 'post',
+                data: _this.sendForm,
+                success: function (result) {
+                  if (result.error == 0) {
+                    _this.cancel();
+                    _this.$Notice.success({title: '提示', desc: result.info})
+                  } else {
+                    _this.saveLoading = false;
+                    _this.$Notice.error({title: '提示', desc: result.info})
+                  }
+                }
+              })
+            } else {
+              _this.$Notice.error({title: '提示', desc: "信息填写不完整"})
+            }
+          })
+        },
+        onCancel: function () {
+          _this.$Notice.error({ title: '提示', desc: '操作取消' })
+        }
+      })
+    },
     cancel: function () {
       this.sendShow = false;
+      this.saveLoading = false;
+    },
+    cancelVIPSending:function(){
+      this.sendVIPShow = false;
       this.saveLoading = false;
     },
     ok () {
