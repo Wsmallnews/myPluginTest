@@ -42,7 +42,7 @@ export default {
         charge_money: 0,
         is_vip_charge: 0,
         vip_charge_money: 0,
-        expire_day: 0,
+        expire_day: 365,
         is_recommend: 0,
         sort_order: 50,
       },
