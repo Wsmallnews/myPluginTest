@@ -19,6 +19,7 @@
           <div class="first">{{ statics.vip_total }}</div>
           <div class="second">月 VIP 用户数:{{ statics.vip_year_total }}</div>
           <div class="second">年 VIP 用户数:{{ statics.vip_month_total }}</div>
+          <div class="second">月赠送 VIP 用户数:{{ statics.vip_send_month_count }}</div>
         </div>
       </Col>
     </Row>
