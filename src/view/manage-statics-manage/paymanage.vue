@@ -32,8 +32,8 @@
         <div class="col-div" style="background-color: #ed4014">
           <div class="title">VIP 付费</div>
           <div class="first">￥{{ statics.vip_total }}</div>
-          <div class="second">月 VIP 付费: ￥{{ statics.vip_year_total }}</div>
-          <div class="second">年 VIP 付费: ￥{{ statics.vip_month_total }}</div>
+          <div class="second">月 VIP 付费: ￥{{ statics.vip_month_total }}</div>
+          <div class="second">年 VIP 付费: ￥{{ statics.vip_year_total }}</div>
         </div>
       </Col>
     </Row>

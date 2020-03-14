@@ -22,6 +22,7 @@ export default {
         teach_id: 0,
         coach_id: 0,
         wechat_qrcode: '',
+        desc: '',
         content: '',
         reminder: '',
         is_charge: 0,
@@ -185,6 +186,12 @@ export default {
           type: "number",
           name: 'sort_order',
           label: '排序',
+        },
+        {
+          type: "textarea",
+          name: 'desc',
+          label: '摘要',
+          placeholder: '摘要，分享时使用'
         },
         {
           type: 'editor',
