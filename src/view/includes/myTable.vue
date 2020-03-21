@@ -25,6 +25,7 @@
 
     <slot name="list" :item="item" :loading="loading">
       <Table
+        ref="table"
         :row-class-name="rowClassName"
         :loading="loading"
         :highlight-row="lighlightRow"
@@ -249,6 +250,51 @@
         }
 
         return "";
+      },
+      exportCsv: function(options, opt = {}) {
+        let route = this.$route;
+        let columnsCB = options.columnsCB;
+        let dataCB = options.dataCB;
+
+        delete options.columnsCB;
+        delete options.dataCB;
+
+        let filename = options.filename != undefined ? options.filename : '';
+        if (filename == '') {
+          filename = route.meta != undefined ? (route.meta.title ? route.meta.title : '导出数据') : '导出数据';
+        }
+        var defaultOptions = {
+          filename: filename,
+          original: true,
+          columns: columnsCB != undefined ? this.cListConf.columns.filter(columnsCB) : this.cListConf.columns,
+        }
+
+        // opt 里面不能包含 data
+        defaultOptions = Util.extend(defaultOptions, opt)
+
+        // 全部数据
+        if (options.isAll) {
+          this.exportLoading = true;
+          var oldPageSize = this.queryParams['page_size'];
+          this.queryParams['page_size'] = 99999999999;
+
+          this.listLoadData((result) => {
+            this.exportLoading = false;
+            // 将 page_size 还原
+            this.queryParams['page_size'] = oldPageSize;
+
+            if (!result.error) {
+              var data = result.result;
+              var item = data.data;
+
+              defaultOptions.data = dataCB != undefined ? item.filter(dataCB) : item;
+              this.$refs.table.exportCsv(defaultOptions);
+            }
+          });
+        } else {
+          defaultOptions.data = dataCB != undefined ? this.item.filter(dataCB) : this.item;
+          this.$refs.table.exportCsv(defaultOptions);
+        }
       }
     },
     created: function () {

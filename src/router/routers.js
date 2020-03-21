@@ -500,6 +500,48 @@ export default [{
     ]
   },
   {
+    path: '/giftLogManage',
+    name: 'giftlogmanage',
+    meta: {
+      access: ['gift_log:view'],
+      icon: 'md-cash',
+      title: '兑换码管理'
+    },
+    component: Main,
+    children: [{
+        path: 'index',
+        name: 'giftlogmanage-giftlogs-index',
+        meta: {
+          access: ['gift_log:view', 'gift_log:add'],
+          icon: 'md-microphone',
+          title: '兑换码管理',
+        },
+        component: () => import('@/view/gift-log-manage/gift-logs/index.vue')
+      },
+      {
+        path: 'add',
+        name: 'giftlogmanage-giftlogs-add',
+        meta: {
+          access: ['gift_log:add'],
+          icon: 'md-add',
+          title: '生成兑换码',
+        },
+        component: () => import('@/view/gift-log-manage/gift-logs/add-edit.vue')
+      },
+      {
+        path: 'userGift/:gift_log_id',
+        name: 'giftlogmanage-usergift-index',
+        meta: {
+          access: ['gift_log:view'],
+          hideInMenu: true,
+          icon: 'md-chatboxes',
+          title: '兑换码详情',
+        },
+        component: () => import('@/view/gift-log-manage/user-gifts/index.vue')
+      },
+    ]
+  },
+  {
     path: '/tagManage',
     name: 'tagmanage',
     meta: {
