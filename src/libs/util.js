@@ -4,7 +4,7 @@ import ViewUI from 'view-design';
 // cookie保存的天数
 import config from '@/config'
 import { forEach, hasOneOf, objEqual } from '@/libs/tools'
-
+import { login, logout, getUserInfo } from '@/api/user'
 import axios from '@/libs/api.request'
 
 let util = {};
@@ -44,18 +44,30 @@ export const ajax = function (options){
         .then(function (response) {
             if (defaults_options.success) {
                 // 所有 ajax 如果登录过期，跳转到登录
-                // if (typeof(response.data.error) != 'undefined') {
-                //     var error = response.data.error;
-                //     var path_name = Store.getters.route.name;
-                //     if (error == 10002) {
-                //         Store.dispatch('logout') // 退出登录
-                //         if (path_name != 'login') {  // 必须要登录的路由
-                //             ViewUI.Notice.error({title: '提示', desc: "登录已过期，请重新登录"});
-                //             router.push({name: 'login'});
-                //             return;
-                //         }
-                //     }
-                // }
+                if (typeof(response.data.error) != 'undefined') {
+                    var error = response.data.error;
+                    
+                    if (error == 10001) {   // 登录已失效
+                      logout().then( () => {
+                        setToken('');
+                        window.location.reload();
+                      });
+                      // store.dispatch('handleLogOut').then(() => {
+                      //   console.log('aadfsas')
+                      //   // router.push({ name: 'login' });
+                      // })
+                    }
+
+                    // var path_name = Store.getters.route.name;
+                    // if (error == 10002) {
+                    //     Store.dispatch('logout') // 退出登录
+                    //     if (path_name != 'login') {  // 必须要登录的路由
+                    //         ViewUI.Notice.error({title: '提示', desc: "登录已过期，请重新登录"});
+                    //         router.push({name: 'login'});
+                    //         return;
+                    //     }
+                    // }
+                }
 
                 defaults_options.success(response.data, response);
             }else {
