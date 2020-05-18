@@ -46,7 +46,7 @@ export const ajax = function (options){
                 // 所有 ajax 如果登录过期，跳转到登录
                 if (typeof(response.data.error) != 'undefined') {
                     var error = response.data.error;
-                    
+
                     if (error == 10001) {   // 登录已失效
                       logout().then( () => {
                         setToken('');

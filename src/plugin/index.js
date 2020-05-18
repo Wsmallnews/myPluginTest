@@ -2,6 +2,7 @@ import List from './components/list';
 import Field from './components/field';
 import Form from './components/form';
 import Upload from './components/upload';
+import UploadFile from './components/upload-file';
 import Editor from './components/editor';
 import Markdown from './components/markdown';
 import Tags from './components/tags';
@@ -12,6 +13,7 @@ const sm = {
   SmField: Field,
   SmForm: Form,
   SmUpload: Upload,
+  SmUploadFile: UploadFile,
   SmEditor: Editor,
   SmMarkdown: Markdown,
   SmTags: Tags

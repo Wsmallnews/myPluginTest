@@ -1,8 +1,35 @@
 <template lang="html">
 	<div class="business-add-edit">
-    <sm-form ref="smForm" v-model="formValidate" :fields="formFields" @submit="handleSubmit">
+    <Menu mode="horizontal" theme="light" active-name="edit" @on-select="getItem">
+      <MenuItem name="edit" >薪商学信息</MenuItem>
+      <template v-if="formValidate.id">
+        <MenuItem name="download" >薪商学资料</MenuItem>
+        <MenuItem name="question_practice" >练习题目</MenuItem>
+        <MenuItem name="question_challenge" >挑战题目</MenuItem>
+      </template>
+    </Menu>
+
+    <div style="height: 20px;"></div>
+
+    <sm-form v-if="menuActivity == 'edit'" ref="smForm" v-model="formValidate" :fields="formFields" @submit="handleSubmit">
 
     </sm-form>
+
+    <div v-else-if="menuActivity == 'download'">
+      <download type="business" :item-id="formValidate.id" :item="formValidate">
+
+      </download>
+    </div>
+
+    <div >
+      <Question ref="practice" v-if="menuActivity == 'question_practice'" type="business" do-type="practice" :item-id="formValidate.id" :item="formValidate">
+
+      </Question>
+
+      <Question ref="challenge" v-if="menuActivity == 'question_challenge'" type="business" do-type="challenge" :item-id="formValidate.id" :item="formValidate">
+
+      </Question>
+    </div>
 	</div>
 </template>
 
@@ -10,14 +37,19 @@
 import Util from '@/libs/util'
 import MyUpload from '@/view/includes/myUpload'
 import Editor from '@/components/editor'
+import Download from '@/view/includes/custom/download'
+import Question from '@/view/includes/custom/question'
 
 export default {
   components: {
     MyUpload,
-    Editor
+    Editor,
+    Download,
+    Question
   },
   data() {
     return {
+      menuActivity: 'edit',
       uploadData: {
         file_type: 'activity'
       },
@@ -36,6 +68,7 @@ export default {
         wechat_qrcode: '',
         live_name: '',
         live_id: '',
+        homework: '',
         content: '',
         reminder: '',
         is_charge: 0,
@@ -44,6 +77,7 @@ export default {
         vip_charge_money: 0,
         expire_day: 365,
         is_recommend: 0,
+        is_download: 0,
         sort_order: 50,
       },
       formFields: [
@@ -174,7 +208,15 @@ export default {
             message: '直播间 ID 不能为空',
           }
         },
-
+        {
+          type: 'textarea',
+          name: 'homework',
+          label: "课时作业",
+          placeholder: "请输入课时作业",
+          required: {
+            message: '请输入课时作业',
+          }
+        },
         {
           type: "group",
           name: 'group',
@@ -339,6 +381,9 @@ export default {
           }
         }
       })
+    },
+    getItem(code) {
+      this.menuActivity = code;
     }
   },
   mounted: function() {

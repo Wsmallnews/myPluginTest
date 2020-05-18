@@ -46,8 +46,8 @@ export default [{
     path: '/manageStaticsManage',
     name: 'managestaticsmanage',
     meta: {
-      access: ['manage_statics:user_manage', 
-                'manage_statics:pay_manage', 
+      access: ['manage_statics:user_manage',
+                'manage_statics:pay_manage',
                 'manage_statics:coupon_manage',
                 'manage_statics:income_manage'
               ],
@@ -238,7 +238,7 @@ export default [{
     path: '/businessManage',
     name: 'businessmanage',
     meta: {
-      access: ['business:view', 'business:edit', 'tag:view'],
+      access: ['business:view', 'tag:view'],
       icon: 'md-bookmarks',
       title: '薪商学管理'
     },
@@ -258,6 +258,7 @@ export default [{
         name: 'businessmanage-business-add',
         meta: {
           access: ['business:edit'],
+          hideInMenu: true,
           icon: 'md-add',
           title: '薪商学添加',
         },
@@ -286,6 +287,27 @@ export default [{
         component: () => import('@/view/business-manage/business/user.vue')
       },
       {
+        path: 'businessComments',
+        name: 'businessmanage-businessComments-index',
+        meta: {
+          access: ['business_comment:view'],
+          icon: 'md-chatboxes',
+          title: '薪商学留言',
+        },
+        component: () => import('@/view/business-manage/business-comments/index.vue')
+      },
+      {
+        path: 'businessComments/:business_id',
+        name: 'businessmanage-businessComments-index-params',
+        meta: {
+          access: ['business_comment:view'],
+          hideInMenu: true,
+          icon: 'md-add',
+          title: '新商学留言',
+        },
+        component: () => import('@/view/business-manage/business-comments/index.vue')
+      },
+      {
         path: 'tags/business',
         name: 'businessmanage-tags-index',
         meta: {
@@ -301,7 +323,7 @@ export default [{
     path: '/classroomManage',
     name: 'classroommanage',
     meta: {
-      access: ['classroom:view', 'classroom:edit', 'classroom_comment:view', 'tag:view'],
+      access: ['classroom:view', 'classroom_comment:view', 'tag:view'],
       icon: 'md-bookmark',
       title: '薪课堂管理'
     },
@@ -321,6 +343,7 @@ export default [{
         name: 'classroommanage-classrooms-add',
         meta: {
           access: ['classroom:edit'],
+          hideInMenu: true,
           icon: 'md-add',
           title: '薪课堂添加',
         },
@@ -496,6 +519,81 @@ export default [{
           title: '薪声留言',
         },
         component: () => import('@/view/sound-manage/sound-comments/index.vue')
+      },
+    ]
+  },
+  {
+    path: '/tutorManage',
+    name: 'tutormanage',
+    meta: {
+      access: ['tutor:view', 'tutor:edit'],
+      icon: 'md-person',
+      title: '导师管理'
+    },
+    component: Main,
+    children: [{
+        path: 'index',
+        name: 'tutormanage-tutors-index',
+        meta: {
+          access: ['tutor:view'],
+          icon: 'md-person',
+          title: '导师管理',
+        },
+      component: () => import('@/view/tutor-manage/tutors/index.vue')
+      },
+      {
+        path: 'add',
+        name: 'tutormanage-tutors-add',
+        meta: {
+          access: ['tutor:edit'],
+          icon: 'md-add',
+          title: '导师添加',
+        },
+        component: () => import('@/view/tutor-manage/tutors/add-edit.vue')
+      },
+      {
+        path: 'edit/:id',
+        name: 'tutormanage-tutors-edit',
+        meta: {
+          access: ['tutor:edit'],
+          hideInMenu: true,
+          icon: 'md-brush',
+          title: '薪声编辑',
+        },
+        component: () => import('@/view/tutor-manage/tutors/add-edit.vue')
+      },
+
+      // {
+      //   path: 'soundComments/:sound_id',
+      //   name: 'soundmanage-soundComments-index',
+      //   meta: {
+      //     access: ['sound_comment:view'],
+      //     hideInMenu: true,
+      //     icon: 'md-chatboxes',
+      //     title: '薪声留言',
+      //   },
+      //   component: () => import('@/view/sound-manage/sound-comments/index.vue')
+      // },
+    ]
+  },
+  {
+    path: '/consultManage',
+    name: 'consultmanage',
+    meta: {
+      access: ['consult:view'],
+      icon: 'md-hand',
+      title: '咨询管理'
+    },
+    component: Main,
+    children: [{
+        path: 'index',
+        name: 'consultmanage-consults-index',
+        meta: {
+          access: ['consult:view'],
+          icon: 'md-hand',
+          title: '咨询管理',
+        },
+        component: () => import('@/view/consult-manage/consults/index.vue')
       },
     ]
   },

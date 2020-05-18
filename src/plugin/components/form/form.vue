@@ -7,7 +7,7 @@
           <FormItem v-if="showFormItem(field, index, null)" :label="field.label" :prop="field.name">
             <Row>
               <template v-for="(child, ind) in field.children">
-                <Col :span="getSpan(field.children.length)">
+                <Col :span="getSpan(field.children.length)" style="margin-right: 10px;">
                   <FormItem v-if="showFormItem(child, index, field)" :prop="child.name">
                     <sm-field
                       v-model="formVal[child.name]"
@@ -334,6 +334,6 @@
 
 <style scoped>
 .sm-form {
-    float: left;
+  float: left;
 }
 </style>

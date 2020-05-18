@@ -40,6 +40,7 @@
       <Input
         type="textarea"
         v-model="currentValue"
+        style="width: 300px"
         :readonly="currentField.readonly"
         :disabled="currentField.disabled"
         :autofocus="currentField.autofocus"
@@ -166,6 +167,7 @@
         v-model="currentValue"
         :type="currentField.group != undefined ? currentField.group.type : null"
         :vertical="currentField.group ? currentField.group.vertical : false"
+        @on-change="currentField['on-change']"
         >
           <Radio v-for="(radio, index) in currentField.radios"
             :key="index"
@@ -442,6 +444,25 @@
       </sm-upload>
     </template>
 
+    <template v-if="currentField.type == 'upload-file'">
+      <sm-upload-file
+        :ref="currentField.name + '-upload-file'"
+        v-model="currentValue"
+        :multiple="false"
+        :filename="currentField.filename ? currentField.filename : 'FileContent'"
+        :upload-url="currentField.uploadUrl"
+        :data="currentField.data"
+        :headers="currentField.headers"
+        :format="currentField.format"
+        :width="currentField.width"
+        :height="currentField.height"
+        :handleResult="currentField.handleResult"
+        :no-edit="currentField.noEdit ? currentField.noEdit : false"
+        @on-change="(val) => {onUploadChange(val, currentField)}"
+        >
+      </sm-upload-file>
+    </template>
+
     <template v-if="currentField.type == 'editor'">
       <sm-editor
         :ref="currentField.name + '-editor'"
@@ -598,7 +619,7 @@
       onUploadChange (value, field) {
         // 触发 表单验证
         this.triggerValidate(value)
-        field['on-change'](value);          // 触发父组件回调方法
+        field['on-change'](value, field);          // 触发父组件回调方法
       },
       onEditorChange (value, text, field) {
         // 触发 表单验证

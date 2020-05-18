@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="users-index">
-    <myTable ref="listTable" :listConf="listConf" @select="selectRow" 
+    <myTable ref="listTable" :listConf="listConf" @select="selectRow"
       @searchReset="searchReset" @on-selection-change="onSelectChange">
       <template slot="formItem" >
         <Button v-if="!searchShowMore" @click="searchShowMore = !searchShowMore" icon="md-apps" type="default" title="展开高级搜索" style="margin-right: 5px;">展开</Button>
@@ -66,7 +66,7 @@
                 </sm-field>
               </Col>
             </Row>
-              
+
             <Row>
               <Col span="3" style="line-height: 32px;">地区</Col>
               <Col span="21">
@@ -702,7 +702,7 @@ export default {
       })
     },
     applyOper: function () {
-      
+
     },
   },
   created: function () {

@@ -2,14 +2,9 @@
   <div class="classroom-comments-index">
     <myTable ref="listTable" :listConf="listConf" @select="selectRow" @searchReset="searchReset" :noSearch="noSearch">
       <template slot="formItem" >
-        <Form-item prop="classroom_id">
-          <Select style="width:200px" v-model="listConf.searchParams.classroom_id" clearable placeholder="薪课堂" @on-change="selectClassroom">
-            <Option v-for="(classroom, index) in classrooms" :key="index" :label="classroom.name" :value="classroom.id" ></Option>
-          </Select>
-        </Form-item>
-        <Form-item prop="classroom_content_id">
-          <Select style="width:200px" v-model="listConf.searchParams.classroom_content_id" clearable placeholder="薪课堂课时">
-            <Option v-for="(classroomContent, index) in classroomContents" :key="index" :label="classroomContent.name" :value="classroomContent.id" ></Option>
+        <Form-item prop="business_id">
+          <Select style="width:200px" v-model="listConf.searchParams.business_id" clearable placeholder="薪商学">
+            <Option v-for="(business, index) in businesss" :key="index" :label="business.name" :value="business.id" ></Option>
           </Select>
         </Form-item>
         <Form-item prop="status">
@@ -38,7 +33,7 @@
             <div v-if="it.replies.length" style="margin: 20px 0 0 10px;padding: 10px;background: #f5f5f5;border-radius: 5px;">
               <template v-for="(e, d) in it.replies">
                 <div class="reply-div" :key="d">
-                  <p class="reply-list" :key="d" >
+                  <p class="reply-list" :key="d">
                     <span class="reply-name" v-if="e.user">
                       {{e.user.name}}
                       <span v-if="e.reply_user" class="reply-name">
@@ -71,11 +66,11 @@
               <li>
                 <a type="text" style="color: #57a3f;" @click="showReply(it)"> 回复 </a>
               </li>
-              <li>
+              <!-- <li>
                 <Icon type="md-star" style="font-size: 18px" :style="qulityStyle(it.is_quality)" />
                 <a v-if="it.is_quality" type="text" style="color: #57a3f;" @click="setQulity(it.id, 0)">取消精选</a>
                 <a v-else type="text" style="color: #57a3f;" @click="setQulity(it.id, 1)">设为精选</a>
-              </li>
+              </li> -->
               <li>
                 <a type="text" style="color: #57a3f;" @click="deleteConf(it.id)">删除</a>
               </li>
@@ -138,8 +133,7 @@ export default {
       replyInfo: '',
       replyForm: {
         id: 0,
-        classroom_id: 0,
-        classroom_content_id: 0,
+        business_id: 0,
         content: ''
       },
       replyValidate: {
@@ -159,17 +153,15 @@ export default {
       statusValidate: {
       },
 
-      classrooms: [],
-      classroomContents: [],
+      businesss: [],
       noSearch: true,
       currentRow: {},
       teachers: [],
       tags: [],
       listConf: {
-        url: '/adminapi/classroomComments',
+        url: '/adminapi/businessComments',
         searchParams: {
-          classroom_id: this.$route.params.classroom_id ? this.$route.params.classroom_id : 0,
-          classroom_content_id: this.$route.params.classroom_content_id ? this.$route.params.classroom_content_id : 0,
+          business_id: this.$route.params.business_id ? this.$route.params.business_id : 0,
           status: ''
         },
         item: []
@@ -203,17 +195,17 @@ export default {
         title: '提示',
         content: '确定删除吗？删除之后不可恢复!',
         onOk: function () {
-          _this.classroomCommentDel(id)
+          _this.businessCommentDel(id)
         },
         onCancel: function () {
           _this.$Notice.error({ title: '提示', desc: '操作取消' })
         }
       })
     },
-    classroomCommentDel (id) {
+    businessCommentDel (id) {
       var _this = this
       Util.ajax({
-        url: '/adminapi/classroomComments/' + id,
+        url: '/adminapi/businessComments/' + id,
         method: 'DELETE',
         success: function (result) {
           if (result.error == 0) {
@@ -242,7 +234,7 @@ export default {
     qulity (id, is_quality) {
       var _this = this
       Util.ajax({
-        url: '/adminapi/classroomComments/' + id + '/setQuality',
+        url: '/adminapi/businessComments/' + id + '/setQuality',
         method: 'patch',
         data: {is_quality: is_quality},
         success: function (result) {
@@ -255,38 +247,16 @@ export default {
         }
       })
     },
-    selectClassroom (classroom_id) {
-      this.getClassroomContents(classroom_id);
-    },
-    getClassrooms() {
+    getBusiness() {
       // 获取所有老师
       var _this = this;
       Util.ajax({
-        url: '/adminapi/classrooms/all',
+        url: '/adminapi/business/all',
         method: 'get',
         success: function(result) {
           if (result.error == 0) {
 
-            _this.classrooms = result.result;
-          } else {
-            _this.$Notice.error({
-              title: '提示',
-              desc: result.info
-            })
-          }
-        }
-      })
-    },
-    getClassroomContents(classroom_id) {
-      // 获取所有老师
-      var _this = this;
-      Util.ajax({
-        url: '/adminapi/classroomContents/all',
-        method: 'get',
-        data: {classroom_id: classroom_id},
-        success: function(result) {
-          if (result.error == 0) {
-            _this.classroomContents = result.result;
+            _this.businesss = result.result;
           } else {
             _this.$Notice.error({
               title: '提示',
@@ -305,16 +275,14 @@ export default {
       //   return false;
       // }
       this.replyForm.id = item.id;
-      this.replyForm.classroom_id = item.classroom_id;
-      this.replyForm.classroom_content_id = item.classroom_content_id;
+      this.replyForm.business_id = item.business_id;
       this.replyInfo = item.content;
       this.replyShow = true;
     },
     cancel: function () {
       this.replyShow = false;
       this.replyForm.id = 0;
-      this.replyForm.classroom_id = 0;
-      this.replyForm.classroom_content_id = 0;
+      this.replyForm.business_id = 0;
       this.replyForm.content = '';
       this.replyInfo = "";
     },
@@ -324,9 +292,9 @@ export default {
         if (valid) {
           _this.saveLoading = true;
           Util.ajax({
-            url: '/adminapi/classroomComments/'+ _this.replyForm.id +'/reply',
+            url: '/adminapi/businessComments/'+ _this.replyForm.id +'/reply',
             method: 'post',
-            data: {classroom_id: this.replyForm.classroom_id, classroom_content_id: this.replyForm.classroom_content_id, content: this.replyForm.content},
+            data: {business_id: this.replyForm.business_id, content: this.replyForm.content},
             success: function(result) {
               _this.saveLoading = false;
               if (result.error == 0) {
@@ -379,7 +347,7 @@ export default {
         if (valid) {
           _this.statusSaveLoading = true;
           Util.ajax({
-            url: '/adminapi/classroomComments/'+ _this.statusForm.id +'/statusOper',
+            url: '/adminapi/businessComments/'+ _this.statusForm.id +'/statusOper',
             method: 'patch',
             data: {status: this.statusForm.status, status_msg: this.statusForm.status_msg},
             success: function(result) {
@@ -410,11 +378,11 @@ export default {
   created: function () {
     var _this = this
 
-    if (this.$route.params.classroom_id && this.$route.params.classroom_content_id) {
+    if (this.$route.params.business_id) {
       this.noSearch = true
     } else {
       this.noSearch = false
-      this.getClassrooms();
+      this.getBusiness();
     }
   },
   mounted: function () {

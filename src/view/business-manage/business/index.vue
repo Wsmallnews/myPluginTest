@@ -23,183 +23,213 @@
     </myTable>
 
     <Modal v-model="showDetail" :closable="true" :mask-closable=false :width="700">
-      <h3 slot="header" style="color:#2D8CF0">薪商学详情</h3>
-      <div v-if="detail.name">
-        <Row >
-          <Col span="6" class="row-label">薪商学名称：</Col>
-          <Col span="18" class="row-content">{{ detail.name }}</Col>
-        </Row>
-        <Row >
-          <Col span="6" class="row-label">活动描述：</Col>
-          <Col span="18" class="row-content">{{ detail.desc }}</Col>
-        </Row>
-        <Row v-if="detail.image">
-          <Col span="6" class="row-label">薪商学图片：</Col>
-          <Col span="18" class="row-content">
-            <img class="detail-images" style="width: 125px;height: 50px;" :src="detail.image" @click="showBigImg(detail.image)" />
-          </Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">标签：</Col>
-          <Col span="18" class="row-content">
-            <Tag
-                v-for="(item, ind) in detail.tag_arr"
-                :key="ind"
-                :checkable="false"
-                :checked="false"
-                type="border"
-                size="medium"
-                color="primary"
-                >
-                {{ item }}
-              </Tag>
-          </Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">薪商学开始时间：</Col>
-          <Col span="18" class="row-content">{{ detail.start_at }}</Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">薪商学结束时间：</Col>
-          <Col span="18" class="row-content">{{ detail.end_at }}</Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">报名人数：</Col>
-          <Col span="18" class="row-content">
-            可报名人数：{{ detail.join_num }} &nbsp;&nbsp; 已报名人数：{{ detail.joined_num }}
-            <Button type="text" @click="jumpPage('/businessManage/user/' + detail.id)">查看报名列表</Button>
-          </Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">报名截止时间：</Col>
-          <Col span="18" class="row-content">{{ detail.join_end_at }}</Col>
-        </Row>
+      <Menu mode="horizontal" theme="light" active-name="info" @on-select="getItem">
+        <MenuItem name="info" >薪商学信息</MenuItem>
+        <MenuItem name="download" >薪商学资料</MenuItem>
+        <MenuItem name="question_practice" >练习题目</MenuItem>
+        <MenuItem name="question_challenge" >挑战题目</MenuItem>
+      </Menu>
 
-        <Row>
-          <Col span="6" class="row-label">讲师：</Col>
-          <Col span="18" class="row-content">
-            <span v-if="detail.teach">
-              {{ detail.teach.name }}({{detail.teach.phone}})
-            </span>
-          </Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">辅导老师：</Col>
-          <Col span="18" class="row-content">
-            <span v-if="detail.coach">
-              {{ detail.coach.name }}({{detail.coach.phone}})
-            </span>
-          </Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">微信二维码：</Col>
-          <Col span="18" class="row-content">
-            <img class="detail-images" :src="detail.wechat_qrcode" @click="showBigImg(detail.wechat_qrcode)" />
-          </Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">直播间 ID：</Col>
-          <Col span="18" class="row-content">{{ detail.live_id }}</Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">课时名称：</Col>
-          <Col span="18" class="row-content">{{ detail.live_name }}</Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">费用：</Col>
-          <Col span="18" class="row-content">
-            <span v-if="detail.is_charge">
-              ￥{{ detail.charge_money }}
-            </span>
-            <span v-else>
-              免费
-            </span>
-          </Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">VIP 费用：</Col>
-          <Col span="18" class="row-content">
-            <span v-if="detail.is_vip_charge">
-              ￥{{ detail.vip_charge_money }}
-            </span>
-            <span v-else>
-              免费
-            </span>
-          </Col>
-        </Row>
-        
-        <Row>
-          <Col span="6" class="row-label">过期时间：</Col>
-          <Col span="18" class="row-content">{{ detail.expire_day }} 天</Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">浏览量：</Col>
-          <Col span="18" class="row-content">{{ detail.view_num }}</Col>
-        </Row>
+      <div style="height: 20px;"></div>
 
-        <Row>
-          <Col span="6" class="row-label">推荐状态：</Col>
-          <Col span="18" class="row-content">
-            <span v-if="detail.is_recommend == 1">
-              推荐
-            </span>
-            <span v-else>
-              未推荐
-            </span>
-          </Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">创建时间：</Col>
-          <Col span="18" class="row-content">{{ detail.created_at }}</Col>
-        </Row>
-
-        <Row>
-          <Col span="6" class="row-label">详情：</Col>
-          <Col span="18" class="row-content content-detail" v-html="detail.content"></Col>
-        </Row>
-
-        <Row>
-          <Col span="6" class="row-label">温馨提醒：</Col>
-          <Col span="18" class="row-content content-detail" v-html="detail.reminder"></Col>
-        </Row>
+      <div v-if="menuActivity == 'download'">
+        <download type="business" :item-id="detail.id" :item="detail"></download>
       </div>
 
-      <hr v-if="!getMoreIng && moreDetail.id" style="color: #e8eaec" />
-      <div v-if="!getMoreIng && moreDetail.id">
-        <h3 slot="header" style="color:#2D8CF0">报名统计</h3>
-        <Row>
-          <Col span="6" class="row-label">浏览人数：</Col>
-          <Col span="18" class="row-content">{{ detail.view_num }}人</Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">报名人数：</Col>
-          <Col span="18" class="row-content">{{ detail.joined_num }}人</Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">转化率：</Col>
-          <Col v-if="detail.joined_num > 0" span="18" class="row-content">{{ ((detail.joined_num / detail.view_num) * 100).toFixed(2) }}%</Col>
-          <Col v-else span="18" class="row-content">0%</Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">普通会员报名人数：</Col>
-          <Col span="18" class="row-content">{{ detail.joined_num - detail.vip_joined_num }}人</Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">VIP报名人数：</Col>
-          <Col span="18" class="row-content">{{ detail.vip_joined_num }}人</Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">普通会员报名费收入：</Col>
-          <Col span="18" class="row-content">￥{{ moreDetail.money_total - moreDetail.vip_money_total }}</Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">VIP会员报名费收入：</Col>
-          <Col span="18" class="row-content">￥{{ moreDetail.vip_money_total }}</Col>
-        </Row>
-        <Row>
-          <Col span="6" class="row-label">合计报名费收入：</Col>
-          <Col span="18" class="row-content">￥{{ moreDetail.money_total }}</Col>
-        </Row>
+      <div >
+        <Question ref="practice"
+            v-if="menuActivity == 'question_practice'"
+            type="business"
+            do-type="practice"
+            :item-id="detail.id" :item="detail">
+        </Question>
+
+        <Question ref="challenge"
+            v-if="menuActivity == 'question_challenge'"
+            type="business"
+            do-type="challenge"
+            :item-id="detail.id" :item="detail">
+        </Question>
+      </div>
+
+      <div v-if="menuActivity == 'info'">
+        <div v-if="detail.name">
+          <Row >
+            <Col span="6" class="row-label">薪商学名称：</Col>
+            <Col span="18" class="row-content">{{ detail.name }}</Col>
+          </Row>
+          <Row >
+            <Col span="6" class="row-label">活动描述：</Col>
+            <Col span="18" class="row-content">{{ detail.desc }}</Col>
+          </Row>
+          <Row v-if="detail.image">
+            <Col span="6" class="row-label">薪商学图片：</Col>
+            <Col span="18" class="row-content">
+              <img class="detail-images" style="width: 125px;height: 50px;" :src="detail.image" @click="showBigImg(detail.image)" />
+            </Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">标签：</Col>
+            <Col span="18" class="row-content">
+              <Tag
+                  v-for="(item, ind) in detail.tag_arr"
+                  :key="ind"
+                  :checkable="false"
+                  :checked="false"
+                  type="border"
+                  size="medium"
+                  color="primary"
+                  >
+                  {{ item }}
+                </Tag>
+            </Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">薪商学开始时间：</Col>
+            <Col span="18" class="row-content">{{ detail.start_at }}</Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">薪商学结束时间：</Col>
+            <Col span="18" class="row-content">{{ detail.end_at }}</Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">报名人数：</Col>
+            <Col span="18" class="row-content">
+              可报名人数：{{ detail.join_num }} &nbsp;&nbsp; 已报名人数：{{ detail.joined_num }}
+              <Button type="text" @click="jumpPage('/businessManage/user/' + detail.id)">查看报名列表</Button>
+            </Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">报名截止时间：</Col>
+            <Col span="18" class="row-content">{{ detail.join_end_at }}</Col>
+          </Row>
+
+          <Row>
+            <Col span="6" class="row-label">讲师：</Col>
+            <Col span="18" class="row-content">
+              <span v-if="detail.teach">
+                {{ detail.teach.name }}({{detail.teach.phone}})
+              </span>
+            </Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">辅导老师：</Col>
+            <Col span="18" class="row-content">
+              <span v-if="detail.coach">
+                {{ detail.coach.name }}({{detail.coach.phone}})
+              </span>
+            </Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">微信二维码：</Col>
+            <Col span="18" class="row-content">
+              <img class="detail-images" :src="detail.wechat_qrcode" @click="showBigImg(detail.wechat_qrcode)" />
+            </Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">直播间 ID：</Col>
+            <Col span="18" class="row-content">{{ detail.live_id }}</Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">课时名称：</Col>
+            <Col span="18" class="row-content">{{ detail.live_name }}</Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">费用：</Col>
+            <Col span="18" class="row-content">
+              <span v-if="detail.is_charge">
+                ￥{{ detail.charge_money }}
+              </span>
+              <span v-else>
+                免费
+              </span>
+            </Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">VIP 费用：</Col>
+            <Col span="18" class="row-content">
+              <span v-if="detail.is_vip_charge">
+                ￥{{ detail.vip_charge_money }}
+              </span>
+              <span v-else>
+                免费
+              </span>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col span="6" class="row-label">过期时间：</Col>
+            <Col span="18" class="row-content">{{ detail.expire_day }} 天</Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">浏览量：</Col>
+            <Col span="18" class="row-content">{{ detail.view_num }}</Col>
+          </Row>
+
+          <Row>
+            <Col span="6" class="row-label">推荐状态：</Col>
+            <Col span="18" class="row-content">
+              <span v-if="detail.is_recommend == 1">
+                推荐
+              </span>
+              <span v-else>
+                未推荐
+              </span>
+            </Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">创建时间：</Col>
+            <Col span="18" class="row-content">{{ detail.created_at }}</Col>
+          </Row>
+
+          <Row>
+            <Col span="6" class="row-label">详情：</Col>
+            <Col span="18" class="row-content content-detail" v-html="detail.content"></Col>
+          </Row>
+
+          <Row>
+            <Col span="6" class="row-label">温馨提醒：</Col>
+            <Col span="18" class="row-content content-detail" v-html="detail.reminder"></Col>
+          </Row>
+        </div>
+
+        <hr v-if="!getMoreIng && moreDetail.id" style="color: #e8eaec" />
+        <div v-if="!getMoreIng && moreDetail.id">
+          <h3 slot="header" style="color:#2D8CF0">报名统计</h3>
+          <Row>
+            <Col span="6" class="row-label">浏览人数：</Col>
+            <Col span="18" class="row-content">{{ detail.view_num }}人</Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">报名人数：</Col>
+            <Col span="18" class="row-content">{{ detail.joined_num }}人</Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">转化率：</Col>
+            <Col v-if="detail.joined_num > 0" span="18" class="row-content">{{ ((detail.joined_num / detail.view_num) * 100).toFixed(2) }}%</Col>
+            <Col v-else span="18" class="row-content">0%</Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">普通会员报名人数：</Col>
+            <Col span="18" class="row-content">{{ detail.joined_num - detail.vip_joined_num }}人</Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">VIP报名人数：</Col>
+            <Col span="18" class="row-content">{{ detail.vip_joined_num }}人</Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">普通会员报名费收入：</Col>
+            <Col span="18" class="row-content">￥{{ moreDetail.money_total - moreDetail.vip_money_total }}</Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">VIP会员报名费收入：</Col>
+            <Col span="18" class="row-content">￥{{ moreDetail.vip_money_total }}</Col>
+          </Row>
+          <Row>
+            <Col span="6" class="row-label">合计报名费收入：</Col>
+            <Col span="18" class="row-content">￥{{ moreDetail.money_total }}</Col>
+          </Row>
+        </div>
       </div>
     </Modal>
 
@@ -212,13 +242,18 @@
 <script>
 import Util from '@/libs/util'
 import myTable from '@/view/includes/myTable'
+import Download from '@/view/includes/custom/download'
+import Question from '@/view/includes/custom/question'
 
 export default {
   components: {
-    myTable
+    myTable,
+    Download,
+    Question
   },
   data () {
     return {
+      menuActivity: 'info',
       detail: {},
       moreDetail: {},
       getMoreIng: false,
@@ -301,7 +336,7 @@ export default {
           {title: '操作',
             key: 'action',
             align: 'center',
-            width: 200,
+            width: 220,
             fixed: 'right',
             render: (h, params) => {
               return h('div', [
@@ -322,6 +357,26 @@ export default {
                     click: () => {
                       var id = params.row.id
                       this.jumpPage('/businessManage/user/' + id)
+                    }
+                  }
+                }),
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small',
+                    icon: 'md-list-box'
+                  },
+                  domProps: {
+                    title: '查看留言',
+                  },
+                  style: {
+                    marginRight: '5px',
+                    marginBottom: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      var id = params.row.id
+                      this.jumpPage('/businessManage/businessComments/' + id)
                     }
                   }
                 }),
@@ -551,6 +606,9 @@ export default {
       }, function (e) {
         _this.$Notice.success({title: '提示', desc: '复制失败'})
       })
+    },
+    getItem(code) {
+      this.menuActivity = code;
     }
   },
   created: function () {

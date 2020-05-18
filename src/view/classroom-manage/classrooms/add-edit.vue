@@ -1,17 +1,51 @@
 <template lang="html">
   <div class="classrooms-add-edit">
-    <sm-form ref="smForm" v-model="formValidate" :fields="formFields" @submit="handleSubmit">
+    <Menu mode="horizontal" theme="light" active-name="edit" @on-select="getItem">
+      <MenuItem name="edit" >薪课堂信息</MenuItem>
+      <template v-if="formValidate.id">
+        <MenuItem name="download" >薪课堂资料</MenuItem>
+        <MenuItem name="question_practice" >练习题目</MenuItem>
+        <MenuItem name="question_challenge" >挑战题目</MenuItem>
+      </template>
+    </Menu>
+
+    <div style="height: 20px;"></div>
+
+    <sm-form v-if="menuActivity == 'edit'" ref="smForm" v-model="formValidate" :fields="formFields" @submit="handleSubmit">
 
     </sm-form>
+
+	  <div v-else-if="menuActivity == 'download'">
+      <download type="classroom" :item-id="formValidate.id" :item="formValidate">
+
+      </download>
+    </div>
+
+    <div >
+      <Question ref="practice" v-if="menuActivity == 'question_practice'" type="classroom" do-type="practice" :item-id="formValidate.id" :item="formValidate">
+
+      </Question>
+
+      <Question ref="challenge" v-if="menuActivity == 'question_challenge'" type="classroom" do-type="challenge" :item-id="formValidate.id" :item="formValidate">
+
+      </Question>
+    </div>
 	</div>
 </template>
 
 <script>
 import Util from '@/libs/util'
+import Download from '@/view/includes/custom/download'
+import Question from '@/view/includes/custom/question'
 
 export default {
+  components: {
+    Download,
+    Question
+  },
   data() {
     return {
+      menuActivity: 'edit',
       formValidate: {
         id: 0,
         name: '',
@@ -31,6 +65,7 @@ export default {
         vip_charge_money: 0,
         expire_day: 365,
         is_recommend: 0,
+        is_download: 0,
         sort_order: 50,
       },
       formFields: [
@@ -289,6 +324,9 @@ export default {
           }
         }
       })
+    },
+    getItem(code) {
+      this.menuActivity = code;
     }
   },
   mounted: function() {

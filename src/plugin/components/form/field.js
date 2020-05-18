@@ -47,6 +47,15 @@ export const defFields = {
     height: "150px",
     noEdit: false
   },
+  'upload-file': {
+    type: 'upload-file',
+    name: 'file',
+    value: "",        // 默认值
+    label: "上传文件",
+    width: "375px",
+    height: "150px",
+    noEdit: false
+  },
   search: {
     type: 'search',
     name: 'keyword',
@@ -349,6 +358,11 @@ export const defRules = {
       trigger: 'change'
     }
   ],
+  'upload-file': {
+    required: true,
+    message: '请上传文件',
+    trigger: 'change'
+  },
   search: {
     required: true,
     message: '搜索关键字不能为空',

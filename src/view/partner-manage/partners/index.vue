@@ -82,7 +82,7 @@ export default {
           { required: true, type: 'number', min: 1, message: '请选择合伙人类型', trigger: 'change' }
         ],
       },
-      
+
       detail: {},
       moreDetail: {},
       getMoreIng: false,
@@ -94,7 +94,7 @@ export default {
       listConf: {
         url: '/adminapi/partners',
         searchParams: {
-          id: 0,
+          id: '',
           name: '',
           phone: '',
           partner_type: 0,
