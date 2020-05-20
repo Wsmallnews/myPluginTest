@@ -41,6 +41,71 @@
       </template>
     </myTable>
 
+    <Modal v-model="showDetail" :closable="true" :mask-closable=false :width="700">
+      <h3 style="color:#2D8CF0">咨询详情</h3>
+
+      <div v-if="detail.id">
+        <Row >
+          <Col span="6" class="row-label">咨询ID：</Col>
+          <Col span="18" class="row-content">{{ detail.id }}</Col>
+        </Row>
+        <Row >
+          <Col span="6" class="row-label">咨询人姓名：</Col>
+          <Col span="18" class="row-content">{{ detail.user ? detail.user.name : '' }}</Col>
+        </Row>
+        <Row >
+          <Col span="6" class="row-label">咨询人手机号：</Col>
+          <Col span="18" class="row-content">{{ detail.user ? detail.user.phone : '' }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">咨询方向：</Col>
+          <Col span="18" class="row-content">{{ detail.tutor_cat_name }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">咨询方式：</Col>
+          <Col span="18" class="row-content">{{ detail.mode_type }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">金额：</Col>
+          <Col span="18" class="row-content">{{ detail.tutor_price }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">问题描述：</Col>
+          <Col span="18" class="row-content">{{ detail.content }}</Col>
+        </Row>
+        <Row v-if="detail.resume_arr && detail.resume_arr.length">
+          <Col span="6" class="row-label">学员简历：</Col>
+          <Col span="18" class="row-content">
+            <img v-for="img in detail.resume_arr" :src="img" style="width: 100px; padding: 0 5px;" @click="showBigImg(img)" />
+          </Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">学员信息：</Col>
+          <Col span="18" class="row-content">{{ detail.user_name }}-{{ detail.user_sex_name }}-{{ detail.phone }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">导师姓名：</Col>
+          <Col span="18" class="row-content">{{ detail.tutor ? detail.tutor.name : '' }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">导师手机号：</Col>
+          <Col span="18" class="row-content">{{ detail.tutor ? detail.tutor.phone : ''}}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">创建时间：</Col>
+          <Col span="18" class="row-content">{{ detail.created_at }}</Col>
+        </Row>
+        <Row>
+          <Col span="6" class="row-label">状态：</Col>
+          <Col span="18" class="row-content">{{ detail.status_name }}</Col>
+        </Row>
+      </div>
+    </Modal>
+
+    <Modal v-model="bigImgShow" :closable="true" :mask-closable="true" :footer-hide="true" width="700">
+      <img :src="bigImg" style="width: 670px;margin-top: 30px;" alt="">
+    </Modal>
+
     <!-- <Modal v-model="sendVIPShow" :closable='false' :mask-closable=false :width="400">
       <h3 slot="header" style="color:#2D8CF0">处理</h3>
       <h3 style="color: #ffad33;margin-bottom: 10px;">{{ currentSendInfo }}</h3>
@@ -56,11 +121,6 @@
         <Button type="primary" :loading="saveLoading" @click="processSendVIP">确定</Button>
       </div>
     </Modal> -->
-
-
-    <Modal v-model="showDetail" :closable="true" :mask-closable=false width="90%">
-
-    </Modal>
   </div>
 </template>
 
@@ -133,8 +193,8 @@ export default {
             width: 120,
             fixed: 'right',
             render: (h, params) => {
-              return h('div', [
-                h('Button', {
+              var btn = [];
+              btn.push(h('Button', {
                   props: {
                     type: 'primary',
                     size: 'small',
@@ -151,13 +211,34 @@ export default {
                     click: () => {
                       this.detail = params.row;
                       this.showDetail = true;
-
-                      // this.getMoreDetail(this.detail.id);
                     }
                   }
-                }),
+                })
+              )
 
-              ])
+              if (params.row.status == 1 || params.row.status == 2) {
+                btn.push(h('Button', {
+                    props: {
+                      type: 'error',
+                      size: 'small',
+                      icon: 'md-redo'
+                    },
+                    domProps: {
+                      title: '退款',
+                    },
+                    style: {
+                      marginRight: '5px',
+                      marginBottom: '5px'
+                    },
+                    on: {
+                      click: () => {
+                        this.refund(params.row);
+                      }
+                    }
+                  })
+                )
+              }
+              return h('div', btn)
             }
           }
         ]
@@ -179,61 +260,31 @@ export default {
       this.bigImg = src;
       this.bigImgShow = true;
     },
-    // sendVIP () {
-    //   var _this = this;
-    //   if (!this.currentSelect.length) {
-    //     _this.$Notice.error({title: '提示', desc: '请选择要赠送VIP的用户'})
-    //     return false;
-    //   }
-    //   var names = this.currentSelectUserName.join(", ");
-    //   this.currentSendInfo = '当前已选择:' + names + "；共 (" + this.currentSelect.length + ") 人";
+    refund(consult){
+       var _this = this;
 
-    //   this.sendVIPShow = true;
-    // },
-    // processSendVIP(){
-    //    var _this = this;
-    //   _this.sendForm.id = this.currentSelect;
-
-    //   _this.$Modal.confirm({
-    //     title: '提示',
-    //     content: '确定要处理吗？',
-    //     onOk: function () {
-    //       _this.$refs['sendForm'].validate((valid) => {
-    //         if (valid) {
-    //           _this.saveLoading = true;
-    //           Util.ajax({
-    //             url: '/adminapi/users/sendVIP',
-    //             method: 'post',
-    //             data: _this.sendForm,
-    //             success: function (result) {
-    //               if (result.error == 0) {
-    //                 _this.cancelVIPSending();
-    //                 _this.$refs.listTable.listLoad()
-    //                 _this.$Notice.success({title: '提示', desc: result.info})
-    //               } else {
-    //                 _this.saveLoading = false;
-    //                 _this.$Notice.error({title: '提示', desc: result.info})
-    //               }
-    //             }
-    //           })
-    //         } else {
-    //           _this.$Notice.error({title: '提示', desc: "信息填写不完整"})
-    //         }
-    //       })
-    //     },
-    //     onCancel: function () {
-    //       _this.$Notice.error({ title: '提示', desc: '操作取消' })
-    //     }
-    //   })
-    // },
-    // cancel: function () {
-    //   this.sendShow = false;
-    //   this.saveLoading = false;
-    // },
-    // cancelVIPSending:function(){
-    //   this.sendVIPShow = false;
-    //   this.saveLoading = false;
-    // },
+      _this.$Modal.confirm({
+        title: '提示',
+        content: '确定要退款吗？',
+        onOk: function () {
+          Util.ajax({
+            url: '/adminapi/consults/' + consult.id + '/refund',
+            method: 'patch',
+            success: function (result) {
+              if (result.error == 0) {
+                _this.$refs.listTable.listLoad()
+                _this.$Notice.success({title: '提示', desc: result.info})
+              } else {
+                _this.$Notice.error({title: '提示', desc: result.info})
+              }
+            }
+          })
+        },
+        onCancel: function () {
+          _this.$Notice.error({ title: '提示', desc: '操作取消' })
+        }
+      })
+    },
     getOrderStatus() {
       var _this = this;
 

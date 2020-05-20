@@ -95,6 +95,16 @@ export default [{
         },
         component: () => import('@/view/statics-manage/statics/index.vue'),
       },
+      {
+        path: 'consultManage',
+        name: 'managestaticsmanage-consultmanage',
+        meta: {
+          access: ['manage_statics:consult_manage'],
+          icon: 'md-stats',
+          title: '咨询统计'
+        },
+        component: () => import('@/view/manage-statics-manage/consultmanage.vue'),
+      },
     ]
   },
   {

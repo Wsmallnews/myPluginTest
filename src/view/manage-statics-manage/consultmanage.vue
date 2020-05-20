@@ -1,45 +1,28 @@
 <template lang="html">
   <div class="partners-statics">
-    <Row v-if="statics.total != undefined">
-      <Col span="24" >
+    <Row v-if="statics.today_money != undefined">
+      <Col span="6" >
         <div class="col-div" style="background-color: #2db7f5">
-          <div class="title">总付费</div>
-          <div class="first">{{ statics.total }}</div>
+          <div class="title">今日咨询人数</div>
+          <div class="first">￥{{ statics.today_num }}</div>
         </div>
       </Col>
-    </Row>
-
-    <Row v-if="statics.total != undefined">
-      <Col span="5" >
-        <div class="col-div" style="background-color: #2db7f5">
-          <div class="title">薪活动付费</div>
-          <div class="first">￥{{ statics.activity_total }}</div>
-        </div>
-      </Col>
-      <Col span="5">
+      <Col span="6">
         <div class="col-div" style="background-color: #ff9900">
-          <div class="title">薪商学付费</div>
-          <div class="first">￥{{ statics.business_total }}</div>
+          <div class="title">累计咨询人数</div>
+          <div class="first">￥{{ statics.total_num }}</div>
         </div>
       </Col>
-      <Col span="5">
+      <Col span="6">
         <div class="col-div" style="background-color: #2d8cf0">
-          <div class="title">薪课堂付费</div>
-          <div class="first">￥{{ statics.classroom_total }}</div>
+          <div class="title">今日收入</div>
+          <div class="first">￥{{ statics.today_money }}</div>
         </div>
       </Col>
-      <Col span="5">
+      <Col span="6">
         <div class="col-div" style="background-color: #ed4014">
-          <div class="title">VIP 付费</div>
-          <div class="first">￥{{ statics.vip_total }}</div>
-          <div class="second">月 VIP 付费: ￥{{ statics.vip_month_total }}</div>
-          <div class="second">年 VIP 付费: ￥{{ statics.vip_year_total }}</div>
-        </div>
-      </Col>
-      <Col span="4">
-        <div class="col-div" style="background-color: #2d8cf0">
-          <div class="title">咨询付费</div>
-          <div class="first">￥{{ statics.consult_total }}</div>
+          <div class="title">累计收入</div>
+          <div class="first">￥{{ statics.total_money }}</div>
         </div>
       </Col>
     </Row>
@@ -68,7 +51,7 @@
           :field="{type: 'daterange', placeholder: '查询时间', confirm: true, 'split-panels': true}"
           />
 
-        <Button type="primary" icon="ios-search" @click="getPaySearch()" style="margin-left: 10px;">搜索</Button>
+        <Button type="primary" icon="ios-search" @click="getConsultSearch()" style="margin-left: 10px;">搜索</Button>
       </div>
     </div>
     <div ref="dom" class="charts chart-bar"></div>
@@ -100,21 +83,16 @@ export default {
       fastType: 'week',
       searchDate: [],
       listConf: {
-        url: '/adminapi/manageStatics/payList',
+        url: '/adminapi/manageStatics/consultList',
         searchParams: {
         },
         item: [],
         columns: [
           {title: '日期', align: 'center', minWidth: 100, key: 'date'},
-          {title: '薪活动付费', align: 'center', minWidth: 100, key: 'activity_money'},
-          {title: '薪商学付费', align: 'center', minWidth: 100, key: 'business_money'},
-          {title: '薪课堂付费', align: 'center', minWidth: 100, key: 'classroom_money'},
-          {title: '月VIP付费', align: 'center', minWidth: 100, key: 'vip_month_money'},
-          {title: '年VIP付费', align: 'center', minWidth: 100, key: 'vip_year_money'},
-          {title: 'VIP合计付费', align: 'center', minWidth: 110, key: 'vip_money'},
-          {title: '薪咨询付费', align: 'center', minWidth: 110, key: 'consult_money'},
-          {title: '合计付费', align: 'center', minWidth: 100, key: 'total_money'},
-          {title: '累计付费', align: 'center', minWidth: 100, key: 'all_total_money'},
+          {title: '今日咨询人数', align: 'center', minWidth: 100, key: 'consult_num'},
+          {title: '今日收入', align: 'center', minWidth: 100, key: 'consult_money'},
+          {title: '累计咨询人数', align: 'center', minWidth: 100, key: 'all_total_num'},
+          {title: '累计收入', align: 'center', minWidth: 100, key: 'all_total_money'},
         ]
       }
     }
@@ -126,7 +104,7 @@ export default {
     getStatics () {
       var _this = this;
       Util.ajax({
-        url: '/adminapi/manageStatics/payManage',
+        url: '/adminapi/manageStatics/consultManage',
         method: 'get',
         success: function (result) {
           if (result.error == 0) {
@@ -146,13 +124,13 @@ export default {
 
       return date;
     },
-    getPaySearch () {
+    getConsultSearch () {
       var _this = this;
 
       var date = this.getSearchDate();
 
       Util.ajax({
-        url: '/adminapi/manageStatics/paySearch',
+        url: '/adminapi/manageStatics/consultSearch',
         method: 'get',
         data: {type: this.type, date: date},
         success: function (result) {
@@ -220,7 +198,7 @@ export default {
     this.searchDate = _this.getDate();
     _this.getStatics();
 
-    this.getPaySearch();
+    this.getConsultSearch();
   },
   mounted: function () {
     this.echarts();
