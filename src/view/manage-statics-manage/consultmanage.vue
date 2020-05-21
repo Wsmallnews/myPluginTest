@@ -4,13 +4,13 @@
       <Col span="6" >
         <div class="col-div" style="background-color: #2db7f5">
           <div class="title">今日咨询人数</div>
-          <div class="first">￥{{ statics.today_num }}</div>
+          <div class="first">{{ statics.today_num }}</div>
         </div>
       </Col>
       <Col span="6">
         <div class="col-div" style="background-color: #ff9900">
           <div class="title">累计咨询人数</div>
-          <div class="first">￥{{ statics.total_num }}</div>
+          <div class="first">{{ statics.total_num }}</div>
         </div>
       </Col>
       <Col span="6">
