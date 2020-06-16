@@ -99,6 +99,10 @@
           <Col span="6" class="row-label">状态：</Col>
           <Col span="18" class="row-content">{{ detail.status_name }}</Col>
         </Row>
+        <Row v-if="detail.deny_reason">
+          <Col span="6" class="row-label">拒绝原因：</Col>
+          <Col span="18" class="row-content">{{ detail.deny_reason }}</Col>
+        </Row>
       </div>
     </Modal>
 
@@ -130,7 +134,7 @@ import myTable from '@/view/includes/myTable'
 
 export default {
   components: {
-    myTable,
+    myTable
   },
   data () {
     return {
@@ -163,45 +167,85 @@ export default {
         },
         item: [],
         columns: [
-          {type: 'index', align: 'center', width: 50, fixed: 'left'},
-          {title: 'ID', align: 'center', width: 120, key: 'id'},
+          { type: 'index', align: 'center', width: 50, fixed: 'left' },
+          { title: 'ID', align: 'center', width: 120, key: 'id' },
           // {title: '订单ID', align: 'center', width: 120, key: 'order_sn', render: (h, params) => {
           //   if (params.row.order) {
 
           //   }
           // }},
-          {title: '咨询人姓名', align: 'center', width: 120, key: 'user_name', render:(h, params)=>{
-            return params.row.user ? h('span', params.row.user.name) : h('span', '');
-          }},
-          {title: '咨询人手机号', align: 'center', width: 120, key: 'user_phone', render:(h, params)=>{
-            return params.row.user ? h('span', params.row.user.phone) : h('span', '');
-          }},
-          {title: '咨询方向', align: 'center', width: 120, key: 'tutor_cat_name'},
-          {title: '金额', align: 'center', width: 120, key: 'tutor_price'},
-          {title: '导师姓名', align: 'center', width: 120, key: 'tutor_name', render:(h, params)=>{
-            return params.row.tutor ? h('span', params.row.tutor.name) : h('span', '');
-          }},
-          {title: '导师手机号', align: 'center', width: 120, key: 'tutor_phone', render:(h, params)=>{
-            return params.row.tutor ? h('span', params.row.tutor.phone) : h('span', '');
-          }},
-          {title: '咨询方式', align: 'center', width: 150, key: 'mode_type'},
-          {title: '咨询状态', align: 'center', width: 130, key: 'status_name'},
-          {title: '创建时间', align: 'center', width: 200, key: 'created_at'},
-          {title: '操作',
+          { title: '咨询人姓名',
+            align: 'center',
+            width: 120,
+            key: 'user_name',
+            render: (h, params) => {
+              return params.row.user ? h('span', params.row.user.name) : h('span', '')
+            } },
+          { title: '咨询人手机号',
+            align: 'center',
+            width: 120,
+            key: 'user_phone',
+            render: (h, params) => {
+              return params.row.user ? h('span', params.row.user.phone) : h('span', '')
+            } },
+          { title: '咨询方向', align: 'center', width: 120, key: 'tutor_cat_name' },
+          { title: '金额', align: 'center', width: 120, key: 'tutor_price' },
+          { title: '导师姓名',
+            align: 'center',
+            width: 120,
+            key: 'tutor_name',
+            render: (h, params) => {
+              return params.row.tutor ? h('span', params.row.tutor.name) : h('span', '')
+            } },
+          { title: '导师手机号',
+            align: 'center',
+            width: 120,
+            key: 'tutor_phone',
+            render: (h, params) => {
+              return params.row.tutor ? h('span', params.row.tutor.phone) : h('span', '')
+            } },
+          { title: '咨询方式', align: 'center', width: 150, key: 'mode_type' },
+          { title: '咨询状态', align: 'center', width: 130, key: 'status_name' },
+          { title: '拒绝理由', align: 'center', width: 130, key: 'deny_reason' },
+          { title: '创建时间', align: 'center', width: 200, key: 'created_at' },
+          { title: '操作',
             key: 'action',
             align: 'center',
             width: 120,
             fixed: 'right',
             render: (h, params) => {
-              var btn = [];
+              var btn = []
               btn.push(h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small',
+                  icon: 'md-eye'
+                },
+                domProps: {
+                  title: '查看详情'
+                },
+                style: {
+                  marginRight: '5px',
+                  marginBottom: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.detail = params.row
+                    this.showDetail = true
+                  }
+                }
+              })
+              )
+
+              if (params.row.status == 1 || params.row.status == 2) {
+                btn.push(h('Button', {
                   props: {
-                    type: 'primary',
+                    type: 'error',
                     size: 'small',
-                    icon: 'md-eye'
+                    icon: 'md-redo'
                   },
                   domProps: {
-                    title: '查看详情',
+                    title: '退款'
                   },
                   style: {
                     marginRight: '5px',
@@ -209,33 +253,10 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.detail = params.row;
-                      this.showDetail = true;
+                      this.refund(params.row)
                     }
                   }
                 })
-              )
-
-              if (params.row.status == 1 || params.row.status == 2) {
-                btn.push(h('Button', {
-                    props: {
-                      type: 'error',
-                      size: 'small',
-                      icon: 'md-redo'
-                    },
-                    domProps: {
-                      title: '退款',
-                    },
-                    style: {
-                      marginRight: '5px',
-                      marginBottom: '5px'
-                    },
-                    on: {
-                      click: () => {
-                        this.refund(params.row);
-                      }
-                    }
-                  })
                 )
               }
               return h('div', btn)
@@ -257,11 +278,11 @@ export default {
       this.$router.push(path)
     },
     showBigImg (src) {
-      this.bigImg = src;
-      this.bigImgShow = true;
+      this.bigImg = src
+      this.bigImgShow = true
     },
-    refund(consult){
-       var _this = this;
+    refund (consult) {
+      var _this = this
 
       _this.$Modal.confirm({
         title: '提示',
@@ -273,9 +294,9 @@ export default {
             success: function (result) {
               if (result.error == 0) {
                 _this.$refs.listTable.listLoad()
-                _this.$Notice.success({title: '提示', desc: result.info})
+                _this.$Notice.success({ title: '提示', desc: result.info })
               } else {
-                _this.$Notice.error({title: '提示', desc: result.info})
+                _this.$Notice.error({ title: '提示', desc: result.info })
               }
             }
           })
@@ -285,17 +306,17 @@ export default {
         }
       })
     },
-    getOrderStatus() {
-      var _this = this;
+    getOrderStatus () {
+      var _this = this
 
       Util.ajax({
         url: '/adminapi/consults/orderStatus',
         method: 'get',
         success: function (result) {
           if (result.error == 0) {
-            _this.orderStatus = result.result;
+            _this.orderStatus = result.result
           } else {
-            _this.$Notice.error({title: '提示', desc: result.info})
+            _this.$Notice.error({ title: '提示', desc: result.info })
           }
         }
       })
@@ -304,7 +325,7 @@ export default {
   created: function () {
     var _this = this
 
-    this.getOrderStatus();
+    this.getOrderStatus()
   },
   mounted: function () {
   }
