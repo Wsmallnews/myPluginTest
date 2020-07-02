@@ -979,6 +979,49 @@ export default [{
     ]
   },
   {
+    path: '/keywordManage',
+    name: 'keywordmanage',
+    meta: {
+      access: ['keyword:view'],
+      icon: 'md-basket',
+      title: '搜索管理'
+    },
+    component: Main,
+    children: [{
+        path: 'keyword/index',
+        name: 'admanage-keyword-index',
+        meta: {
+          access: ['keyword:view'],
+          icon: 'md-basket',
+          title: '热搜词管理',
+        },
+        component: () => import('@/view/keyword-manage/keyword/index.vue')
+      },
+      {
+        path: 'keyword/add',
+        name: 'admanage-keyword-add',
+        meta: {
+          access: ['keyword:edit'],
+          // hideInMenu: true,
+          icon: 'md-add',
+          title: '热搜词添加',
+        },
+        component: () => import('@/view/keyword-manage/keyword/add-edit.vue')
+      },
+      {
+        path: 'keyword/edit/:id',
+        name: 'admanage-keyword-edit',
+        meta: {
+          access: ['keyword:edit'],
+          hideInMenu: true,
+          icon: 'md-brush',
+          title: '热搜词编辑',
+        },
+        component: () => import('@/view/keyword-manage/keyword/add-edit.vue')
+      }
+    ]
+  },
+  {
     path: '/settingManage',
     name: 'settingmanage',
     meta: {
