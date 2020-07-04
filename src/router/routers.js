@@ -105,6 +105,16 @@ export default [{
         },
         component: () => import('@/view/manage-statics-manage/consultmanage.vue'),
       },
+      {
+        path: 'keywordManage',
+        name: 'managestaticsmanage-keywordmanage',
+        meta: {
+          access: ['manage_statics:keyword_manage'],
+          icon: 'md-stats',
+          title: '热搜词统计'
+        },
+        component: () => import('@/view/manage-statics-manage/keywordmanage.vue'),
+      },
     ]
   },
   {

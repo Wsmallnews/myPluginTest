@@ -1,11 +1,11 @@
 <template lang="html">
   <div class="tags-index">
     <myTable ref="listTable" :listConf="listConf" @select="selectRow" @searchReset="searchReset" :is-hand-start="true">
-      <template slot="formItem" >
+      <!-- <template slot="formItem" >
         <Form-item prop="name">
           <Input type="text" v-model="listConf.searchParams.name" placeholder="搜索关键词" ></Input>
         </Form-item>
-      </template>
+      </template> -->
       <template slot="formBtn" >
         <Button type="primary" @click="jumpPage({ path: '/keywordManage/keyword/add/'})"><Icon type="plus-round"></Icon>热搜词添加</Button>
       </template>

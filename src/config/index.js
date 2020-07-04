@@ -4,7 +4,7 @@ export default {
    */
   cookieExpires: 1,
 
-  mock: true,
+  mock: false,
   /**
    * @description mock token
    */
