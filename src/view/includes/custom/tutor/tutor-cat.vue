@@ -53,6 +53,7 @@
         <Form-item label="所属模块" prop="type">
           <Select v-model="formValidate.type">
             <Option value="job" key="job">职业咨询</Option>
+            <Option value="psychology" key="psychology">心理咨询</Option>
             <Option value="policy" key="policy">决策咨询</Option>
           </Select>
         </Form-item>
@@ -131,11 +132,11 @@ export default {
       default: {}
     }
   },
-  data() {
+  data () {
     return {
       list: [],
       showAddEdit: false,
-      question_answer: '',  // 临时存储正确答案
+      question_answer: '', // 临时存储正确答案
       formValidate: {
         id: 0,
         user_id: this.itemId,
@@ -168,34 +169,34 @@ export default {
         ],
         type: [
           { required: true, message: '请选择所属模块', trigger: 'change' }
-        ],
+        ]
       },
-      backupForm: {},
+      backupForm: {}
     }
   },
   watch: {
     itemId (value) {
       if (value) {
-        this.getList();
+        this.getList()
       }
     }
   },
   computed: {
     isEdit () {
-      return this.formValidate.id ? true : false
+      return !!this.formValidate.id
     }
   },
   methods: {
     getList () {
-      var _this = this;
+      var _this = this
 
       Util.ajax({
         url: 'adminapi/tutorCats',
         method: 'get',
-        data: {user_id: this.itemId},
-        success: function(result) {
+        data: { user_id: this.itemId },
+        success: function (result) {
           if (result.error == 0) {
-            _this.list = result.result;
+            _this.list = result.result
           } else {
             _this.$Notice.error({
               title: '提示',
@@ -206,7 +207,7 @@ export default {
       })
     },
     tutorCatsDelete (item) {
-      var _this = this;
+      var _this = this
 
       _this.$Modal.confirm({
         title: '提示',
@@ -215,13 +216,13 @@ export default {
           Util.ajax({
             url: 'adminapi/tutorCats/' + item.id,
             method: 'delete',
-            success: function(result) {
+            success: function (result) {
               if (result.error == 0) {
                 _this.$Notice.success({
                   title: '提示',
                   desc: '删除成功'
                 })
-                _this.getList();    // 重新刷新课程资料列表
+                _this.getList() // 重新刷新课程资料列表
               } else {
                 _this.$Notice.error({
                   title: '提示',
@@ -236,37 +237,37 @@ export default {
         }
       })
     },
-    tutorCatAdd() {
+    tutorCatAdd () {
       this.formValidate = JSON.parse(JSON.stringify(this.backupForm))
-      this.showAddEdit = true;
+      this.showAddEdit = true
     },
     tutorCatEdit (item) {
-      var _this = this;
+      var _this = this
 
       for (var i in _this.formValidate) {
         _this.formValidate[i] = item[i]
       }
 
-      this.showAddEdit = true;
+      this.showAddEdit = true
     },
-    handleSubmit(name) {
+    handleSubmit (name) {
       var _this = this
 
       _this.$refs[name].validate((valid) => {
         if (valid) {
-          var values = this.formValidate;
+          var values = this.formValidate
 
-          var count = 0;
+          var count = 0
           if (values.is_mode_phone) {
             if (!values.mode_phone.time || !values.mode_phone.price || !values.mode_phone.vip_price) {
               _this.$Notice.error({
                 title: '提示',
                 desc: '电话咨询信息填写不完整'
               })
-              return false;
+              return false
             }
           } else {
-            count ++;
+            count++
           }
           if (values.is_mode_video) {
             if (!values.mode_video.time || !values.mode_video.price || !values.mode_video.vip_price) {
@@ -274,22 +275,22 @@ export default {
                 title: '提示',
                 desc: '视频咨询信息填写不完整'
               })
-              return false;
+              return false
             }
           } else {
-            count ++;
+            count++
           }
           if (values.is_mode_offline) {
-            if (!values.mode_offline.time || !values.mode_offline.price
-                || !values.mode_offline.vip_price || !values.mode_offline.city) {
+            if (!values.mode_offline.time || !values.mode_offline.price ||
+                !values.mode_offline.vip_price || !values.mode_offline.city) {
               _this.$Notice.error({
                 title: '提示',
                 desc: '线下咨询信息填写不完整'
               })
-              return false;
+              return false
             }
           } else {
-            count ++;
+            count++
           }
 
           if (count == 3) {
@@ -297,27 +298,27 @@ export default {
               title: '提示',
               desc: '请至少选择一个咨询方式'
             })
-            return false;
+            return false
           }
 
           var url = '/adminapi/tutorCats'
           var method = 'post'
           if (values.id) {
-            url = url + '/' + values.id;
+            url = url + '/' + values.id
             var method = 'patch'
           }
           Util.ajax({
             url: url,
             method: method,
             data: values,
-            success: function(result) {
+            success: function (result) {
               if (result.error == 0) {
                 _this.$Notice.success({
                   title: '提示',
                   desc: '保存成功'
                 })
-                _this.showAddEdit = false;   // 关闭弹窗
-                _this.getList();
+                _this.showAddEdit = false // 关闭弹窗
+                _this.getList()
               } else {
                 _this.$Notice.error({
                   title: '提示',
@@ -332,23 +333,21 @@ export default {
             desc: '信息填写不完整'
           })
         }
-      });
+      })
     }
   },
   created () {
     if (this.itemId) {
-      this.getList();
+      this.getList()
     }
   },
-  mounted() {
+  mounted () {
     // 为编辑完再添加的时候 重新初始化 formValidate 做准备
     this.backupForm = JSON.parse(JSON.stringify(this.formValidate))
   }
 }
 
-
 </script>
-
 
 <style scoped>
 .tutor-cat-list {

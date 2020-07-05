@@ -67,7 +67,7 @@
         </Row>
         <Row>
           <Col span="6" class="row-label">金额：</Col>
-          <Col span="18" class="row-content">{{ detail.tutor_price }}</Col>
+          <Col span="18" class="row-content">{{ detail.tutor_price * detail.quantity}}</Col>
         </Row>
         <Row>
           <Col span="6" class="row-label">问题描述：</Col>
@@ -189,7 +189,14 @@ export default {
               return params.row.user ? h('span', params.row.user.phone) : h('span', '')
             } },
           { title: '咨询方向', align: 'center', width: 120, key: 'tutor_cat_name' },
-          { title: '金额', align: 'center', width: 120, key: 'tutor_price' },
+          { title: '总金额',
+            align: 'center',
+            width: 120,
+            key: 'tutor_price',
+            render: (h, params) => {
+              return h('span', params.row.tutor_price * params.row.quantity)
+            } },
+          { title: '数量', align: 'center', width: 120, key: 'quantity' },
           { title: '导师姓名',
             align: 'center',
             width: 120,

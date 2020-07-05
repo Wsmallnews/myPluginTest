@@ -37,7 +37,7 @@ export default {
     TutorCat,
     TutorComment
   },
-  data() {
+  data () {
     return {
       menuActivity: 'edit',
       formValidate: {
@@ -45,76 +45,82 @@ export default {
         name: '',
         avatar: '',
         desc: '',
-        intro: '',
+        recommend: 0,
+        intro: ''
       },
       formFields: [
         {
           type: 'select',
           name: 'id',
-          label: "选择用户",
-          placeholder: "请选择用户",
+          label: '选择用户',
+          placeholder: '请选择用户',
           disabled: false,
           options: [
           ],
           required: {
             type: 'number',
             min: 1,
-            message: "请选择用户"
+            message: '请选择用户'
           }
         },
         {
           type: 'text',
           name: 'name',
-          label: "导师姓名",
-          placeholder: "请输入导师姓名",
+          label: '导师姓名',
+          placeholder: '请输入导师姓名',
           required: {
-            message: '导师姓名不能为空',
+            message: '导师姓名不能为空'
           }
         },
         {
           type: 'upload',
           name: 'avatar',
-          label: "导师照片",
-          width: "100px",
-          height: "100px",
+          label: '导师照片',
+          width: '100px',
+          height: '100px',
           noEdit: false,
           required: {
-            message: '请上传导师照片',
+            message: '请上传导师照片'
           }
         },
         {
-          type: "textarea",
+          type: 'textarea',
           name: 'desc',
           label: '个性签名',
           placeholder: '导师姓名下显示'
         },
         {
+          type: 'switch',
+          name: 'recommend',
+          label: '是否推荐'
+        },
+        {
           type: 'editor',
           name: 'intro',
-          label: "导师介绍",
-        },
+          label: '导师介绍'
+        }
       ]
     }
   },
   methods: {
-    abc() {
+    abc () {
       console.log('aaaa')
     },
-    getTutors() {
+    getTutors () {
       // 获取所有非导师
-      var _this = this;
+      var _this = this
       Util.ajax({
         url: '/adminapi/users/all',
         method: 'get',
-        success: function(result) {
+        success: function (result) {
           if (result.error == 0) {
             var tutors = []
             for (let te of result.result) {
-              tutors.push({value: te.id, label: te.name})
+              tutors.push({ value: te.id, label: te.name })
             }
             // 获取二位数组的下标
-            let key_tutors = Util.getArrayKey('id', _this.formFields, 'name');
-            _this.formFields[key_tutors]['options'] = tutors;
+            let key_tutors = Util.getArrayKey('id', _this.formFields, 'name')
+            _this.formFields[key_tutors]['options'] = tutors
 
             if (_this.$route.params.id != undefined) {
               _this.formFields[key_tutors]['disabled'] = true
@@ -129,20 +135,20 @@ export default {
       })
     },
 
-    handleSubmit(vals) {
+    handleSubmit (vals) {
       var _this = this
       var values = Util.extend(this.formValidate, vals)
       var url = '/adminapi/tutors'
       var method = 'post'
       if (_this.$route.params.id != undefined) {
-        url = url + '/' + values.id;
+        url = url + '/' + values.id
         var method = 'patch'
       }
       Util.ajax({
         url: url,
         method: method,
         data: values,
-        success: function(result) {
+        success: function (result) {
           if (result.error == 0) {
             _this.$Notice.success({
               title: '提示',
@@ -158,23 +164,23 @@ export default {
         }
       })
     },
-    getItem(code) {
-      this.menuActivity = code;
+    getItem (code) {
+      this.menuActivity = code
     }
   },
-  mounted: function() {
+  mounted: function () {
 
   },
-  created() {
+  created () {
     var _this = this
 
-    _this.getTutors();
+    _this.getTutors()
 
     if (_this.$route.params.id != undefined) {
       Util.ajax({
         url: '/adminapi/tutors/' + _this.$route.params.id,
         method: 'get',
-        success: function(result) {
+        success: function (result) {
           if (result.error == 0) {
             var info = result.result
             for (var i in _this.formValidate) {
